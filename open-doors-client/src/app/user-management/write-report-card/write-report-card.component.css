@@ -1,0 +1,38 @@
+
+.report {
+    width: calc(100% - 10px);
+    margin: 50px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.just-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.just-button-container button {
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #0C4A60;
+    padding: 10px 30px;
+    border-color: #0C4A60;
+}
+
+.just-button-container button span {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.error-container {
+    width: 200px;
+}
+
+.error {
+    height: 20px;
+    font-size: 15px;
+    color: red;
+}

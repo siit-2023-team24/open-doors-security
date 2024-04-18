@@ -1,0 +1,21 @@
+img {
+    height: 100px;
+    width: auto;
+    margin-left: 10px;
+}
+
+button {
+    border: solid;
+    border-color: #0C4A60;
+    margin-right: 10px;
+}
+
+.frame {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: solid;
+    border-color: #EF6C33;
+}

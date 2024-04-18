@@ -1,0 +1,62 @@
+@import '~materialize-css/dist/css/materialize.min.css';
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    width: 60vw;
+  }
+
+#countryLbl {
+    margin-right: 10px;
+    color: gray;
+}
+
+#buttons {
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#buttons button {
+  margin-left: 16px;
+}
+
+#imgButtons {
+  margin: 20px 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#imgButtons button {
+  margin-right: 16px;
+}
+
+
+#imgDiv {
+  height: 30vh;
+  width: auto;
+  padding: 5vh;
+  margin-left: 50px;
+}
+
+img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
+
+
+.file-field ::ng-deep .btn {
+  background-color: #0C4A60;
+  color: white;
+}
+
+.file-field ::ng-deep .btn:hover {
+  background-color: #0C4A60;
+  color: #EF6C33;;
+}
+

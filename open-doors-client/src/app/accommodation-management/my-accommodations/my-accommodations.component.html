@@ -1,0 +1,17 @@
+<div class="buttons">
+    <button mat-raised-button class="button orange-btn" [routerLink]="['/financial-reports']">Financial reports</button>
+    <button mat-raised-button [queryParams]="{title: 'Create Accommodation'}" class="button create-btn" [routerLink]="['/create-accommodation', null, null]">Create accommodation</button>
+</div>
+
+<p class="subtitle">Active accommodations</p>
+<h2 class="subtitle">{{ noActiveMessage }}</h2>
+<div class="cards" *ngFor="let acc of accommodations">
+    <app-my-accommodation-card [accommodation]="acc" [pending]="false" (reload)="reloadParent($event)"></app-my-accommodation-card>
+</div>
+
+<p class="subtitle">Pending accommodations</p>
+<h2 class="subtitle">{{ noPendingMessage }}</h2>
+<div class="cards" *ngFor="let p of pending">
+    <app-my-accommodation-card [accommodation]="p" [pending]="true" (reload)="reloadParent($event)"></app-my-accommodation-card>
+</div>
+<br>

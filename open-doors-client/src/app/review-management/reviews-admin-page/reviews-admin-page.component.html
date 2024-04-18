@@ -1,0 +1,12 @@
+<p class="subtitle">Pending reviews</p>
+<h2 class="subtitle">{{ noPendingMessage }}</h2>
+<div class="cards" *ngFor="let p of pending">
+    <app-pending-review-card [review]="p" (reload)="reloadParent($event)"></app-pending-review-card>
+</div>
+<br>
+
+<p class="subtitle">Reported reviews</p>
+<h2 class="subtitle">{{ noReportedMessage }}</h2>
+<div class="cards" *ngFor="let r of reported">
+    <app-reported-review-card [review]="r" (reload)="reloadParent($event)"></app-reported-review-card>
+</div>

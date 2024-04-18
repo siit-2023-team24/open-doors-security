@@ -1,0 +1,35 @@
+
+<div class="basic-data">
+    <img src={{imgPath}} class="img">
+    <h1>Email: {{ username }}</h1>
+    <h1>Name: {{ name }}</h1>
+</div>
+<div class="reviews">
+    <h2>Reviews: {{ reviews.length }}</h2>
+    
+    <div class="stars" *ngIf="reviews.length != 0">
+      <div class="star-container">
+        <p class="rating">Average rating: </p>
+      </div>
+      <div class="star-container with-star">
+        <mat-icon class="star full">star</mat-icon>
+      </div>
+      <div class="star-container">
+        <p class="rating">{{ averageRating }}</p>
+      </div>
+    </div>
+    <h1 *ngIf="reviews.length == 0">This host has no reviews.</h1>
+    <hr class="horizontal-separator">
+    <div *ngIf="isReviewable">
+        <h2>Since you have stayed at one of this host's accommodations, why not leave a review?</h2>
+        <app-write-review-card [recipientId]="hostId" [isHost]="true" [hostUsername]="username" (reload)="reloadParent($event)"></app-write-review-card>
+    </div>
+    <hr class="horizontal-separator">
+    <div class="list-item">
+      <mat-grid-list cols="2" rowHeight="250px" class="review-list">
+        <mat-grid-tile class="tile" *ngFor="let review of reviews">
+          <app-review-card [review]="review" [canReport]="canReport" [isHost]="true" class="review" (reload)="reloadParent($event)"></app-review-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div  style="padding: 0 100px;">
+    <mat-grid-list gutterSize="16" cols="5" rowHeight="330">
+        <mat-grid-tile *ngFor="let accommodation of accommodations" colspan="1">
+        <app-accommodation-card [accommodation]="accommodation"></app-accommodation-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <div class="just-button-container">
+    <div class="show-more-button">
+        <button mat-button>
+        <span>Show More</span>
+        </button>
+    </div>
+    </div>
+</div>

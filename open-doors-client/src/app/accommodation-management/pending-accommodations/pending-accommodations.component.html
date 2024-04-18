@@ -1,0 +1,5 @@
+<h2 class="info"> {{noDataMessage}} </h2>
+
+<div class="cards" *ngFor="let p of pending">
+    <app-pending-accommodation-card [accommodation]="p" (reload)="reloadParent($event)"></app-pending-accommodation-card>
+</div>

@@ -1,0 +1,6 @@
+export enum NotificationType {
+    NEW_RESERVATION_REQUEST,
+    RESERVATION_REQUEST,
+    HOST_REVIEW,
+    ACCOMMODATION_REVIEW
+}

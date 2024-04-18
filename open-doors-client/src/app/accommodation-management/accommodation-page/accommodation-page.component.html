@@ -1,0 +1,158 @@
+<div  style="padding: 0 100px;">
+  <div class="accommodation-name"><h1>{{ accommodation.name }}</h1></div>
+  <div class="host">
+    <h1 class="host-label">Host:</h1>
+    <button mat-raised-button class="button host-btn" [routerLink]="['/host-reviews/' + accommodation.hostId]" [queryParams]="{title: 'Host reviews'}">{{ accommodation.host }}</button>
+  </div>
+  <div class="basic-info">
+    <div style="display: flex;">
+    <h2>{{ accommodation.city }}, {{ accommodation.country }}</h2>
+    <div style="width:300px;"></div>
+    <span class="basic-info-reviews">
+      <span *ngIf="reviews.length>0" class="rating">
+        <mat-icon class="star full">star</mat-icon>
+        <span>
+          {{ accommodation.averageRating }}
+        </span>
+        <span class="small-review-number" *ngIf="reviews.length>1">{{ reviews.length }} reviews</span>
+        <span class="small-review-number" *ngIf="reviews.length==1">{{ reviews.length }} review</span>
+      </span>
+    </span>
+  </div>
+    <a class="favorite-icon" (click)="toggleFavorite()" *ngIf="isGuest">
+      <mat-icon [style.color]="accommodation.isFavoriteForGuest ? 'red' : 'grey'">favorite</mat-icon>
+    </a>
+  </div>
+  <div class="grid-container">
+    <img *ngFor="let imagePath of imagePaths.slice(0, 5)" [src]="imagePath" alt="accommodation image" class="grid-item">
+  </div>
+  <h1 class="host-label">Description:</h1>
+  <div class="details flex-container">
+    <div class="description-text">
+      <span>
+        {{ accommodation.description }}
+      </span>
+    </div>
+    <div class="reservation-details" *ngIf="isGuest && !accommodation.blocked">
+      <span class="reservation-details-first-line">
+        <h1> {{ accommodation.price }} rsd night</h1>
+        <span *ngIf="reviews.length>0" class="small-rating">
+          <mat-icon class="star full">star</mat-icon>
+          <span>
+            {{ accommodation.averageRating }}
+          </span>
+          <span class="small-review-number" *ngIf="reviews.length>1">{{ reviews.length }} reviews</span>
+          <span class="small-review-number" *ngIf="reviews.length==1">{{ reviews.length }} review</span>
+        </span>
+      </span>
+      <div class="preferences">
+        <div class="date-pickers">
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="checkInDatePicker" placeholder="Check-In" [(ngModel)]="selectedStartDate" [matDatepickerFilter]="startDateFilter" (ngModelChange)="onInput()"/>
+              <mat-datepicker-toggle matSuffix [for]="checkInDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #checkInDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="checkOutDatePicker" placeholder="Check-Out" [(ngModel)]="selectedEndDate" [matDatepickerFilter]="endDateFilter" (ngModelChange)="onInput()"/>
+              <mat-datepicker-toggle matSuffix [for]="checkOutDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #checkOutDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="guest-number">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Guests" [min]="accommodation.minGuests" [max]="accommodation.maxGuests" [(ngModel)]="selectedGuestNumber" (ngModelChange)="onInput()"/>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="reserve-button">
+        <button mat-button (click)="makeReservationRequest()" [disabled]="isReservationButtonDisabled" [ngClass]="{'disabled-button': isReservationButtonDisabled}">
+          <span style="font-size: 20px;">Reserve</span>
+        </button>
+      </div>
+      <div *ngIf="!isReservationButtonDisabled">
+        <div class="cost-details" *ngFor="let seasonalRate of seasonalRates">
+          <div>
+            <span>{{ seasonalRate.price }} rsd x {{ seasonalRate.numberOfNights }} nights</span>
+            <span *ngIf="accommodation.isPricePerGuest"> x {{ selectedGuestNumber }} guests</span>
+          </div>
+          <div>
+            <span>{{ seasonalRate.startDate | date:'dd/MM/yyyy'}} - {{ seasonalRate.endDate | date:'dd/MM/yyyy'}}</span>
+          </div>
+        </div>
+        <div style="margin: 0 10% 25px 10%;">
+          <span style="font-size: 15px;">Total price: {{ accommodation.totalPrice }} rsd</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="horizontal-separator">
+  <div class="amenities">
+    <span style="font-size: 25px;">Amenities</span>
+    <mat-grid-list cols="4" rowHeight="100px" gutterSize="16px">
+      <ng-container *ngFor="let amenity of accommodation.amenities">
+        <mat-grid-tile>
+          <mat-icon>done_outline</mat-icon>
+          <span>{{ amenity }}</span>
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+  </div>
+  <hr class="horizontal-separator">
+  <span style="font-size: 25px;">View on map</span>
+  <div *ngIf="isAccommodationDetailsReady" class="center-div">
+    <app-map-view [accommodationAddress]="accommodationAddress"></app-map-view>
+  </div>
+  <br>
+  <div>
+    <div class="stars" *ngIf="reviews.length != 0">
+      <hr class="horizontal-separator">
+      <div class="star-container">
+        <p class="rating">Average rating: </p>
+      </div>
+      <div class="star-container with-star">
+        <mat-icon class="star full">star</mat-icon>
+      </div>
+      <div class="star-container">
+        <p class="rating">{{ accommodation.averageRating }}</p>
+      </div>
+    </div>
+    <div *ngIf="unapprovedReview!=null">
+      <hr class="horizontal-separator">
+      <div class="stars">
+        <div class="star-container">
+          <p class="rating">Your review is awaiting approval: </p>
+        </div>
+      </div>
+      <br>
+      <app-review-card [review]="unapprovedReview" [canReport]="false" (reload)="reloadReviews($event)" class="review"></app-review-card>
+    </div>
+    <div *ngIf="isReviewable">
+      <hr class="horizontal-separator">
+      <h2>Since you have stayed at this accommodation in the past 7 days, why not leave a review?</h2>
+      <app-write-review-card [recipientId]="accommodation.id" [isHost]="false" [hostUsername]="accommodation.host" (reload)="reloadReviews($event)"></app-write-review-card>
+    </div>
+    <div *ngIf="reviews.length == 0">
+      <hr class="horizontal-separator">
+      <h1>This accommodation has no reviews.</h1>
+    </div>
+    <div *ngIf="reviews.length != 0">
+      <hr class="horizontal-separator">
+      <h2>Reviews: {{ reviews.length }}</h2>
+    </div>
+    <hr class="horizontal-separator">
+    <div class="list-item">
+      <mat-grid-list cols="2" rowHeight="250px" class="review-list">
+        <mat-grid-tile class="tile" *ngFor="let review of reviews">
+          <app-review-card [review]="review" [canReport]="false" class="review" (reload)="reloadReviews($event)"></app-review-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
+
+

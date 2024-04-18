@@ -1,0 +1,23 @@
+.list-item {
+    margin-bottom: 50px;
+}
+
+.tile {
+    height: 200px;
+}
+
+.report-list {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.frame {
+    padding: 60px;
+}
+
+
+.report {
+    width: 100%;
+}

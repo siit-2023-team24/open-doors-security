@@ -1,0 +1,123 @@
+<div style="padding: 0 100px;">
+    <div class="search-bar-content">
+        <div class="title-text">
+            <span> Time period: </span>
+        </div>
+        <div class="search-input">
+            <mat-form-field>
+                <input matInput [matDatepicker]="checkInDatePicker" placeholder="Check-In Date" [(ngModel)]="dateRangeReportParams.startDate" [matDatepickerFilter]="startDateFilter"/>
+                <mat-datepicker-toggle matSuffix [for]="checkInDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #checkInDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="search-input">
+            <mat-form-field>
+                <input matInput [matDatepicker]="checkOutDatePicker" placeholder="Check-Out Date" [(ngModel)]="dateRangeReportParams.endDate" [matDatepickerFilter]="endDateFilter"/>
+                <mat-datepicker-toggle matSuffix [for]="checkOutDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #checkOutDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="search-button">
+            <button mat-button (click)="getDateRangeReport()">
+                <span class="icon-button">
+                Search
+                <mat-icon>search</mat-icon>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="table" *ngIf="dateRangeReportsReady">
+        <table mat-table [dataSource]="dateRangeReports" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="accommodationId">
+              <th mat-header-cell *matHeaderCellDef> Accommodation Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.accommodationId}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="accommodationName">
+              <th mat-header-cell *matHeaderCellDef> Accommodation Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.accommodationName}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="numOfReservations">
+              <th mat-header-cell *matHeaderCellDef> Number of Reservations </th>
+              <td mat-cell *matCellDef="let element"> {{element.numOfReservations}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="profit">
+              <th mat-header-cell *matHeaderCellDef> Profit </th>
+              <td mat-cell *matCellDef="let element"> {{element.profit}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <div style="display: flex;">
+        <div id="chartContainer" style="height: 370px; width: 50%; margin: 50px 0;"></div>
+        <div id="chartContainer2" style="height: 370px; width: 50%; margin: 50px 0;"></div>
+    </div>
+    <div class="search-button" *ngIf="dateRangeReportsReady">
+        <button mat-button (click)="exportDateRangeReport()">
+            <span class="icon-button">
+            Download to PDF
+            </span>
+        </button>
+    </div>
+    <div class="search-bar-content">
+        <div class="title-text">
+            <span> Accommodation: </span>
+        </div>
+        <div class="search-input">
+            <mat-form-field appearance="fill">
+                <mat-label>Select an option</mat-label>
+                <mat-select [(ngModel)]="selectedAccommodation">
+                    <mat-option *ngFor="let accommodation of accommodations" [value]="accommodation">
+                        {{ accommodation.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="search-button">
+            <button mat-button (click)="getAccommodationReport()">
+                <span class="icon-button">
+                Search
+                <mat-icon>search</mat-icon>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="table" *ngIf="accommodationIdReportsReady">
+        <table mat-table [dataSource]="accommodationIdReports" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="month">
+              <th mat-header-cell *matHeaderCellDef> Month </th>
+              <td mat-cell *matCellDef="let element"> {{element.month}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="numOfReservations">
+              <th mat-header-cell *matHeaderCellDef> Number of Reservations </th>
+              <td mat-cell *matCellDef="let element"> {{element.numOfReservations}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="profit">
+              <th mat-header-cell *matHeaderCellDef> Profit </th>
+              <td mat-cell *matCellDef="let element"> {{element.profit}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+    </div>
+    <div style="display: flex;">
+        <div id="chartContainer3" style="height: 370px; width: 50%; margin: 50px 0;"></div>
+        <div id="chartContainer4" style="height: 370px; width: 50%; margin: 50px 0;"></div>
+    </div>
+    <div class="search-button" *ngIf="accommodationIdReportsReady">
+        <button mat-button (click)="exportAccommodationIdReport()">
+            <span class="icon-button">
+            Download to PDF
+            </span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="imageSection">
+  <div id="imgDiv">
+    <img id="profileImg" src={{imgPath}}>
+  </div>
+  
+  <div id="imgButtons">
+    <div class="dark-orange-button-wrapper">
+        <button (click)="deleteProfileImage()" class="orangeBtn" mat-raised-button>Delete profile image</button>
+    </div>
+
+    <div>
+      <div class = "file-field input-field">
+         <div class = "btn">
+            <span>Upload image</span>
+            <input type = "file" (change)="onFileSelected($event)"/>
+         </div>
+         
+         <div class = "file-path-wrapper">
+            <input class = "file-path validate" type = "text"
+               placeholder = "Upload file" />
+         </div>
+      </div>
+   </div>
+
+</div>
+
+
+
+<form [formGroup]="editProfileForm">
+    <mat-form-field >
+      <mat-label>First name</mat-label>
+      <input matInput type="text" name="firstName" formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last name</mat-label>
+      <input matInput type="text" name="lastName" formControlName="lastName" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="country">
+        <div *ngFor="let c of this.countries">
+          <mat-option [value]="c">{{c}}</mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input matInput type="text" name="city" formControlName="city" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Street</mat-label>
+      <input matInput type="text" name="street" formControlName="street" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>House number</mat-label>
+      <input matInput type="number" name="number" formControlName="number" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput type="text" name="phone" formControlName="phone" />
+      </mat-form-field>
+      <div class="errorMessage" *ngIf="editProfileForm.get('phone')?.hasError('pattern')">
+        Please enter a valid phone number.
+      </div>
+      
+  </form>
+
+  <div id="buttons">
+    <div  class="dark-orange-button-wrapper">
+        <button [routerLink]="['change-password']" [queryParams]="{title: 'Create new password'}" class="orangeBtn" mat-raised-button>Change password</button>
+    </div>
+  
+    <div  class="grey-button-wrapper">
+      <button [routerLink]="['/profile']" [queryParams]="{title: 'My profile'}" class="greyBtn" mat-raised-button>Cancel changes</button>
+  </div>
+
+    <div class="dark-blue-button-wrapper">
+        <button class="blueBtn" (click)="saveChanges()" type="submit" mat-raised-button id="edit-btn">Save changes</button>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+.grey-letters {
+    color: grey;
+}
+
+.orange-letters {
+    color: #EF6C33;
+}
+
+.blue-letters {
+    color: #0C4A60;
+}
+
+.details-and-buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.details {
+    flex: 1;
+    padding: 16px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+  
+.confirm-button {
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0C4A60;
+    padding: 5px 15px;
+    border-color: #0C4A60;
+    margin-bottom: 10px;
+}
+  
+.deny-button {
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #EF6C33;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+}
+  
+button span {
+    color: #ffffff;
+    font-size: 16px;
+}

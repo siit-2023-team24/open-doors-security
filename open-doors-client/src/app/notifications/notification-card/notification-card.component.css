@@ -1,0 +1,16 @@
+.data {
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+}
+
+.grey-letters {
+    color: grey;
+    align-self: flex-end;
+
+}
+
+.orange-letters {
+    color: #EF6C33;
+    align-self: flex-end;
+}

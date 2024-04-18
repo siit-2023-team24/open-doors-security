@@ -1,0 +1,52 @@
+
+.review {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .user-info span{
+    margin-right: 20px;
+  }
+  
+  
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  button {
+    margin-right: 20px;
+  }
+
+  .block-btn {
+    background-color: #EF6C33;
+    color:white;
+  }
+  
+  .comment {
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  
+  .dismiss-btn {
+    background-color: #F1F0EF;
+    color: #0C4A60;
+  }
+
+.grey-letters { 
+    color: grey;
+}

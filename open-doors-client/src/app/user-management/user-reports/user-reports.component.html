@@ -1,0 +1,11 @@
+<div class="subtitle">Reports:</div>
+<h2 class="subtitle">{{ noDataMessage }}</h2>
+<div class="cards" *ngFor="let r of reports">
+    <app-user-report-card [report]="r" (reload)="reloadParent($event)"></app-user-report-card>
+</div>
+
+<div class="subtitle">Blocked users:</div>
+<h2 class="subtitle">{{ noBlockedMessage }}</h2>
+<div class="cards" *ngFor="let u of blockedUsers">
+    <app-user-card [user]="u" (reload)="reloadParent($event)"></app-user-card>
+</div>

@@ -1,0 +1,28 @@
+<mat-card class="accommodation-card">
+
+  <button mat-icon-button class="favorite-button" (click)="toggleFavorite()" *ngIf="isGuest">
+    <mat-icon [style.color]="accommodation.isFavoriteForGuest ? 'red' : 'black'">favorite</mat-icon>
+  </button>
+  <a (click)="onAccommodationClicked()">
+    <img [src]="getImagePath()" alt="Accommodation Image" class="accommodation-image" />
+
+    <div class="details">
+      <div class="row">
+        <div class="location">{{accommodation.city ? accommodation.city : 'No city'}}, {{accommodation.country ? accommodation.country : 'No country'}}</div>
+        <div class="rating">
+          <mat-icon>star</mat-icon>
+          <span>{{accommodation.averageRating}}</span>
+        </div>
+      </div>
+
+      <div class="info">
+        <div class="row">
+          <span style="margin-right: 20px;">{{accommodation.price}} rsd/night</span>
+          <span *ngIf="accommodation.totalPrice !== null && accommodation.totalPrice !== 0.0;">
+            {{ accommodation.totalPrice }} rsd total
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</mat-card>

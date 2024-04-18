@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-content class="frame">
+        <img src={{imagePath}} alt="Accommodation Image">
+        <b [routerLink]="['/accommodation', id, accommodationId]">{{accommodation.name}} #{{accommodationId}}</b>
+        
+        <div class="transparent-button-wrapper">
+            <button class="tranparentBtn" mat-flat-button (click)="openDialog()">Delete</button>
+            <button class="tranparentBtn" mat-flat-button (click)="onEdit()"
+            [routerLink]="['/create-accommodation', id, accommodationId]">Edit</button>
+        </div>
+    </mat-card-content>
+</mat-card>

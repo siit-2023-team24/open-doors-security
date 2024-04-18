@@ -1,0 +1,19 @@
+.blue-btn {
+    background-color: #0C4A60;
+    color: white;
+}
+
+.orange-btn {
+    background-color: #EF6C33;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.content {
+    margin: 20px;
+}

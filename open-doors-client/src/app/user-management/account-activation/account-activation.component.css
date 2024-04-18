@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    width: 100%;
+    height:200px;
+}
+.success {
+    color: #0C4A60;
+}

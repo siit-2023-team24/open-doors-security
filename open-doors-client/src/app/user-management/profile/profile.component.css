@@ -1,0 +1,55 @@
+
+
+#profileDetails {
+    margin: 20px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#imgDiv {
+    height: 30vh;
+    width: auto;
+    padding: 10vh;
+}
+
+img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+
+#dataSections {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10vh;
+}
+
+.data {
+    margin: 10px;
+    font-size: medium;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.data p {
+    margin-bottom: 20px;
+}
+
+.data address {
+    margin-bottom: 20px;
+}
+
+#buttons {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#buttons button {
+    margin-left: 16px;
+}
+

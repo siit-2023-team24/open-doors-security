@@ -1,0 +1,55 @@
+.title-container {
+    display: flex;
+    justify-content: center;
+}
+
+h2, h3 {
+    color: black;
+}
+
+h3 {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+mat-divider {
+    margin-bottom: 20px;
+}
+
+.accommodation-type, .amenity {
+    font-size: 18px;
+}
+
+mat-form-field {
+    width: 20%;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+}
+  
+.currency-text {
+    margin-left: 5px;
+}
+
+mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #0C4A60;
+    padding: 10px 30px;
+    border-color: #0C4A60;
+    color:white;
+    font-size: 16px;
+}
+
+.button-text{
+    color:white;
+}

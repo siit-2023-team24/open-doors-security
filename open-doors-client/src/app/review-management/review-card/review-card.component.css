@@ -1,0 +1,104 @@
+
+.review {
+  width: calc(100% - 10px);
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-text {
+  display: flex;
+}
+
+.review-card {
+  margin: 0;
+}
+
+.review-details {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: center;
+}
+.star {
+  font-size: 25px;
+  width: 25px;
+  height: 25px;
+}
+
+.full {
+  color: #dddd00;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+}
+
+.star-container {
+  height: 32px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-container {
+  height: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.button {
+  height: 30px;
+  border-radius: 15px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  margin: 0;
+}
+.delete-btn {
+  background-color: #EF6C33;
+}
+
+.comment {
+  display: flex;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.restore-btn {
+  background-color: #0C4A60;
+  color: white;
+}

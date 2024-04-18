@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<body class="page">
+    <main class="full-page">
+        
+        
+
+        <div fxLayout="column" fxLayoutGap="20px">
+            <div *ngIf="page === 1">
+
+                <form [formGroup]="accommodationForm" class="form">
+                    <h1>Provide basic data</h1>
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Name of accommodation</mat-label>
+                            <input matInput formControlName="name" type="text" name="name" placeholder="Enter the name of your accommodation" required maxlength="50">
+                            <mat-error *ngIf="accommodationForm.get('name')?.hasError('required')">
+                                Name is required.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('name')?.hasError('maxlength')">
+                                Maximum 50 characters allowed.
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <mat-radio-group class="create-text-field right" formControlName="isAutomatic">
+                            <mat-label>Reservation confirmation:</mat-label>
+                            <mat-radio-button color="primary" [value]="true">automatic</mat-radio-button>
+                            <mat-radio-button color="primary" [value]="false">manual</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="Enter a short description" maxlength="200" formControlName="description"></textarea>
+                            <mat-error *ngIf="accommodationForm.get('description')?.hasError('maxlength')">
+                                Maximum 200 characters allowed.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="create-text-field special right">
+                            <div class="upload">
+                                <label for="fileInput" class="upload-label">
+                                    <mat-icon>upload</mat-icon>
+                                    Choose Images
+                                </label>
+                                <input type="file" (change)="onFileChanged($event)" multiple accept="image/*" class="upload-input" id="fileInput">
+                            </div>
+                            <div *ngIf="selectedFiles.length > 0">
+                                <p>Selected Files:</p>
+                                <div class="file-list">
+                                    <ul>
+                                        <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+                                    </ul>
+                                </div>
+                                <button mat-flat-button (click)="resetUploaded()">Reset uploaded</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="currentImages.length > 0">
+                        <p>Images before edit: (Click on an image to delete it.)</p>
+                        <div id="imageContainer" >
+
+                            <div *ngFor="let image of currentImages">
+                                <img src={{getPath(image)}} class="single-image" (click)="deleteImage(image)" alt={{image}} name={{image}}>
+                            </div>
+                        </div>
+
+                        <div class="delete-info" *ngIf="toDeleteImages.length > 0">
+                            <p>Images to be deleted:</p>
+                            <div>
+                                <ul>
+                                    <li *ngFor="let imageDel of toDeleteImages">{{ imageDel }}</li>
+                                </ul>
+                                <button mat-flat-button (click)="resetToDelete()">Reset deleted</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="country" (selectionChange)="updateAddress()">
+                                <mat-option value="none" selected disabled>Location of the accommodation: country</mat-option>
+                                <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="accommodationForm.get('country')?.hasError('required')">
+                                Please select your country.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="create-text-field right">
+                            <mat-label>City</mat-label>
+                            <input formControlName="city" matInput type="text" name="city" placeholder="Location of the accommodation: city" required maxlength="200" (change)="updateAddress()">
+                            <mat-error *ngIf="accommodationForm.get('city')?.hasError('required')">
+                                City is required.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('city')?.hasError('maxlength')">
+                                Maximum 200 characters allowed.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Street</mat-label>
+                            <input matInput type="text" formControlName="street" name="street" placeholder="Location of the accommodation: street" required maxlength="200" (change)="updateAddress()">
+                            <mat-error *ngIf="accommodationForm.get('street')?.hasError('required')">
+                                Street is required.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('street')?.hasError('maxlength')">
+                                Maximum 200 characters allowed.
+                            </mat-error>
+                        </mat-form-field>
+            
+                        <mat-form-field class="create-text-field right">
+                            <mat-label>Number</mat-label>
+                            <input matInput formControlName="number" type="number" name="number" placeholder="Location of the accommodation: street number" min="1" required max="1000000" (change)="updateAddress()">
+                            <mat-error *ngIf="accommodationForm.get('number')?.hasError('max')">
+                                Street number has to be under 1000000.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('number')?.hasError('min')">
+                                Street number has to be over 0.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('number')?.hasError('required')">
+                                Street number is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                        
+                    <app-map-view [accommodationAddress]="address"></app-map-view>
+                    <h2 class = "amenities">{{ coordinates }}</h2>
+                    
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Type of accommodation</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option value="none" selected disabled>Select the type of your accommodation</mat-option>
+                                <mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="accommodationForm.get('type')?.hasError('required')">
+                                Please select the type of your accommodation.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="create-text-field right">
+                            <mat-label>Deadline for booking a reservation (in days)</mat-label>
+                            <input matInput formControlName="deadline" type="number" name="deadline" min="0" required max="365">
+                            <mat-error *ngIf="accommodationForm.get('deadline')?.hasError('max')">
+                                Deadline has to be under 365 days.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('deadline')?.hasError('min')">
+                            Deadline has to be at least 0 days.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('deadline')?.hasError('required')">
+                                Booking deadline is required.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Minimal number of guests</mat-label>
+                            <input matInput formControlName="minGuests" type="number" name="min-guests" min="1" max="100" required>
+                            <mat-error *ngIf="accommodationForm.get('minGuests')?.hasError('required')">
+                                Minimal number of guests is required.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('minGuests')?.hasError('max')">
+                                Minimal number of guests has to be under 100.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('minGuests')?.hasError('min')">
+                                Minimal number of guests has to be over 0.
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <mat-form-field class="create-text-field right">
+                            <mat-label>Maximal number of guests</mat-label>
+                            <input matInput formControlName="maxGuests" type="number" name="max-guests" min="1" max="100" required>
+                            <mat-error *ngIf="accommodationForm.get('maxGuests')?.hasError('max')">
+                                Maximal number of guests has to be under 100.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('maxGuests')?.hasError('min')">
+                                Maximal number of guests has to be over 0.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('maxGuests')?.hasError('required')">
+                                Maximal number of guests is required.
+                            </mat-error>
+                            <mat-error  *ngIf="accommodationForm.hasError('minMaxMismatch') && ( accommodationForm.get('maxGuests')?.touched || accommodationForm.get('minGuests')?.touched )">
+                                Maximal number of guests must be equal to or greater than the minimal number of guests.
+                            </mat-error>
+                        </mat-form-field>
+                    
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <mat-form-field class="create-text-field left">
+                            <mat-label>Default price</mat-label>
+                            <input matInput formControlName="price" type="number" name="price" min="0" required>
+                            <mat-error *ngIf="accommodationForm.get('price')?.hasError('min')">
+                                Price has to be at least 0.
+                            </mat-error>
+                            <mat-error *ngIf="accommodationForm.get('price')?.hasError('required')">
+                                Price is required.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-radio-group class="create-text-field right" formControlName="isPricePerGuest">
+                            <mat-label>Type of price:</mat-label>
+                            <mat-radio-button color="primary" [value]="true">per guest</mat-radio-button>
+                            <mat-radio-button color="primary" [value]="false">total</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+                        <section class="checkbox-column">
+                            <mat-label>Choose amenities</mat-label>
+                            <section class="checkbox-grid">
+                                <section class="checkbox-column" *ngFor="let amenity of amenities">
+                                <mat-checkbox [checked]="selectedAmenities.includes(amenity)" (change)="onCheckboxChange(amenity, $event.checked)" color="primary">{{ amenity }}</mat-checkbox>
+                                </section>
+                            </section>
+                        </section>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                        <div class="create-text-field left">
+                            <button mat-stroked-button class="button dark-btn" [routerLink]="['/my-accommodations']">Back</button>
+                        </div>
+                        <div class="create-text-field right">
+                            <mat-error *ngIf="accommodationForm.invalid && accommodationForm.dirty">Please fill out the form according to the validations.</mat-error>
+                            <button mat-stroked-button class="button next-btn" (click)="onNextClick()">Next</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form" *ngIf="page === 2">
+
+                <h1>Define availability</h1>
+
+                <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                    <div>
+                        <h2>Click the dates when the accommodation is available.</h2>
+                        <mat-card class="demo-inline-calendar-card">
+                            <mat-calendar (selectedChange)="availableDateSelected($event)"></mat-calendar>
+                        </mat-card>
+                        <div class="instructions"><p>{{ availabilityMessage }}</p></div>
+                    </div>
+                    <ul class="scrollable-list">
+                    <li *ngFor="let range of availability">Available period: {{ range.startDate | date }} to {{ range.endDate | date }}</li>
+                    </ul>
+                </div>
+                
+                <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                    <div class="create-text-field left">
+                        <button mat-stroked-button class="button prev-btn" (click)="onBackClick()">Previous</button>
+                    </div>
+                    <div class="create-text-field right">
+                        <button mat-stroked-button class="button next-btn" (click)="onNextClick()">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form" *ngIf="page === 3">
+                <h1>Add seasonal rates</h1>
+                
+                <mat-form-field class="create-text-field left">
+                    <mat-label>Price of seasonal rate</mat-label>
+                    <input matInput type="number" placeholder="0" name="seasonalRatePrice" min="0" [(ngModel)]="seasonalRatePrice">
+                </mat-form-field>
+
+                <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+
+                </div>
+                <div fxLayout="row" fxLayoutGap="20px" class="section create-section">
+                    <div>
+                        <h2>Click the dates that should have the seasonal rate.</h2>
+                        <mat-card class="demo-inline-calendar-card">
+                            <mat-calendar (selectedChange)="priceDateSelected($event)"></mat-calendar>
+                        </mat-card>
+                        <div class="instructions"><p class="error">{{ priceError }}</div>
+                    </div>
+                    <ul class="scrollable-list">
+                    <li *ngFor="let rate of seasonalRates">A new price of {{ rate.price }} from {{ rate.period.startDate | date }} to {{ rate.period.endDate | date }}</li>
+                    </ul>
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="20px" class="section create-section left">
+                    <div class="create-text-field">
+                        <button mat-stroked-button class="button prev-btn" (click)="onBackClick()">Previous</button>
+                    </div>
+                    <div class="create-text-field right">
+                        <button mat-raised-button class="button dark-btn" (click)="createAccommodation()">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

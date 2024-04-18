@@ -1,0 +1,78 @@
+.request-card {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  flex: 0 0 280px;
+  height: 280px;
+}
+
+.accommodation-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.details-and-buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.details {
+  flex: 1;
+  padding: 16px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.accommodation-name {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.cancel-button {
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0C4A60;
+  padding: 5px 15px;
+  border-color: #0C4A60;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EF6C33;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+}
+
+.cancel-button span,
+.delete-button span {
+  color: #ffffff;
+  font-size: 16px;
+}

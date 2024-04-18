@@ -1,0 +1,15 @@
+<div class="settings">
+    <h3>Notification settings:</h3>
+    <mat-slide-toggle [checked]="types[allTypes[0]]" (change)="setToggle( 0 , $event )" *ngIf="role == 'ROLE_HOST'" color="#0C4A60">For new reservation requests</mat-slide-toggle>
+    <mat-slide-toggle [checked]="types[allTypes[1]]" (change)="setToggle( 1 , $event )" color="#0C4A60">For reservation request status changes</mat-slide-toggle>
+    <mat-slide-toggle [checked]="types[allTypes[2]]" (change)="setToggle( 2 , $event )" *ngIf="role == 'ROLE_HOST'" color="#0C4A60">For new host reviews</mat-slide-toggle>
+    <mat-slide-toggle [checked]="types[allTypes[3]]" (change)="setToggle( 3 , $event )" *ngIf="role == 'ROLE_HOST'" color="#0C4A60">For new accommodation reviews</mat-slide-toggle>
+</div>
+<div class="btn">
+    <button mat-raised-button (click)="saveSettings()">Save settings</button>
+</div>
+
+<h2 class="subtitle">{{ noData }}</h2>
+<div *ngFor="let not of notifications">
+    <app-notification-card [notification]="not"></app-notification-card>
+</div>

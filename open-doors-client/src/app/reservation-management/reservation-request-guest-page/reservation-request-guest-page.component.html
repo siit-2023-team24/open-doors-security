@@ -1,0 +1,65 @@
+<div  style="padding: 0 100px;">
+
+  <!-- Search Bar -->
+  <div class="search-bar-container" style="margin-top: 50px;">
+    <div class="search-bar-content">
+      <div class="search-input">
+        <mat-form-field>
+          <input matInput placeholder="Accommodation name" [(ngModel)]="searchParams.accommodationName"/>
+        </mat-form-field>
+      </div>
+  
+      <div class="search-input">
+        <mat-form-field>
+          <input matInput [matDatepicker]="checkInDatePicker" placeholder="Check-In Date" [(ngModel)]="searchParams.startDate" [matDatepickerFilter]="startDateFilter"/>
+          <mat-datepicker-toggle matSuffix [for]="checkInDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #checkInDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+  
+      <div class="search-input">
+        <mat-form-field>
+          <input matInput [matDatepicker]="checkOutDatePicker" placeholder="Check-Out Date" [(ngModel)]="searchParams.endDate" [matDatepickerFilter]="endDateFilter"/>
+          <mat-datepicker-toggle matSuffix [for]="checkOutDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #checkOutDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+      <div class="search-button">
+        <button mat-button (click)="searchAndFilterRequests()">
+          <span class="icon-button">
+            Search
+            <mat-icon>search</mat-icon>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Display Radio Buttons for Request Statuses -->
+  <div class="request-status-buttons">
+    <mat-radio-group [(ngModel)]="searchParams.status">
+      <mat-radio-button *ngFor="let status of requestStatuses" [value]="status" class="status-button">
+        {{ status }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <!-- Display Grid List for Reservation Requests -->
+  <mat-grid-list gutterSize="16" cols="2" rowHeight="280" class="requests-container">
+    <div *ngIf="role =='ROLE_GUEST'">
+      <mat-grid-tile *ngFor="let request of requests" colspan="1">
+        <app-reservation-request-card [request]="request" (reload)="reloadParent($event)" style="width: 100%;"></app-reservation-request-card>
+      </mat-grid-tile>
+    </div>
+
+    <div *ngIf = "role=='ROLE_HOST'">
+      <h2 class="subtitle">{{noDataMessage}}</h2>
+      <mat-grid-tile *ngFor="let request of hostsRequests" colspan="1">
+        <app-reservation-request-host-card [request]="request" (reload)="reloadParent($event)"></app-reservation-request-host-card>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+
+
+</div>

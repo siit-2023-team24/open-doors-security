@@ -1,0 +1,149 @@
+.full-page {
+    width: 100%;
+}
+
+.amenities {
+    display: flex;
+    justify-content: center;
+}
+.next-btn {
+    color: #0C4A60;
+    background-color: #ABDFF1;
+}
+
+.prev-btn {
+    background-color: #E1DDDB;
+    color: #0C4A60;
+}
+.dark-btn {
+    background-color: #0C4A60;
+    color: white;
+}
+
+.input-field {
+    width: 50%;
+    margin: 25px 0;
+    box-sizing: border-box;
+    background-color: #E1DDDB;
+    border: none;
+    height: 30px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.create-section {
+    margin-top: 50px;
+    box-sizing: border-box;
+    padding: 0 50px 0 50px;
+}
+
+.create-text-field {
+    display: flex;
+    align-items: center;
+    width: 500px;
+}
+
+.checkbox-grid {
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.checkbox-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload {
+    position: relative;
+    display: flex;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px 20px;
+    display: flex;
+    color: white;
+    background-color: #0C4A60;
+    width: 200px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.upload-label {
+    box-sizing: border-box;
+    padding: 0 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    align-items: center;
+    font-size: 20px;
+    font-style: bold;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    z-index: 1
+}
+
+.upload-input {
+    display: none;
+}
+
+.file-list {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 50px;
+}
+
+.special {
+    height: 200px;
+}
+
+.error {
+    color: red;
+}
+
+.scrollable-list {
+    height: 200px;
+    overflow-y: auto;
+}
+
+.demo-inline-calendar-card {
+    width: 300px;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+.single-image {
+    height: 100px;
+    width: auto;
+    border: solid;
+    border-color: #0C4A60;
+    margin: 0px;
+}
+
+#imageContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: solid;
+    border-color: #0C4A60;
+    background-color: #0C4A60;
+    width: fit-content;
+    justify-content: space-evenly;
+}
+
+.delete-info {
+    color: #EF6C33;
+    margin-top: 5px;
+}
+.instructions {
+    height: 50px;
+    padding-top: 10px;
+}

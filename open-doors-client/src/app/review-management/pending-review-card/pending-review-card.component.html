@@ -1,0 +1,30 @@
+<div class="review">
+    <div class="review-details">
+
+        <div class="user-info">
+            <div class="user-text">
+                <span>{{ review.authorUsername }}</span>
+                <span id="timestamp">{{ review.timestamp | date:'dd/MM/yyyy' }}</span>
+            </div>
+        </div>
+
+        <div class="stars">
+            <div class="star-container">
+                <mat-icon class="star full">star</mat-icon>
+            </div>
+            <div class="star-container">
+                <p class="rating">{{ review.rating }}</p>
+            </div>
+        </div>
+    </div>
+
+    <b>{{review.accommodationName}}</b>
+    <div class="comment">
+        <p>{{ review.comment }}</p>
+    </div>
+
+    <div class="buttons">
+        <button mat-raised-button class="deny-btn" (click)="dialogDeny()">Deny</button>
+        <button mat-raised-button class="approve-btn" (click)="dialogApprove()">Approve</button>
+    </div>
+</div>

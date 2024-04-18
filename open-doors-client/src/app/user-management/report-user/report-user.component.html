@@ -1,0 +1,15 @@
+<div class="frame">
+  <br>
+  <h1 *ngIf="isGuest">Hosts you have stayed with:</h1>
+  <h1 *ngIf="!isGuest">Guests you have hosted:</h1>
+  <h2 *ngIf="usernames.length==0 && isGuest">There are no hosts for you to report.</h2>
+  <h2 *ngIf="usernames.length==0 && !isGuest">There are no guests for you to report.</h2>
+  <div class="list-item">
+      
+      <mat-grid-list cols="2" rowHeight="250px" class="report-list">
+        <mat-grid-tile class="tile" *ngFor="let username of usernames">
+          <app-write-report-card class="report" [username]="username" (reload)="reloadParent($event)"></app-write-report-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+  </div>
+</div>

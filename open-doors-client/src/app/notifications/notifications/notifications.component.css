@@ -1,0 +1,21 @@
+.subtitle {
+    margin: 80px;
+    color: #0C4A60;
+    font-size: large;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+}
+
+h3 {
+    color: #0C4A60;
+}
+
+button {
+    margin-left: 40px;
+    background-color: #0C4A60;
+}
+

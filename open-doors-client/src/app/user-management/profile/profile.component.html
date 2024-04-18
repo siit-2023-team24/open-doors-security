@@ -1,0 +1,41 @@
+<div id="parts">
+
+    <div id="buttons">
+        <div  class="dark-orange-button-wrapper">
+            <button (click)="openDialog()" class="orangeBtn" mat-raised-button>Delete profile</button>
+        </div>
+        <div class="dark-blue-button-wrapper">
+            <button [routerLink]="['/edit-profile']" [queryParams]="{title: 'Edit profile'}" class="blueBtn" mat-raised-button>Edit</button>
+        </div>
+    </div>
+
+    <div id="profileDetails">
+        <div id="imgDiv">
+            <img src={{imgPath}}>
+        </div>
+
+        <div id="dataSections">
+            <div id="labels" class="data">
+                <p>Email:</p>
+                <p>First name:</p>
+                <p>Last name:</p>
+                <p>Country:</p>
+                <p>City:</p>
+                <p>Address:</p>
+                <p>Phone number:</p>
+            </div>
+        
+            <div id="profileData" class="data">
+                <p>{{ username }}</p>
+                <p>{{user.firstName}}</p>
+                <p>{{user.lastName}}</p>
+                <p>{{user.country}}</p>
+                <p>{{user.city}}</p>
+                <address>{{ user.street + ' ' + user.number }}</address>
+                <p>{{user.phone}}</p>
+            </div>
+        </div>
+
+    </div>
+        
+</div>

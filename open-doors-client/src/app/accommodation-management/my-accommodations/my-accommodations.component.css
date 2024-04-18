@@ -1,0 +1,29 @@
+.create-btn {
+    background-color: #0C4A60;
+    color: white;
+}
+
+.orange-btn {
+    background-color: #EF6C33;
+    color: white;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.cards {
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    margin-left: 50px;
+    margin-top: 40px;
+    color: #0C4A60;
+    font-size: large;
+}

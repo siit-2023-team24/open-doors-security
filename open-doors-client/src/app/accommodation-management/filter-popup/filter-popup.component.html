@@ -1,0 +1,53 @@
+<mat-dialog-content>
+  <div class="title-container">
+    <h2 class="mat-h2">Filters</h2>
+  </div>
+  
+    <!-- Property Type Section -->
+    <mat-divider></mat-divider>
+    <h3>Property Type</h3>
+    <mat-grid-list cols="3" rowHeight="50px" gutterSize="16px">
+      <mat-grid-tile *ngFor="let type of propertyTypes" class="tile">
+        <mat-checkbox [(ngModel)]="selectedPropertyTypes[type]">
+          <span class="accommodation-type">{{ type }}</span>
+        </mat-checkbox>
+      </mat-grid-tile>
+    </mat-grid-list>
+  
+    <!-- Price Range Section -->
+    <mat-divider></mat-divider>
+    <h3>Price Range</h3>
+    <div class="price-range">
+      <mat-form-field appearance="fill">
+        <mat-label>Min Price</mat-label>
+        <div class="input-container">
+          <input matInput type="number" [(ngModel)]="minPrice">
+          <span class="currency-text">RSD</span>
+        </div>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" style="margin-left: 30px;">
+        <mat-label>Max Price</mat-label>
+        <div class="input-container">
+          <input matInput type="number" [(ngModel)]="maxPrice">
+          <span class="currency-text">RSD</span>
+        </div>
+      </mat-form-field>
+    </div>
+  
+    <!-- Amenities Section -->
+    <mat-divider></mat-divider>
+    <h3>Amenities</h3>
+    <mat-grid-list cols="3" rowHeight="50px" gutterSize="16px">
+      <mat-grid-tile *ngFor="let amenity of amenities" class="tile">
+        <mat-checkbox [(ngModel)]="selectedAmenities[amenity]"><span class="amenity">{{ amenity }}</span></mat-checkbox>
+      </mat-grid-tile>
+    </mat-grid-list>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="applyFilters()">
+      <span class="button-text">Filter</span>
+    </button>
+</mat-dialog-actions>
+  

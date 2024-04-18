@@ -1,0 +1,13 @@
+
+.cards {
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    margin-left: 50px;
+    margin-top: 40px;
+    color: #0C4A60;
+    font-size: large;
+}

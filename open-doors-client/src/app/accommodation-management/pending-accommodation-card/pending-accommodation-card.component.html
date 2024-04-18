@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-content class="frame">
+        <img src={{imagePath}} alt="Accommodation Image">
+        <b [routerLink]="['/accommodation', accommodation.id, null]">{{accommodation.name}} #{{accommodation.id}}</b>
+        
+        <div class="transparent-button-wrapper">
+            <button class="tranparentBtn" mat-flat-button (click)="openDialog(denyQuestion, false)">Deny</button>
+            <button class="tranparentBtn" mat-flat-button (click)="openDialog(approveQuestion, true)">Approve</button>
+        </div>
+    </mat-card-content>
+</mat-card>
