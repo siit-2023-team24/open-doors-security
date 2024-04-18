@@ -5,9 +5,9 @@ import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 public class AccountDTO {
-    @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+//    @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     private String username;
-    @Length(min = 5)
+//    @Length(min = 5)
     private String password;
     public AccountDTO(User account){
         this.username =account.getUsername();

@@ -78,6 +78,7 @@ public class AuthenticationController {
         } catch (Exception e) {
             UserTokenState errorToken = new UserTokenState();
             errorToken.setMessage("Unexpected server error");
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorToken);
         }
     }
