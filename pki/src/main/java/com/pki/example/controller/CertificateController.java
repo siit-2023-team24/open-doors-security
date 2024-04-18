@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "pki")
+@RequestMapping(value = "pki/certificates")
 public class CertificateController {
 
-    @GetMapping("/certificates")
+    @GetMapping
     public ResponseEntity<List<CertificateDTO>> getAll() {
         List<CertificateDTO> dtos = new ArrayList<>();
         //todo
