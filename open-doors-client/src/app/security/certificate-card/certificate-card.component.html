@@ -1,1 +1,13 @@
-<p>certificate-card works!</p>
+<div class="certificate-card">
+    <div class="certificate-details">
+        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.subjectName }}</span>
+        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.issuerName }}</span>
+        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.serialNumber }}</span>
+        <span style="margin-left: 10px; color: grey;">{{ certificate.startDate | date:'dd/MM/yyyy' }}</span>
+        <span style="margin-left: 10px; color: grey;">{{ certificate.endDate | date:'dd/MM/yyyy' }}</span>
+    </div>
+    <div class="delete-container">
+        <button mat-raised-button class="button delete-btn"  (click)="openDeleteDialog()">Delete</button>
+        <button mat-raised-button class="button delete-btn"  (click)="openCreateDialog()">+</button>
+    </div>
+</div>

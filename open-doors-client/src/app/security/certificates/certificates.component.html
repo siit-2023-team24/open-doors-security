@@ -1,1 +1,13 @@
-<p>certificates works!</p>
+<div  style="padding: 0 100px;">
+    <div class="create-certificate-container">
+        <span class="create-cert-text">Create new certificate</span>
+        <button mat-icon-button color="primary" (click)="openCreateCertificateDialog()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <mat-grid-list gutterSize="16" cols="1" rowHeight="330">
+        <mat-grid-tile *ngFor="let certificate of certificates" colspan="1">
+            <app-certificate-card [certificate]="certificate"></app-certificate-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
