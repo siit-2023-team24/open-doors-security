@@ -13,6 +13,9 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 @Component
 public class KeyStoreReader {
@@ -80,14 +83,53 @@ public class KeyStoreReader {
         try {
             //kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
+
             //ucitavamo podatke
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
             ks.load(in, keyStorePass.toCharArray());
 
-            if(ks.isKeyEntry(alias)) {
-                Certificate cert = ks.getCertificate(alias);
-                return cert;
+//            var aliases = ks.aliases();
+//            System.out.println("Aliases in keystore:");
+//            while (aliases.hasMoreElements()) {
+//                System.out.println(aliases.nextElement());
+//            }
+
+            return ks.getCertificate(alias);
+
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<X509Certificate> readAll(String keyStoreFile, String keyStorePass) {
+        List<X509Certificate> certificates = new ArrayList<>();
+        try {
+            KeyStore ks = KeyStore.getInstance("JKS", "SUN");
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            ks.load(in, keyStorePass.toCharArray());
+
+            Enumeration<String> aliases = ks.aliases();
+            while (aliases.hasMoreElements()) {
+                String alias = aliases.nextElement();
+                Certificate certificate = ks.getCertificate(alias);
+                if (certificate instanceof X509Certificate) {
+                    X509Certificate x509Certificate = (X509Certificate) certificate;
+                    certificates.add(x509Certificate);
+                }
             }
+            return certificates;
+
         } catch (KeyStoreException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {

@@ -13,6 +13,7 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 @SpringBootApplication
 public class ExampleApplication {
@@ -32,24 +33,23 @@ public class ExampleApplication {
 		keyStoreWriter = (KeyStoreWriter) context.getBean("keyStoreWriter");
 		certExample = (CertificateExample) context.getBean("certificateExample");
 
-		com.pki.example.data.Certificate certificate = certExample.getCertificate();
-		System.out.println("Novi sertifikat:");
-		System.out.println(certificate.getX509Certificate());
+//		com.pki.example.data.Certificate certificate = certExample.getCertificate();
+//		System.out.println("Novi sertifikat:");
+//		System.out.println(certificate.getX509Certificate());
 
 		// Inicijalizacija fajla za cuvanje sertifikata
 		System.out.println("Cuvanje certifikata u jks fajl:");
-		keyStoreWriter.loadKeyStore("src/main/resources/static/example.jks",  "password".toCharArray());
-		PrivateKey pk = certificate.getIssuer().getPrivateKey();
-		keyStoreWriter.write("cert1", pk, "password".toCharArray(), certificate.getX509Certificate());
-		keyStoreWriter.saveKeyStore("src/main/resources/static/example.jks",  "password".toCharArray());
-		System.out.println("Cuvanje certifikata u jks fajl zavrseno.");
+		keyStoreWriter.loadKeyStore("src/main/resources/static/keystore1.jks",  "opendoors".toCharArray());
+//		PrivateKey pk = certificate.getIssuer().getPrivateKey();
+//		keyStoreWriter.write("cert1", pk, "password".toCharArray(), certificate.getX509Certificate());
+//		keyStoreWriter.saveKeyStore("src/main/resources/static/example.jks",  "password".toCharArray());
+//		System.out.println("Cuvanje certifikata u jks fajl zavrseno.");
 
 		System.out.println("Ucitavanje sertifikata iz jks fajla:");
-		Certificate loadedCertificate = keyStoreReader.readCertificate("src/main/resources/static/example.jks", "password", "cert1");
+		Certificate loadedCertificate = keyStoreReader.readCertificate("src/main/resources/static/keystore1.jks", "opendoors", "rootca");
 		System.out.println(loadedCertificate);
 
-		System.out.println("Provera potpisa:");
-		// to do
+
 
 	}
 
