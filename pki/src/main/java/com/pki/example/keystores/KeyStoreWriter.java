@@ -77,4 +77,12 @@ public class KeyStoreWriter {
             e.printStackTrace();
         }
     }
+
+    public void delete(String alias) {
+        try {
+            keyStore.deleteEntry(alias);
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+    }
 }

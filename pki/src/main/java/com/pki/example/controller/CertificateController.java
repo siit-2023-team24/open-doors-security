@@ -39,9 +39,9 @@ public class CertificateController {
         return new ResponseEntity<>(returnDto, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{serialNumber}")
-    public ResponseEntity<Void> delete(@PathVariable String serialNumber) {
-        //TODO iz fajla
+    @DeleteMapping("/{alias}")
+    public ResponseEntity<Void> delete(@PathVariable String alias) {
+        service.delete(alias);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

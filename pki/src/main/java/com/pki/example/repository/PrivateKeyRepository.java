@@ -9,10 +9,7 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.security.PrivateKey;
 
 @Component
@@ -49,5 +46,13 @@ public class PrivateKeyRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean delete(String alias) {
+        File file = new File(filePath + alias + ".pem");
+        if (file.exists()) {
+            return file.delete();
+        }
+        return false;
     }
 }

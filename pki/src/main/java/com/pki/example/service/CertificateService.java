@@ -93,9 +93,7 @@ public class CertificateService {
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
             keyGen.initialize(2048, random);
             return keyGen.generateKeyPair();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             e.printStackTrace();
         }
         return null;
@@ -123,4 +121,30 @@ public class CertificateService {
 
         return sb.toString() + System.currentTimeMillis();
     }
+
+    public void delete(String alias) {
+        X509Certificate certificate = (X509Certificate) keyStoreReader.readCertificate(FILE, PASS, alias);
+        aliasRepository.deleteSubject(alias);
+
+        //delete za sve koje je potpisao ovaj koga brisemo
+        List<String> signedAliases = aliasRepository.getAllSignedBy(alias);
+        for (String signedAlias: signedAliases) {
+            delete(signedAlias);
+        }
+
+        keyStoreWriter.delete(alias);
+        keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
+
+        privateKeyRepository.delete(alias);
+    }
+/*
+    public void delete(String alias) {
+        List<String> children = aliasRepository.delete(alias);
+        for (int i = children.size() - 1; i >= 0; i--) {
+            keyStoreWriter.delete(children.get(i));
+        }
+        keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
+    }
+
+ */
 }

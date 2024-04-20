@@ -37,12 +37,15 @@ public class CertificateDTO extends CertificateNewDTO {
         this.expirationDate = certificate.getNotAfter();
 
         this.extensions = new Extensions();
+
+
+        //TODO ne radi ovo za CA
+
         this.extensions.setCA(certificate.getBasicConstraints() != -1);
         this.extensions.setUsage(certificate.getKeyUsage());
 
         this.alias = alias;
         this.issuerAlias = issuerAlias;
-        System.out.println("AAAA" + certificate.getSubjectX500Principal().getName());
         setRDN(certificate.getSubjectX500Principal().getName());
 
         X500Name x500name = null;
@@ -50,13 +53,10 @@ public class CertificateDTO extends CertificateNewDTO {
             x500name = new JcaX509CertificateHolder(certificate).getSubject();
             RDN cn = x500name.getRDNs(BCStyle.E)[0];
             this.email = IETFUtils.valueToString(cn.getFirst().getValue());
-        } catch (CertificateEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (CertificateEncodingException | IndexOutOfBoundsException e) {}
     }
 
     private void setRDN(String names) {
-        System.out.println("BBBBB" + names);
         String[] rdns = names.split(",");
         String[] parts;
 
