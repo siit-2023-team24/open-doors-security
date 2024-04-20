@@ -13,9 +13,7 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class KeyStoreReader {
@@ -112,8 +110,8 @@ public class KeyStoreReader {
         return null;
     }
 
-    public List<X509Certificate> readAll(String keyStoreFile, String keyStorePass) {
-        List<X509Certificate> certificates = new ArrayList<>();
+    public Map<String, X509Certificate> readAll(String keyStoreFile, String keyStorePass) {
+        Map<String, X509Certificate> certificates = new HashMap<>();
         try {
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
@@ -125,7 +123,7 @@ public class KeyStoreReader {
                 Certificate certificate = ks.getCertificate(alias);
                 if (certificate instanceof X509Certificate) {
                     X509Certificate x509Certificate = (X509Certificate) certificate;
-                    certificates.add(x509Certificate);
+                    certificates.put(alias, x509Certificate);
                 }
             }
             return certificates;

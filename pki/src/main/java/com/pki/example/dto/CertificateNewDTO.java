@@ -13,17 +13,18 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CertificateNewDTO {
+    protected String alias;
     protected String commonName;
     protected String organization;
     protected String organizationalUnit;
-    protected String country;
-    protected String state;
     protected String locality;
+    protected String state;
+    protected String country;
     protected String email;
 
     protected Extensions extensions;
-    protected Date creationDate;
+    protected Date startDate;
     protected Date expirationDate;
-    protected String issuerName;
+    protected String issuerAlias;
 
 }
