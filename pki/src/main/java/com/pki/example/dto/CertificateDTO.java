@@ -40,6 +40,7 @@ public class CertificateDTO extends CertificateNewDTO {
 
         //TODO ne radi ovo za CA
 
+
         this.extensions.setCA(isCACertificate(certificate));
 
         this.extensions.setUsage(certificate.getKeyUsage());
