@@ -9,9 +9,13 @@ import com.pki.example.keystores.KeyStoreReader;
 import com.pki.example.keystores.KeyStoreWriter;
 import com.pki.example.repository.AliasRepository;
 import com.pki.example.repository.PrivateKeyRepository;
+import com.pki.example.repository.RevocationRepository;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.cert.CertIOException;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +44,14 @@ public class CertificateService {
     private AliasRepository aliasRepository;
 
     @Autowired
+    private RevocationRepository revocationRepository;
+
+    @Autowired
     private PrivateKeyRepository privateKeyRepository;
+
+    @Autowired
+    private OcspService ocspService;
+
     //TODO u fajl:
     private final String FILE = "src/main/resources/static/keystore1.jks";
     private final String PASS = "opendoors";
@@ -73,13 +84,14 @@ public class CertificateService {
         Issuer issuer = findIssuer(dto.getIssuerAlias());
         String serialNumber = generateSerialNumber();
         X509Certificate certificate = CertificateGenerator.generateCertificate(
-                subject, issuer, dto.getStartDate(), dto.getExpirationDate(), serialNumber);
+                subject, issuer, dto.getStartDate(), dto.getExpirationDate(), serialNumber, dto.getExtensions().isCA());
 
         if (dto.getExtensions().isCA()){
             privateKeyRepository.save(dto.getAlias(), keyPairSubject.getPrivate());
         }
 
         aliasRepository.save(dto.getIssuerAlias(), dto.getAlias());
+        revocationRepository.save(certificate.getSerialNumber(), false);
 
         keyStoreWriter.write(certificate, dto.getAlias());
         keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
@@ -136,6 +148,10 @@ public class CertificateService {
         keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
 
         privateKeyRepository.delete(alias);
+    }
+
+    public void revoke(CertificateDTO dto) {
+        revocationRepository.revokeCertificate(dto);
     }
 /*
     public void delete(String alias) {
