@@ -22,8 +22,8 @@ import java.util.List;
 @Getter
 @Setter
 public class CertificateDTO extends CertificateNewDTO {
-    private BigInteger serialNumber;
-    private String subjectPublicKey;
+    protected BigInteger serialNumber;
+    protected String subjectPublicKey;
 
     public CertificateDTO() {
         super();

@@ -4,6 +4,7 @@ import com.pki.example.certificates.CertificateGenerator;
 import com.pki.example.data.Issuer;
 import com.pki.example.data.Subject;
 import com.pki.example.dto.CertificateDTO;
+import com.pki.example.dto.CertificateItemDTO;
 import com.pki.example.dto.CertificateNewDTO;
 import com.pki.example.keystores.KeyStoreReader;
 import com.pki.example.keystores.KeyStoreWriter;
@@ -56,12 +57,15 @@ public class CertificateService {
     private final String FILE = "src/main/resources/static/keystore1.jks";
     private final String PASS = "opendoors";
 
-    public List<CertificateDTO> getAll() {
+    public List<CertificateItemDTO> getAll() {
         Map<String, X509Certificate> certificates = keyStoreReader.readAll(FILE, PASS);
-        List<CertificateDTO> dtos = new ArrayList<>();
+        List<CertificateItemDTO> dtos = new ArrayList<>();
         for (String alias : certificates.keySet()) {
             String issuerAlias = aliasRepository.getIssuerAlias(alias);
-            dtos.add(new CertificateDTO(certificates.get(alias), alias, issuerAlias));
+            X509Certificate certificate = certificates.get(alias);
+            CertificateDTO certificateDTO = new CertificateDTO(certificate, alias, issuerAlias);
+            boolean valid = ocspService.checkCertificateStatus(certificateDTO);
+            dtos.add(new CertificateItemDTO(certificate, alias, issuerAlias, valid));
         }
         return dtos;
     }
@@ -101,7 +105,8 @@ public class CertificateService {
 
     public CertificateDTO createDTO(CertificateNewDTO dto) {
         X509Certificate certificate = (X509Certificate) create(dto);
-        return new CertificateDTO(certificate, dto.getAlias(), dto.getIssuerAlias());
+        CertificateDTO certificateDTO = new CertificateDTO(certificate, dto.getAlias(), dto.getIssuerAlias());
+        return certificateDTO;
     }
 
     private KeyPair generateKeyPair() {

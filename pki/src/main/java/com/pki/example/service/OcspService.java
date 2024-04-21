@@ -1,9 +1,7 @@
 package com.pki.example.service;
 
 import java.math.BigInteger;
-import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.Set;
 
 import com.pki.example.dto.CertificateDTO;
 import com.pki.example.repository.RevocationRepository;
@@ -17,13 +15,14 @@ public class OcspService {
     private RevocationRepository revocationRepository;
 
     public boolean checkCertificateStatus(CertificateDTO certificate) {
-        return isValidCertificate(certificate) && !isRevoked(certificate.getSerialNumber());
+        return isValid(certificate) && !isRevoked(certificate.getSerialNumber());
     }
 
-    private boolean isValidCertificate(CertificateDTO certificate) {
+    private boolean isValid(CertificateDTO certificate) {
         Date expirationDate = certificate.getExpirationDate();
         Date currentDate = new Date();
-        return currentDate.after(expirationDate);
+        Date startDate = certificate.getStartDate();
+        return currentDate.before(expirationDate) && currentDate.after(startDate);
     }
 
     private boolean isRevoked(BigInteger serialNumber) {

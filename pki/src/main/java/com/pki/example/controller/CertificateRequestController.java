@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequestMapping(value = "pki/certificate-requests")
 @RestController
+@CrossOrigin(origins = "https://localhost:4200")
 public class CertificateRequestController {
 
     @Autowired

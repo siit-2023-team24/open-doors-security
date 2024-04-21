@@ -1,6 +1,7 @@
 package com.pki.example.controller;
 
 import com.pki.example.dto.CertificateDTO;
+import com.pki.example.dto.CertificateItemDTO;
 import com.pki.example.dto.CertificateNewDTO;
 import com.pki.example.keystores.KeyStoreReader;
 import com.pki.example.keystores.KeyStoreWriter;
@@ -26,16 +27,14 @@ public class CertificateController {
     private OcspService ocspService;
 
     @GetMapping
-    public ResponseEntity<List<CertificateDTO>> getAll() {
-        List<CertificateDTO> dtos = service.getAll();
+    public ResponseEntity<List<CertificateItemDTO>> getAll() {
+        List<CertificateItemDTO> dtos = service.getAll();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CertificateDTO> create(@RequestBody CertificateNewDTO dto) {
         CertificateDTO returnDto = service.createDTO(dto);
-        //checkCertificateValidity(returnDto);
-
         return new ResponseEntity<>(returnDto, HttpStatus.CREATED);
     }
 

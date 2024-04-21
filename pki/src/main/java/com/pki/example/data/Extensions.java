@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Extensions {
     private boolean CA;
-//    private boolean[] usage;
+    private boolean[] usage;
 
     public Extensions() {
     }
@@ -22,11 +22,11 @@ public class Extensions {
         this.CA = CA;
     }
 
-//    public boolean[] getUsage() {
-//        return usage;
-//    }
+    public boolean[] getUsage() {
+        return usage;
+    }
 
-//    public void setUsage(boolean[] usage) {
-//        this.usage = usage;
-//    }
+    public void setUsage(boolean[] usage) {
+        this.usage = usage;
+    }
 }
