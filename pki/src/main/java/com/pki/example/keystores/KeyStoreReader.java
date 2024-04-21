@@ -144,6 +144,11 @@ public class KeyStoreReader {
         return null;
     }
 
+    public X509Certificate getCertificateByAlias(String keyStoreFile, String keyStorePass, String alias) {
+        Map<String, X509Certificate> certificates = readAll(keyStoreFile, keyStorePass);
+        return certificates.get(alias);
+    }
+
     /**
      * Ucitava privatni kljuc is KS fajla
      */

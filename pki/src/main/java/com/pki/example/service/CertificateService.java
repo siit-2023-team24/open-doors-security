@@ -27,10 +27,7 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CertificateService {
@@ -71,6 +68,22 @@ public class CertificateService {
     }
 
     public Certificate create(CertificateNewDTO dto) {
+
+        //check that alias is unique
+        if(aliasAlreadyExists(dto.getAlias())) {
+            return null;
+        }
+
+        // check issuer validity
+        if(!isIssuerValid(dto.getIssuerAlias())) {
+            return null;
+        }
+
+        // check whether cert dates are within issuer dates and that start date is not before today and that start date is before end date
+        if(!areDatesValid(dto)) {
+            return null;
+        }
+
         KeyPair keyPairSubject = generateKeyPair();
 
         //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
@@ -103,8 +116,32 @@ public class CertificateService {
         return certificate;
     }
 
+    private boolean aliasAlreadyExists(String alias) {
+        Map<String, X509Certificate> certificateMap = keyStoreReader.readAll(FILE, PASS);
+        return certificateMap.containsKey(alias);
+    }
+
+    private boolean isIssuerValid(String issuerAlias) {
+        X509Certificate certificate = keyStoreReader.getCertificateByAlias(FILE, PASS, issuerAlias);
+        Date startDate = certificate.getNotBefore();
+        Date endDate = certificate.getNotAfter();
+        Date now = new Date();
+        if (certificate == null) {
+            return false;
+        }
+        return startDate.before(now) && endDate.after(now) && !revocationRepository.isRevoked(certificate.getSerialNumber());
+    }
+
+    private boolean areDatesValid(CertificateNewDTO dto) {
+        X509Certificate issuer = keyStoreReader.getCertificateByAlias(FILE, PASS, dto.getIssuerAlias());
+        Date issuerStartDate = issuer.getNotBefore();
+        Date issuerEndDate = issuer.getNotAfter();
+        return !dto.getStartDate().before(new Date()) && dto.getStartDate().before(dto.getExpirationDate()) && issuerStartDate.before(dto.getStartDate()) && issuerEndDate.after(dto.getExpirationDate());
+    }
+
     public CertificateDTO createDTO(CertificateNewDTO dto) {
         X509Certificate certificate = (X509Certificate) create(dto);
+        if(certificate == null) {return null;}
         CertificateDTO certificateDTO = new CertificateDTO(certificate, dto.getAlias(), dto.getIssuerAlias());
         return certificateDTO;
     }
