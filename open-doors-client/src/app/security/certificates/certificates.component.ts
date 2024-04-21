@@ -34,7 +34,7 @@ export class CertificatesComponent implements OnInit{
           }
           this.aliases.push(dto.alias)
         }
-        console.log(dtos);
+        this.otherChild.aliases = this.aliases;
       },
       error: () => {
         
