@@ -1,9 +1,10 @@
 package com.pki.example.certificates;
 
+import com.pki.example.data.Extensions;
 import com.pki.example.data.Issuer;
 import com.pki.example.data.Subject;
-import org.bouncycastle.asn1.x509.BasicConstraints;
-import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -20,6 +21,7 @@ import java.security.Security;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Date;
 
 @Component
@@ -28,7 +30,7 @@ public class CertificateGenerator {
         Security.addProvider(new BouncyCastleProvider());
     }
 
-    public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber, boolean isCA) {
+    public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber, Extensions extensions) {
         try {
             //Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
             //Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
@@ -48,8 +50,32 @@ public class CertificateGenerator {
                     subject.getX500Name(),
                     subject.getPublicKey());
 
-            if(isCA)
+            if(extensions.isCA())
                 certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
+            int keys = 0;
+            for (int i : extensions.getUsage()) {
+                System.out.println(i);
+                keys |= (int)Math.pow(2, i);
+            }
+            if (keys!=0) {
+                System.out.println(keys);
+                certGen.addExtension(Extension.keyUsage, true, new KeyUsage(keys));
+            }
+            int extendedUsage = extensions.getExtendedUsage();
+            if(extendedUsage>-1) {
+                String oidString = "1.3.6.1.5.5.7." + extendedUsage;
+
+                ASN1ObjectIdentifier oid = new ASN1ObjectIdentifier(oidString);
+                KeyPurposeId keyPurposeId = KeyPurposeId.getInstance(oid);
+                ExtendedKeyUsage extendedKeyUsage = new ExtendedKeyUsage(new KeyPurposeId[] { keyPurposeId });
+
+                System.out.println(Arrays.toString(extendedKeyUsage.getUsages()));
+                certGen.addExtension(Extension.extendedKeyUsage, true, extendedKeyUsage);
+            }
+
+
+
+
 
             //Generise se sertifikat
             X509CertificateHolder certHolder = certGen.build(contentSigner);

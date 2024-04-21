@@ -53,6 +53,8 @@ export class CertificatesComponent implements OnInit{
   openCreateForm(alias: string) {
     this.otherChild.issuer = alias;
     this.otherChild.visible = true;
+    this.otherChild.usage=[];
+    this.otherChild.extendedUsage=0;
     this.otherChild.ngOnInit();
   }
 

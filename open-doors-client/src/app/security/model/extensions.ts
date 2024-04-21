@@ -1,4 +1,5 @@
 export interface Extensions {
     ca: boolean,
-    usage: boolean[]
+    usage: number[],
+    extendedUsage: number
 }

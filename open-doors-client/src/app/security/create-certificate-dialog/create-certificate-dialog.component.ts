@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CertificateService } from '../certificate.service';
 import { CertificateNewDTO } from '../model/certificate-new';
@@ -27,7 +27,19 @@ export class CreateCertificateDialogComponent implements OnInit{
 
   aliases: string[];
 
+  usage: number[] = [];
+  usageText: string[] =
+  ["Encipher only", "CRL Sign", "Key certificate signature", "Key agreement", "Data encipherment",
+  "Key encipherment", "Non-repudiation", "Digital signature", "Decipher only"];
+  extendedUsageText: string[] = ["None",
+  "Any extended key usage", "Server authentication", "Client authentication", "Code signing", "Email protection",
+  "IPSEC end system", "IPSEC tunnel", "IPSEC user", "Time stamping", "OCSP signing",
+  "DVCS", "SBGP Certificate AA server authentication", "SCVP responder", "EAP over PPP", "EAP over LAN",
+  "SCVP server", "SCVP client", "IPSEC IKE", "Capwap AC", "Capwap WTP"]
+  extendedUsage: number = 0;
+
   certificateForm: FormGroup;
+  extensionForm: FormGroup;
   visible = false;
   issuer = "";
   errorMessage = "";
@@ -41,7 +53,6 @@ export class CreateCertificateDialogComponent implements OnInit{
     this.certificateForm = this.formBuilder.group({
       issuerAlias:  [{ value: this.issuer, disabled: true }],
       alias: ['', Validators.required],
-      ca: [false],
       startDate: [null, Validators.required],
       expirationDate: [null, Validators.required],
       commonName: ['', Validators.required],
@@ -53,10 +64,29 @@ export class CreateCertificateDialogComponent implements OnInit{
       email: ['', Validators.required],
       usage: ['']
     }, { validator: dateValidator });
+
+    this.extensionForm = this.formBuilder.group({
+      ca: [false],
+    });
+  }
+  get checkboxes(): FormArray {
+    return this.extensionForm.get('checkboxes') as FormArray;
+  }
+
+  onCheckboxChange(value: number, isChecked: boolean) {
+    if(value == 8) value = 15;
+    if (isChecked) {
+      this.usage.push(value);
+    } else {
+      const index = this.usage.indexOf(value);
+      if (index >= 0) {
+        this.usage.splice(index, 1);
+      }
+    }
+    console.log(this.usage);
   }
 
   onCreateClick(): void {
-    console.log(this.dateValidator)
     this.errorMessage = 'Please fill out all the fields according to the validations.'
     if(this.certificateForm.value.startDate && 
       this.certificateForm.value.expirationDate &&
@@ -79,12 +109,15 @@ export class CreateCertificateDialogComponent implements OnInit{
     }
     this.errorMessage = ""
     let certificate: CertificateNewDTO = this.certificateForm.value;
-    // certificate.startDate = new Date(this.certificateForm.value.startDateString);
-    // certificate.expirationDate = new Date(this.certificateForm.value.expirationDateString);
-    certificate.extensions = { ca: this.certificateForm.value.ca, usage: []};
+    certificate.extensions = {
+      ca: this.extensionForm.value.ca,
+      usage: this.usage,
+      extendedUsage: this.extendedUsage - 1
+    };
+
     certificate.issuerAlias = this.issuer;
-    console.log(certificate)
-    // USAGE??
+    console.log(certificate.extensions)
+    
 
     this.service.create(certificate).subscribe({
       next: () => {

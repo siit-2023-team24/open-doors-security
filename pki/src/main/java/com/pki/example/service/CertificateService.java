@@ -73,7 +73,6 @@ public class CertificateService {
     public Certificate create(CertificateNewDTO dto) {
         KeyPair keyPairSubject = generateKeyPair();
 
-        //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);
         builder.addRDN(BCStyle.CN, dto.getCommonName())
                 .addRDN(BCStyle.O, dto.getOrganization())
@@ -82,13 +81,12 @@ public class CertificateService {
                 .addRDN(BCStyle.E, dto.getEmail())
                 .addRDN(BCStyle.L, dto.getLocality())
                 .addRDN(BCStyle.ST, dto.getState());
-        //UID (USER ID) je ID korisnika
-//        builder.addRDN(BCStyle.UID, "123456");
+
         Subject subject = new Subject(keyPairSubject.getPublic(), builder.build());
         Issuer issuer = findIssuer(dto.getIssuerAlias());
         String serialNumber = generateSerialNumber();
         X509Certificate certificate = CertificateGenerator.generateCertificate(
-                subject, issuer, dto.getStartDate(), dto.getExpirationDate(), serialNumber, dto.getExtensions().isCA());
+                subject, issuer, dto.getStartDate(), dto.getExpirationDate(), serialNumber, dto.getExtensions());
 
         if (dto.getExtensions().isCA()){
             privateKeyRepository.save(dto.getAlias(), keyPairSubject.getPrivate());

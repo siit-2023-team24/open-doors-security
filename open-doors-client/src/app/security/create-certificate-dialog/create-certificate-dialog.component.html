@@ -1,5 +1,34 @@
 <div *ngIf="visible" class="container">
   <h1>Create Certificate</h1>
+  <form [formGroup]="extensionForm">
+  
+      <div fxLayout="row" fxLayoutGap="20px" class="section">
+          <mat-slide-toggle color="#0C4A60" formControlName="ca">
+            CA
+          </mat-slide-toggle>
+
+          <mat-form-field>
+            <mat-label>Select an Option</mat-label>
+            <mat-select [(value)]="extendedUsage">
+              <mat-option *ngFor="let use of extendedUsageText; let i = index" [value]="i">
+                {{ use }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+          <section class="checkbox-column">
+              <mat-label>Choose amenities</mat-label>
+              <section class="checkbox-grid">
+                  <section class="checkbox-column" *ngFor="let use of usageText; let i = index">
+                  <mat-checkbox [checked]="usage.includes(i)" (change)="onCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  </section>
+              </section>
+          </section>
+      </div>
+    
+  </form>
+
   <form [formGroup]="certificateForm">
       <div fxLayout="column" fxLayoutGap="20px"  class="form register-form">
           <div fxLayout="row" fxLayoutGap="20px" class="section">
@@ -15,14 +44,6 @@
                   Alias is required.
               </mat-error>
               </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutGap="20px" class="section">
-            <mat-slide-toggle formControlName="ca">
-              CA
-            </mat-slide-toggle>
-  
-            <!--TODO usage -->
-  
           </div>
   
           
