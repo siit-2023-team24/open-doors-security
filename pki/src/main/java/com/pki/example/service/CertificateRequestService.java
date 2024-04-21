@@ -84,4 +84,11 @@ public class CertificateRequestService {
 
         return certificateService.create(newDTO);
     }
+
+    public int getStatusFor(Long userId) {
+        CertificateRequest request = findById(userId);
+        if (request == null) return -1;
+        if (request.isPending()) return 0;
+        return 1;
+    }
 }

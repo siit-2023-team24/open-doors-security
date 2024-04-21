@@ -47,4 +47,10 @@ public class CertificateRequestController {
         Certificate certificate = service.generate(userDataDTO);
         return new ResponseEntity<>(certificate, HttpStatus.OK);
     }
+
+    @GetMapping("/userId/{userId}")
+    public ResponseEntity<Integer> getCertificateStatus(@PathVariable Long userId) {
+        int status = service.getStatusFor(userId);
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
 }
