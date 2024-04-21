@@ -41,8 +41,8 @@ public class CertificateDTO extends CertificateNewDTO {
 
         //TODO ne radi ovo za CA
 
-        this.extensions.setCA(certificate.getBasicConstraints() != -1);
-        this.extensions.setUsage(certificate.getKeyUsage());
+//        this.extensions.setCA(certificate.getBasicConstraints() != -1);
+//        this.extensions.setUsage(certificate.getKeyUsage());
 
         this.alias = alias;
         this.issuerAlias = issuerAlias;

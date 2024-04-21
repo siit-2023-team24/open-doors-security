@@ -1,9 +1,6 @@
 package com.pki.example.controller;
 
-import com.pki.example.dto.CertificateDTO;
-import com.pki.example.dto.CertificateNewRequestDTO;
-import com.pki.example.dto.CertificateRequestApproved;
-import com.pki.example.dto.CertificateRequestDTO;
+import com.pki.example.dto.*;
 import com.pki.example.service.CertificateRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +18,8 @@ public class CertificateRequestController {
     private CertificateRequestService service;
 
     @GetMapping
-    public ResponseEntity<List<CertificateRequestDTO>> getPending() {
-        List<CertificateRequestDTO> dtos = service.getPending();
+    public ResponseEntity<List<CertificateRequestDTO>> get() {
+        List<CertificateRequestDTO> dtos = service.getAll();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
@@ -44,9 +41,9 @@ public class CertificateRequestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/generate/{userId}")
-    public ResponseEntity<Certificate> generate(@PathVariable Long userId) {
-        Certificate certificate = service.generate(userId);
+    @PostMapping("/generation")
+    public ResponseEntity<Certificate> generate(@RequestBody UserDataDTO userDataDTO) {
+        Certificate certificate = service.generate(userDataDTO);
         return new ResponseEntity<>(certificate, HttpStatus.OK);
     }
 }

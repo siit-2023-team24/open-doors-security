@@ -55,7 +55,7 @@ public class CertificateService {
         return dtos;
     }
 
-    public CertificateDTO create(CertificateNewDTO dto) {
+    public Certificate create(CertificateNewDTO dto) {
         KeyPair keyPairSubject = generateKeyPair();
 
         //klasa X500NameBuilder pravi X500Name objekat koji predstavlja podatke o vlasniku
@@ -84,6 +84,11 @@ public class CertificateService {
         keyStoreWriter.write(certificate, dto.getAlias());
         keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
 
+        return certificate;
+    }
+
+    public CertificateDTO createDTO(CertificateNewDTO dto) {
+        X509Certificate certificate = (X509Certificate) create(dto);
         return new CertificateDTO(certificate, dto.getAlias(), dto.getIssuerAlias());
     }
 
@@ -126,7 +131,6 @@ public class CertificateService {
         X509Certificate certificate = (X509Certificate) keyStoreReader.readCertificate(FILE, PASS, alias);
         aliasRepository.deleteSubject(alias);
 
-        //delete za sve koje je potpisao ovaj koga brisemo
         List<String> signedAliases = aliasRepository.getAllSignedBy(alias);
         for (String signedAlias: signedAliases) {
             delete(signedAlias);
@@ -137,14 +141,5 @@ public class CertificateService {
 
         privateKeyRepository.delete(alias);
     }
-/*
-    public void delete(String alias) {
-        List<String> children = aliasRepository.delete(alias);
-        for (int i = children.size() - 1; i >= 0; i--) {
-            keyStoreWriter.delete(children.get(i));
-        }
-        keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
-    }
 
- */
 }
