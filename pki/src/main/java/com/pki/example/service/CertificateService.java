@@ -27,10 +27,7 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CertificateService {
@@ -164,4 +161,7 @@ public class CertificateService {
     }
 
 
+    public List<String> getEligibleIssuers() {
+        return aliasRepository.getIssuers().stream().toList();
+    }
 }

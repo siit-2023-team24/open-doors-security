@@ -24,4 +24,8 @@ export class CertificateService {
     return this.httpClient.delete(environment.pkiHost + '/certificates/' + alias)
   }
 
+  getIssuers(): Observable<string[]> {
+    return this.httpClient.get<string[]>(environment.pkiHost + '/certificates/issuers')
+  }
+
 }

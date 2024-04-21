@@ -59,5 +59,10 @@ public class CertificateController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/issuers")
+    public ResponseEntity<List<String>> getEligibleIssuers() {
+        List<String> issuers = service.getEligibleIssuers();
+        return new ResponseEntity<>(issuers, HttpStatus.OK);
+    }
 
 }

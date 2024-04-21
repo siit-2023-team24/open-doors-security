@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class AliasRepository {
@@ -108,5 +110,19 @@ public class AliasRepository {
         } catch (IOException e) {
             System.err.println("Error writing CSV file: " + e.getMessage());
         }
+    }
+
+    public Set<String> getIssuers() {
+        Set<String> issuers = new HashSet<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                    issuers.add(values[0].trim());
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading CSV file: " + e.getMessage());
+        }
+        return issuers;
     }
 }

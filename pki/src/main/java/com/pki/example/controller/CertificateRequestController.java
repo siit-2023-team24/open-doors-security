@@ -37,7 +37,7 @@ public class CertificateRequestController {
     }
 
     @DeleteMapping("/deny/{userId}")
-    public ResponseEntity<CertificateRequestDTO> deny(@PathVariable Long userId) {
+    public ResponseEntity<Void> deny(@PathVariable Long userId) {
         service.deny(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
