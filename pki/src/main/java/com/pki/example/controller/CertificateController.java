@@ -8,7 +8,10 @@ import com.pki.example.keystores.KeyStoreWriter;
 import com.pki.example.service.CertificateService;
 import com.pki.example.service.OcspService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,8 @@ public class CertificateController {
 
     @Autowired
     private OcspService ocspService;
+    @Autowired
+    private CertificateService certificateService;
 
     @GetMapping
     public ResponseEntity<List<CertificateItemDTO>> getAll() {
@@ -58,6 +63,26 @@ public class CertificateController {
     public ResponseEntity<CertificateDTO> revoke(@RequestBody CertificateDTO dto) {
         service.revoke(dto);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/downloadCertificate/{alias}")
+    public ResponseEntity<ByteArrayResource> downloadCertificate(@PathVariable String alias) {
+        // Read the certificate file as byte array
+        byte[] certificateFileBytes = certificateService.getCertificateFileBytes(alias);
+
+        // Create a ByteArrayResource to represent the certificate file
+        ByteArrayResource resource = new ByteArrayResource(certificateFileBytes);
+
+        // Build response headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=certificate.crt");
+        headers.setContentType(MediaType.parseMediaType("application/x-x509-ca-cert"));
+
+        // Return the certificate file as a ResponseEntity
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(certificateFileBytes.length)
+                .body(resource);
     }
 
 

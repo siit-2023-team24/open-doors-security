@@ -14,19 +14,13 @@ import com.pki.example.repository.RevocationRepository;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.X500NameBuilder;
 import org.bouncycastle.asn1.x500.style.BCStyle;
-import org.bouncycastle.asn1.x509.BasicConstraints;
-import org.bouncycastle.cert.CertIOException;
-import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.security.*;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.*;
 
 @Service
@@ -69,7 +63,13 @@ public class CertificateService {
 
     public Certificate create(CertificateNewDTO dto) {
 
-        //check that alias is unique
+        // check whether issuer is CA
+        if(!isIssuerEligibleCA(dto.getIssuerAlias()))
+        {
+            return null;
+        }
+
+        // check that alias is unique
         if(aliasAlreadyExists(dto.getAlias())) {
             return null;
         }
@@ -114,6 +114,32 @@ public class CertificateService {
         keyStoreWriter.saveKeyStore(FILE, PASS.toCharArray());
 
         return certificate;
+    }
+
+    private boolean isIssuerEligibleCA(String issuerAlias) {
+        X509Certificate issuer = keyStoreReader.getCertificateByAlias(FILE, PASS, issuerAlias);
+        return isCACertificate(issuer) && hasLessThenThreeSigned(issuerAlias);
+    }
+
+    private static boolean isCACertificate(X509Certificate certificate) {
+        try {
+            // Get the Basic Constraints extension
+            byte[] basicConstraints = certificate.getExtensionValue("2.5.29.19");
+
+            if (basicConstraints != null) {
+                // If the certificate is a CA certificate, the basicConstraints value will not be null
+                // and the "cA" field of the Basic Constraints extension must be true
+                return (basicConstraints[4] == 0x01);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // If the Basic Constraints extension is not present or the "cA" field is not set, return false
+        return false;
+    }
+
+    private boolean hasLessThenThreeSigned(String alias) {
+        return aliasRepository.getAllSignedBy(alias).size() < 3;
     }
 
     private boolean aliasAlreadyExists(String alias) {
@@ -201,4 +227,12 @@ public class CertificateService {
     }
 
 
+    public byte[] getCertificateFileBytes(String alias) {
+        X509Certificate certificate = keyStoreReader.getCertificateByAlias(FILE,PASS,alias);
+        try {
+            return certificate.getEncoded();
+        } catch (CertificateEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
