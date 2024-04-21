@@ -61,7 +61,7 @@ public class CertificateRequestService {
 
         //spakujem novi CertificateNewDTO
         CertificateNewDTO newDTO = new CertificateNewDTO();
-        newDTO.setAlias(userData.getUsername());
+        newDTO.setAlias(userData.getUsername() + System.currentTimeMillis());
         newDTO.setCommonName(userData.getFirstName() + " " + userData.getLastName());
         newDTO.setOrganization("Open Doors");
         newDTO.setOrganizationalUnit("Open Doors");
@@ -90,5 +90,9 @@ public class CertificateRequestService {
         if (request == null) return -1;
         if (request.isPending()) return 0;
         return 1;
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 }

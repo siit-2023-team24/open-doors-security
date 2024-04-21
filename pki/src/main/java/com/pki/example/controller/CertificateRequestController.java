@@ -45,6 +45,7 @@ public class CertificateRequestController {
     @PostMapping("/generation")
     public ResponseEntity<Certificate> generate(@RequestBody UserDataDTO userDataDTO) {
         Certificate certificate = service.generate(userDataDTO);
+        service.delete(userDataDTO.getId());
         return new ResponseEntity<>(certificate, HttpStatus.OK);
     }
 
