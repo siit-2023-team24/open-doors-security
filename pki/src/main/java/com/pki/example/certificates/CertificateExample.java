@@ -79,7 +79,7 @@ public class CertificateExample {
             Date endDate = sdf.parse("2028-03-25");
 
             X509Certificate certificate = CertificateGenerator.generateCertificate(subject,
-                    issuer, startDate, endDate, "1");
+                    issuer, startDate, endDate, "1", true); // added true here for isCA might cause some trouble later on if we even need this code
 
             return new com.pki.example.data.Certificate(subject, issuer,
                     "1", startDate, endDate, certificate);

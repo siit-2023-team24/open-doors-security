@@ -38,10 +38,10 @@ public class CertificateDTO extends CertificateNewDTO {
 
         this.extensions = new Extensions();
 
-
         //TODO ne radi ovo za CA
 
-        this.extensions.setCA(certificate.getBasicConstraints() != -1);
+        this.extensions.setCA(isCACertificate(certificate));
+
         this.extensions.setUsage(certificate.getKeyUsage());
 
         this.alias = alias;
@@ -54,6 +54,23 @@ public class CertificateDTO extends CertificateNewDTO {
             RDN cn = x500name.getRDNs(BCStyle.E)[0];
             this.email = IETFUtils.valueToString(cn.getFirst().getValue());
         } catch (CertificateEncodingException | IndexOutOfBoundsException e) {}
+    }
+
+    private static boolean isCACertificate(X509Certificate certificate) {
+        try {
+            // Get the Basic Constraints extension
+            byte[] basicConstraints = certificate.getExtensionValue("2.5.29.19");
+
+            if (basicConstraints != null) {
+                // If the certificate is a CA certificate, the basicConstraints value will not be null
+                // and the "cA" field of the Basic Constraints extension must be true
+                return (basicConstraints[4] == 0x01);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // If the Basic Constraints extension is not present or the "cA" field is not set, return false
+        return false;
     }
 
     private void setRDN(String names) {
