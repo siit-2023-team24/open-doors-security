@@ -43,8 +43,8 @@ const routes: Routes = [
     {component: UserReportsComponent, path: "user-reports", canActivate: [AuthGuard], data: {role: ['ROLE_ADMIN']}},
     {component: ReviewsAdminPageComponent, path: "reviews", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN']}},
     {component: NotificationsComponent, path: "notifications", canActivate: [AuthGuard], data: {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
-    {component: CertificatesComponent, path: "certificates", canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
-    {component: CertificateRequestsComponent, path: "certificate-requests", canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
+    {component: CertificatesComponent, path: "certificates"}, //, canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
+    {component: CertificateRequestsComponent, path: "certificate-requests"}, //, canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' },
 ];

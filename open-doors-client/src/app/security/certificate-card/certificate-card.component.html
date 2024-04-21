@@ -1,13 +1,23 @@
-<div class="certificate-card">
-    <div class="certificate-details">
-        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.subjectName }}</span>
-        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.issuerName }}</span>
-        <span style="margin-left: 10px; font-size: 16px;">{{ certificate.serialNumber }}</span>
-        <span style="margin-left: 10px; color: grey;">{{ certificate.startDate | date:'dd/MM/yyyy' }}</span>
-        <span style="margin-left: 10px; color: grey;">{{ certificate.endDate | date:'dd/MM/yyyy' }}</span>
+<div class="review">
+    <div class="review-details">
+        <div class="user-info">
+            <div class="user-text">
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Alias: {{ certificate.alias }}</div>
+                    <div style="font-size: 16px;">Issuer alias: {{ certificate.issuerAlias }}</div>
+                </div>
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Valid from: {{ certificate.startDate | date:'dd/MM/yyyy' }}</div>
+                    <div style="font-size: 16px;">Valid until: {{ certificate.expirationDate | date:'dd/MM/yyyy' }}</div>
+                </div>
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Serial nubmer: {{ certificate.serialNumber }}</div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="delete-container">
-        <button mat-raised-button class="button delete-btn"  (click)="openDeleteDialog()">Delete</button>
-        <button mat-raised-button class="button delete-btn"  (click)="openCreateDialog()">+</button>
+        <button mat-raised-button class="button delete-btn" (click)="openDeleteDialog()">Delete</button>
+        <button *ngIf="certificate.extensions.ca" mat-raised-button class="button delete-btn" (click)="clickPlus()">+</button>
     </div>
 </div>

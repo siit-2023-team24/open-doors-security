@@ -1,6 +1,6 @@
 import { Extensions } from "./extensions";
 
-export interface CertificateDTO {
+export interface CertificateNewDTO {
     alias: string,
     commonName: string,
     organization: string,
@@ -13,6 +13,4 @@ export interface CertificateDTO {
     startDate: Date,
     expirationDate: Date,
     issuerAlias: string,
-    serialNumber: number,
-    subjectPublicKey: string
 }

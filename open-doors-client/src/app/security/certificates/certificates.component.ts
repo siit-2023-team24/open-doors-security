@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CertificateService } from '../certificate.service';
 import { CertificateDTO } from '../model/certificate';
 import { MatDialog } from '@angular/material/dialog';
+import { CreateCertificateDialogComponent } from '../create-certificate-dialog/create-certificate-dialog.component';
 
 
 @Component({
@@ -11,30 +12,48 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CertificatesComponent implements OnInit{
 
+  @ViewChild(CreateCertificateDialogComponent) otherChild: CreateCertificateDialogComponent;
+
   certificates: CertificateDTO[] = [];
+  aliases: string[] = [];
+  root: CertificateDTO;
 
   constructor(public dialog:MatDialog,
               private certificateService: CertificateService) {}
 
-
-
   ngOnInit(): void {
-    this.fetchCertificates();
-  }
-
-  private fetchCertificates(): void {
-    this.certificateService.getCertificates().subscribe(
-      (certificates: CertificateDTO[]) => {
-        this.certificates = certificates;
-        certificates.forEach(cert => {console.log(cert);});
+    this.aliases = [];
+    this.certificates = [];
+    this.certificateService.getAll().subscribe({
+      next: (dtos: CertificateDTO[]) => {
+        for(let dto of dtos) {
+          if(dto.alias != dto.issuerAlias) {
+            this.certificates.push(dto)
+          } else {
+            this.root = dto
+          }
+          this.aliases.push(dto.alias)
+        }
+        console.log(dtos);
       },
-      error => {
-        console.error("Error fetching certs: ", error);
+      error: () => {
+        
       }
-    );
+    })
+  }
+  
+  reloadParent(id: number) {
+    this.ngOnInit();
   }
 
-  public openCreateCertificateDialog(): void {}
-  
+  createFromRoot() {
+    this.openCreateForm(this.root.alias)
+  }
+
+  openCreateForm(alias: string) {
+    this.otherChild.issuer = alias;
+    this.otherChild.visible = true;
+    this.otherChild.ngOnInit();
+  }
 
 }

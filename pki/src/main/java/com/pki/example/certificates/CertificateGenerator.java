@@ -2,6 +2,9 @@ package com.pki.example.certificates;
 
 import com.pki.example.data.Issuer;
 import com.pki.example.data.Subject;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -25,7 +28,7 @@ public class CertificateGenerator {
         Security.addProvider(new BouncyCastleProvider());
     }
 
-    public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber) {
+    public static X509Certificate generateCertificate(Subject subject, Issuer issuer, Date startDate, Date endDate, String serialNumber, boolean isCA) {
         try {
             //Posto klasa za generisanje sertifiakta ne moze da primi direktno privatni kljuc pravi se builder za objekat
             //Ovaj objekat sadrzi privatni kljuc izdavaoca sertifikata i koristiti se za potpisivanje sertifikata
@@ -44,6 +47,9 @@ public class CertificateGenerator {
                     endDate,
                     subject.getX500Name(),
                     subject.getPublicKey());
+
+            if(isCA)
+                certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
 
             //Generise se sertifikat
             X509CertificateHolder certHolder = certGen.build(contentSigner);
@@ -66,6 +72,8 @@ public class CertificateGenerator {
             e.printStackTrace();
         } catch (CertificateException e) {
             e.printStackTrace();
+        } catch (CertIOException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
