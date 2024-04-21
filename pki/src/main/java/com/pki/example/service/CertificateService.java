@@ -48,7 +48,7 @@ public class CertificateService {
     public List<CertificateDTO> getAll() {
         Map<String, X509Certificate> certificates = keyStoreReader.readAll(FILE, PASS);
         List<CertificateDTO> dtos = new ArrayList<>();
-        for (String alias : certificates.keySet()){
+        for (String alias : certificates.keySet()) {
             String issuerAlias = aliasRepository.getIssuerAlias(alias);
             dtos.add(new CertificateDTO(certificates.get(alias), alias, issuerAlias));
         }
