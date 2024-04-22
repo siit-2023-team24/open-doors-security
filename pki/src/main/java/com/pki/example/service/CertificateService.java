@@ -231,6 +231,7 @@ public class CertificateService {
 
     public List<String> getEligibleIssuers() {
         return aliasRepository.getIssuers().stream().toList();
+    }
 
     public byte[] getCertificateFileBytes(String alias) {
         X509Certificate certificate = keyStoreReader.getCertificateByAlias(FILE,PASS,alias);
