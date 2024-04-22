@@ -71,6 +71,8 @@ public class CertificateRequestService {
         newDTO.setEmail(userData.getUsername());
 
         //TODO EXTENSIONS
+        //ca da bude false
+        //da bude digitalni potpis
         newDTO.setExtensions(new Extensions());
 
         Date today = new Date();
