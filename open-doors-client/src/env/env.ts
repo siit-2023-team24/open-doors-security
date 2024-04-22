@@ -1,3 +1,4 @@
 export const environment = {
-    apiHost: "http://localhost:9090/open-doors"
+    apiHost: "https://localhost:8443/open-doors",
+    pkiHost: "https://localhost:8083/pki"
 }

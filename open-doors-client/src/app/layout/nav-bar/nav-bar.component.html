@@ -5,11 +5,11 @@
     </div>
 
     <div *ngIf="role=='ROLE_SECURITY'" class="transparent-button-wrapper">
-        <button [routerLink]="['user-reports']" [queryParams]="{title: 'Certificate request'}" class="tranparentBtn" mat-flat-button >Certificate request</button>
+        <button [routerLink]="['certificate-requests']" [queryParams]="{title: 'Certificate requests'}" class="tranparentBtn" mat-flat-button >Certificate requests</button>
     </div>
 
     <div *ngIf="role=='ROLE_SECURITY'" class="transparent-button-wrapper">
-        <button [routerLink]="['user-reports']" [queryParams]="{title: 'Certificates'}" class="tranparentBtn" mat-flat-button >Certificates</button>
+        <button [routerLink]="['certificates']" [queryParams]="{title: 'Certificates'}" class="tranparentBtn" mat-flat-button >Certificates</button>
     </div>
 
     <div *ngIf="role=='ROLE_ADMIN'" class="transparent-button-wrapper">

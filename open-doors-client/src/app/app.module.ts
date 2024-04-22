@@ -12,6 +12,7 @@ import { Interceptor } from './user-management/interceptor';
 import { ReservationManagementModule } from './reservation-management/reservation-management.module';
 import { FinancialReportManagementModule } from './financial-report-management/financial-report-management.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SecurityModule } from './security/security.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     SharedModule,
     ReservationManagementModule,
     FinancialReportManagementModule,
-    NotificationsModule
+    NotificationsModule,
+    SecurityModule
   ],
   providers: [
     {
