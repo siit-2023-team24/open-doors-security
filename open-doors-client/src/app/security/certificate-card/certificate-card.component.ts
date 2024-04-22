@@ -28,16 +28,17 @@ export class CertificateCardComponent {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      question: "Are you sure you wish to delete the certificate with alias " + this.certificate.alias + " ?"
+      question: "Are you sure you wish to revoke the certificate with alias " + this.certificate.alias + " ?"
     }
 
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe({
       next: (answer: boolean) => {
         if (answer) {
-          this.service.delete(this.certificate.alias).subscribe({
+          //this.service.delete(this.certificate.alias).subscribe({
+          this.service.revoke(this.certificate).subscribe({
             next: () => {
-              console.log('Deleted certificate with alias: ' + this.certificate.alias);
+              console.log('Revoked certificate with alias: ' + this.certificate.alias);
               this.reload.emit(1);
             },
             error: (error) => {
