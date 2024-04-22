@@ -17,6 +17,10 @@ import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
@@ -45,10 +49,18 @@ public class CertificateService {
 
     @Autowired
     private OcspService ocspService;
-
-    //TODO u fajl:
+    
     private final String FILE = "src/main/resources/static/keystore1.jks";
-    private final String PASS = "opendoors";
+    private String PASS = "";
+
+    public CertificateService() {
+        try(BufferedReader in = new BufferedReader(new FileReader("src/main/resources/static/kspass.txt"))){
+            PASS = in.readLine();
+        } catch (IOException e) {
+            System.err.println("Invalid ks password");
+            throw new RuntimeException(e);
+        }
+    }
 
     public List<CertificateItemDTO> getAll() {
         Map<String, X509Certificate> certificates = keyStoreReader.readAll(FILE, PASS);

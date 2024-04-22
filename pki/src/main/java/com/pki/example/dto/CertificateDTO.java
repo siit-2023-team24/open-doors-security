@@ -38,7 +38,7 @@ public class CertificateDTO extends CertificateNewDTO {
 
         this.extensions = new Extensions();
 
-        //TODO ne radi ovo za CA
+        //TODO za ostale ostale ext.
 
 
         this.extensions.setCA(isCACertificate(certificate));
