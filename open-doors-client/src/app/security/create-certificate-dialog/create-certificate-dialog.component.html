@@ -3,22 +3,22 @@
   <form [formGroup]="extensionForm">
   
       <div fxLayout="row" fxLayoutGap="20px" class="section">
-          <mat-slide-toggle color="#0C4A60" formControlName="ca">
+          <mat-slide-toggle formControlName="ca" color="#0C4A60">
             CA
           </mat-slide-toggle>
       </div>
 
       <div fxLayout="row" fxLayoutGap="20px" class="amenities">
-        <section class="checkbox-column">
-            <mat-label>Choose extended key usages:</mat-label>
-            <br>
-            <section class="checkbox-grid">
-                <section class="checkbox-column" *ngFor="let use of extendedUsageText; let i = index">
-                <mat-checkbox [checked]="extendedUsages.includes(i)" (change)="onExtendedUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
-                </section>
-            </section>
-        </section>
-    </div>
+          <section class="checkbox-column">
+              <mat-label>Choose extended key usages:</mat-label>
+              <br>
+              <section class="checkbox-grid">
+                  <section class="checkbox-column" *ngFor="let use of extendedUsageText; let i = index">
+                  <mat-checkbox [checked]="extendedUsages.includes(i)" (change)="onExtendedUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  </section>
+              </section>
+          </section>
+      </div>
 
       <div fxLayout="row" fxLayoutGap="20px" class="amenities">
           <section class="checkbox-column">
@@ -30,6 +30,21 @@
                   </section>
               </section>
           </section>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+        <mat-form-field>
+          <mat-label>Template name</mat-label>
+          <input matInput type="text" formControlName="templateName">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onCreateTemplateClick()" class="button sign-up-btn" id="register-btn">
+          Create template
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="section">
+        <p class="error">{{ templateMessage }}</p>
       </div>
     
   </form>
