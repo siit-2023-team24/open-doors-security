@@ -86,12 +86,6 @@ public class KeyStoreReader {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
             ks.load(in, keyStorePass.toCharArray());
 
-//            var aliases = ks.aliases();
-//            System.out.println("Aliases in keystore:");
-//            while (aliases.hasMoreElements()) {
-//                System.out.println(aliases.nextElement());
-//            }
-
             return ks.getCertificate(alias);
 
         } catch (KeyStoreException e) {

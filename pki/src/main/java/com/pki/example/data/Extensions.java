@@ -13,4 +13,16 @@ public class Extensions {
     private int[] extendedUsages;
     public Extensions() {
     }
+
+    public int[] getUsage() {
+        if (usage == null)
+            return new int[]{};
+        return usage;
+    }
+
+    public int[] getExtendedUsages() {
+        if (extendedUsages == null)
+            return new int[]{};
+        return extendedUsages;
+    }
 }

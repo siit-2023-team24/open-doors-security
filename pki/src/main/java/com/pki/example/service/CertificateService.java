@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
@@ -174,7 +175,7 @@ public class CertificateService {
         X509Certificate issuer = keyStoreReader.getCertificateByAlias(FILE, PASS, dto.getIssuerAlias());
         Date issuerStartDate = issuer.getNotBefore();
         Date issuerEndDate = issuer.getNotAfter();
-        return dto.getStartDate().before(dto.getExpirationDate()) && issuerStartDate.before(dto.getStartDate()) && issuerEndDate.after(dto.getExpirationDate());
+        return dto.getStartDate().before(dto.getExpirationDate()) && !issuerStartDate.after(dto.getStartDate()) && !issuerEndDate.before(dto.getExpirationDate());
     }
 
     public CertificateDTO createDTO(CertificateNewDTO dto) {
@@ -240,7 +241,16 @@ public class CertificateService {
 
 
     public List<String> getEligibleIssuers() {
-        return aliasRepository.getIssuers().stream().toList();
+        Set<String> issuers = new HashSet<>();
+        Map<String, X509Certificate> certificateMap = keyStoreReader.readAll(FILE, PASS);
+
+        for (String alias : certificateMap.keySet()) {
+            X509Certificate certificate = certificateMap.get(alias);
+            if (certificate != null && isCACertificate(certificate)) {
+                issuers.add(alias);
+            }
+        }
+        return issuers.stream().toList();
     }
 
     public byte[] getCertificateFileBytes(String alias) {
