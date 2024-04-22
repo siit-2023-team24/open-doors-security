@@ -55,7 +55,7 @@ public class CertificateRequestService {
         repo.delete(request);
     }
 
-    public Certificate generate(UserDataDTO userData) {
+    public CertificateDTO generate(UserDataDTO userData) {
         CertificateRequest request = findById(userData.getId());
         if (request == null) throw new EntityNotFoundException();
 
@@ -82,7 +82,7 @@ public class CertificateRequestService {
 
         newDTO.setIssuerAlias(request.getIssuerAlias());
 
-        return certificateService.create(newDTO);
+        return certificateService.createDTO(newDTO);
     }
 
     public int getStatusFor(Long userId) {

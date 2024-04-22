@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CertificateRequestService } from 'src/app/security/certificate-request.service';
 import { CertificateRequestNew } from 'src/app/security/model/certificate-request-new';
 import { UserDataDTO } from 'src/app/shared/model/user-data-cert';
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -129,13 +130,14 @@ export class ProfileComponent implements OnInit {
       let dto: UserDataDTO = {id: this.user.id, username: this.username,
                               firstName: this.user.firstName, lastName: this.user.lastName,
                               city: this.user.city, country: this.user.country};
-      this.certificateRequestService.generate(dto).subscribe({
-        next: ()=> {
-          this.showSnackBar("Certificate generated");
-          this.setCertificateBtn();
-        },
-        error: ()=> {console.log("error generating certificate")}
-      })
+
+      this.certificateRequestService.generate(dto).subscribe((data: Blob) => {
+        const blob = new Blob([data], { type: 'application/x-x509-ca-cert' });
+        saveAs(blob, 'certificate.crt');
+        this.showSnackBar("Certificate generated");
+        this.setCertificateBtn();
+      }, error => {console.log("error generating certificate")
+      });
     }
     else if (this.status == -1) {
       let dto: CertificateRequestNew = {userId: this.user.id, timestamp: new Date()};

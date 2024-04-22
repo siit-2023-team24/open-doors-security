@@ -164,7 +164,7 @@ public class CertificateService {
         X509Certificate issuer = keyStoreReader.getCertificateByAlias(FILE, PASS, dto.getIssuerAlias());
         Date issuerStartDate = issuer.getNotBefore();
         Date issuerEndDate = issuer.getNotAfter();
-        return !dto.getStartDate().before(new Date()) && dto.getStartDate().before(dto.getExpirationDate()) && issuerStartDate.before(dto.getStartDate()) && issuerEndDate.after(dto.getExpirationDate());
+        return dto.getStartDate().before(dto.getExpirationDate()) && issuerStartDate.before(dto.getStartDate()) && issuerEndDate.after(dto.getExpirationDate());
     }
 
     public CertificateDTO createDTO(CertificateNewDTO dto) {

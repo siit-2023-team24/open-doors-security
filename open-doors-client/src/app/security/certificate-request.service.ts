@@ -34,7 +34,8 @@ export class CertificateRequestService {
     return this.httpClient.get<number>(environment.pkiHost + '/certificate-requests/userId/' + userId);
   }
 
-  generate(userData: UserDataDTO) {
-    return this.httpClient.post<UserDataDTO>(environment.pkiHost + '/certificate-requests/generation', userData);
+  generate(userData: UserDataDTO): Observable<Blob> {
+    return this.httpClient.post(environment.pkiHost + '/certificate-requests/generation', userData, { responseType: 'blob' });
   }
+  
 }
