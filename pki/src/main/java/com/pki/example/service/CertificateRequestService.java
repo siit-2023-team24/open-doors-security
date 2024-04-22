@@ -70,10 +70,7 @@ public class CertificateRequestService {
         newDTO.setCountry(userData.getCountry());
         newDTO.setEmail(userData.getUsername());
 
-        //TODO EXTENSIONS
-        //ca da bude false
-        //da bude digitalni potpis
-        newDTO.setExtensions(new Extensions());
+        newDTO.setExtensions(new Extensions(false, new int[] {7}, new int[] {}));
 
         Date today = new Date();
         Calendar c = Calendar.getInstance();

@@ -15,8 +15,14 @@
     </div>
     
 
-    <app-create-certificate-dialog (reload)="reloadParent($event)"></app-create-certificate-dialog>
+    <app-create-certificate-dialog (reload)="reloadParent($event)" (onCreateTemplate)="createTemplate($event)"></app-create-certificate-dialog>
     <div class="list-item-end">
         <h2 class="end">Templates</h2>
+        <button mat-raised-button color="primary"  class="button sign-up-btn" (click)="applyNone()">None</button>
+        <mat-grid-list cols="1" rowHeight="250px" class="review-list">
+            <mat-grid-tile class="tile" *ngFor="let template of templates">
+                <app-certificate-template [template]="template" (reload)="reloadParent($event)" (onApplyClicked)="apply($event)"></app-certificate-template>
+            </mat-grid-tile>
+        </mat-grid-list>
     </div>
 </div>

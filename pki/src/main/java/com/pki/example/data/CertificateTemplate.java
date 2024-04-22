@@ -1,21 +1,25 @@
 package com.pki.example.data;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//@Getter
-//@Setter
-//@Entity
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class CertificateTemplate {
-//    @Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private boolean ca;
+    private boolean CA;
     private int[] usage;
-    private int extendedUsage;
-
+    private int[] extendedUsages;
     private String name;
-
 }

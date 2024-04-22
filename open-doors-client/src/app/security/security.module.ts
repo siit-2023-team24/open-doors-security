@@ -10,6 +10,7 @@ import { CertificatesComponent } from './certificates/certificates.component';
 import { CertificateRequestsComponent } from './certificate-requests/certificate-requests.component';
 import { CertificateCardComponent } from './certificate-card/certificate-card.component';
 import { CreateCertificateDialogComponent } from './create-certificate-dialog/create-certificate-dialog.component';
+import { CertificateTemplateComponent } from './certificate-template/certificate-template.component';
 import { CertificateRequestCardComponent } from './certificate-request-card/certificate-request-card.component';
 import { RequestDialogComponent } from './request-dialog/request-dialog.component';
 
@@ -23,6 +24,7 @@ import { RequestDialogComponent } from './request-dialog/request-dialog.componen
     CertificateCardComponent,
     CreateCertificateDialogComponent,
     CertificateRequestCardComponent,
+    CertificateTemplateComponent,
     RequestDialogComponent
   ],
   imports: [
@@ -37,7 +39,8 @@ import { RequestDialogComponent } from './request-dialog/request-dialog.componen
   exports: [
     CertificateCardComponent,
     CertificatesComponent,
-    CertificateRequestsComponent
+    CertificateRequestsComponent,
+
   ]
 })
 export class SecurityModule { }

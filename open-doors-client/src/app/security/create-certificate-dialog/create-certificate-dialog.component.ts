@@ -1,8 +1,12 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CertificateService } from '../certificate.service';
 import { CertificateNewDTO } from '../model/certificate-new';
+import { CertificateDTO } from '../model/certificate';
+import { CertificateTemplateDTO } from '../model/certificiate-template';
+import { CertificateNewTemplateDTO } from '../model/certificate-new-template';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 function dateValidator(control: AbstractControl): { [key: string]: boolean } | null {
   const startDate = control.get('startDate')?.value;
@@ -25,7 +29,16 @@ export class CreateCertificateDialogComponent implements OnInit{
   @Output()
   reload: EventEmitter<number> = new EventEmitter();
 
-  aliases: string[];
+  visible: boolean = false;
+
+  @Output()
+  onCreateTemplate: EventEmitter<CertificateNewTemplateDTO> = new EventEmitter();
+
+  @ViewChild(MatSlideToggle) slideToggle: MatSlideToggle;
+
+  templates: CertificateTemplateDTO[] = [];
+
+  aliases: string[] = [];
 
   usage: number[] = [];
   usageText: string[] =
@@ -39,11 +52,13 @@ export class CreateCertificateDialogComponent implements OnInit{
   "DVCS", "SBGP cert AA server auth", "SCVP responder", "EAP over PPP", "EAP over LAN",
   "SCVP server", "SCVP client", "IPSEC IKE", "Capwap AC", "Capwap WTP"]
 
+  templateName: string = "";
+
   certificateForm: FormGroup;
   extensionForm: FormGroup;
-  visible = false;
   issuer = "";
   errorMessage = "";
+  templateMessage = "";
   dateValidator = false;
 
   constructor(private formBuilder: FormBuilder,
@@ -68,6 +83,7 @@ export class CreateCertificateDialogComponent implements OnInit{
 
     this.extensionForm = this.formBuilder.group({
       ca: [false],
+      templateName: ['', Validators.required]
     });
   }
   get checkboxes(): FormArray {
@@ -114,8 +130,6 @@ export class CreateCertificateDialogComponent implements OnInit{
     if(!this.certificateForm.valid) {
       return;
     }
-    console.log(this.certificateForm.value.alias);
-    console.log(this.aliases);
     if(this.aliases.includes(this.certificateForm.value.alias)) {
       this.errorMessage = 'This alias is taken. Please choose a new one.';
       return;
@@ -142,5 +156,31 @@ export class CreateCertificateDialogComponent implements OnInit{
         console.error(error.error.message);
       }
     });
+  }
+
+  onCreateTemplateClick() {
+    this.templateMessage = "Please provide a name for the template."
+    if(!this.extensionForm.valid) {
+      return;
+    }
+    for(const t of this.templates) {
+      this.templateMessage = "This template name is taken, please choose a different one."
+      if(t.name == this.extensionForm.value.templateName) {
+        return;
+      }
+    }
+    this.templateMessage = "";
+    let template: CertificateNewTemplateDTO = {
+      ca: this.extensionForm.value.ca,
+      extendedUsages: this.extendedUsages,
+      usage: this.usage,
+      name: this.extensionForm.value.templateName
+    }
+    console.log(template);
+    this.onCreateTemplate.emit(template);
+  }
+
+  toggle() {
+    this.slideToggle.toggle();
   }
 }
