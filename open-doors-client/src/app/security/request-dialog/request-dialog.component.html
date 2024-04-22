@@ -1,0 +1,16 @@
+  <div *ngIf="visible" id="dialog" class="container">
+    <div class="dialog-content">
+      <div>User ID: {{userId}}</div>
+      <span>Select an issuer:</span>
+      <mat-select id="dropdown" [(ngModel)]="selectedIssuer">
+        <mat-option *ngFor="let issuer of issuers" [value]="issuer">
+          {{ issuer }}
+        </mat-option>
+      </mat-select>
+    </div>
+      
+
+      <button mat-raised-button color="primary" (click)="onCreateClick()" class="button sign-up-btn" id="register-btn">
+        Approve certificate request
+      </button>
+    </div>

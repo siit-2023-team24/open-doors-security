@@ -22,11 +22,11 @@ public class OcspService {
         Date expirationDate = certificate.getExpirationDate();
         Date currentDate = new Date();
         Date startDate = certificate.getStartDate();
-        return currentDate.before(expirationDate) && currentDate.after(startDate);
+        return !currentDate.after(expirationDate) && !currentDate.before(startDate);
     }
 
     private boolean isRevoked(BigInteger serialNumber) {
-        return revocationRepository.getCertificateRevocationStatus(serialNumber);
+        return revocationRepository.isRevoked(serialNumber);
     }
 
 

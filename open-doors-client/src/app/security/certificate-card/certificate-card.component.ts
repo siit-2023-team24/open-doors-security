@@ -28,7 +28,7 @@ export class CertificateCardComponent {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      question: "Are you sure you delete the certificate with alias " + this.certificate.alias + " ?"
+      question: "Are you sure you wish to delete the certificate with alias " + this.certificate.alias + " ?"
     }
 
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);

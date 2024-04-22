@@ -55,13 +55,13 @@ public class CertificateRequestService {
         repo.delete(request);
     }
 
-    public Certificate generate(UserDataDTO userData) {
+    public CertificateDTO generate(UserDataDTO userData) {
         CertificateRequest request = findById(userData.getId());
         if (request == null) throw new EntityNotFoundException();
 
         //spakujem novi CertificateNewDTO
         CertificateNewDTO newDTO = new CertificateNewDTO();
-        newDTO.setAlias(userData.getUsername());
+        newDTO.setAlias(userData.getUsername() + System.currentTimeMillis());
         newDTO.setCommonName(userData.getFirstName() + " " + userData.getLastName());
         newDTO.setOrganization("Open Doors");
         newDTO.setOrganizationalUnit("Open Doors");
@@ -71,6 +71,8 @@ public class CertificateRequestService {
         newDTO.setEmail(userData.getUsername());
 
         //TODO EXTENSIONS
+        //ca da bude false
+        //da bude digitalni potpis
         newDTO.setExtensions(new Extensions());
 
         Date today = new Date();
@@ -82,6 +84,17 @@ public class CertificateRequestService {
 
         newDTO.setIssuerAlias(request.getIssuerAlias());
 
-        return certificateService.create(newDTO);
+        return certificateService.createDTO(newDTO);
+    }
+
+    public int getStatusFor(Long userId) {
+        CertificateRequest request = findById(userId);
+        if (request == null) return -1;
+        if (request.isPending()) return 0;
+        return 1;
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
     }
 }

@@ -11,6 +11,8 @@ import { CertificateRequestsComponent } from './certificate-requests/certificate
 import { CertificateCardComponent } from './certificate-card/certificate-card.component';
 import { CreateCertificateDialogComponent } from './create-certificate-dialog/create-certificate-dialog.component';
 import { CertificateTemplateComponent } from './certificate-template/certificate-template.component';
+import { CertificateRequestCardComponent } from './certificate-request-card/certificate-request-card.component';
+import { RequestDialogComponent } from './request-dialog/request-dialog.component';
 
 
 
@@ -21,7 +23,8 @@ import { CertificateTemplateComponent } from './certificate-template/certificate
     CertificateRequestsComponent,
     CertificateCardComponent,
     CreateCertificateDialogComponent,
-    CertificateTemplateComponent
+    CertificateTemplateComponent,
+    RequestDialogComponent
   ],
   imports: [
     CommonModule,

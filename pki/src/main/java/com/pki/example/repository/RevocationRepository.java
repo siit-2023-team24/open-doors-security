@@ -36,7 +36,7 @@ public class RevocationRepository {
         }
     }
 
-    public boolean getCertificateRevocationStatus(BigInteger serialNumber) {
+    public boolean isRevoked(BigInteger serialNumber) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
