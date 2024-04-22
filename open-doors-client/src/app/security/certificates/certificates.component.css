@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: row;
   min-height: 1000px;
+  justify-content: space-between;
 }
 
 .create-cert-text {
@@ -92,4 +93,15 @@
   margin-left: 20px;
   background-color: #EF6C33;
   border-radius: 50%;
+}
+
+.end {
+  text-align: end;
+}
+
+.list-item-end {
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
 }

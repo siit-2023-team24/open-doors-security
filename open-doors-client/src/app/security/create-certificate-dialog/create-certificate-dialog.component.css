@@ -35,3 +35,20 @@
 .container {
     padding-top: 50px;
 }
+
+.amenities {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.checkbox-grid {
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.checkbox-column {
+    display: flex;
+    flex-direction: column;
+}

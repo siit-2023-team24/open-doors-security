@@ -1,5 +1,39 @@
 <div *ngIf="visible" class="container">
   <h1>Create Certificate</h1>
+  <form [formGroup]="extensionForm">
+  
+      <div fxLayout="row" fxLayoutGap="20px" class="section">
+          <mat-slide-toggle color="#0C4A60" formControlName="ca">
+            CA
+          </mat-slide-toggle>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+        <section class="checkbox-column">
+            <mat-label>Choose extended key usages:</mat-label>
+            <br>
+            <section class="checkbox-grid">
+                <section class="checkbox-column" *ngFor="let use of extendedUsageText; let i = index">
+                <mat-checkbox [checked]="extendedUsages.includes(i)" (change)="onExtendedUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                </section>
+            </section>
+        </section>
+    </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+          <section class="checkbox-column">
+              <mat-label>Choose key usages:</mat-label>
+              <br>
+              <section class="checkbox-grid">
+                  <section class="checkbox-column" *ngFor="let use of usageText; let i = index">
+                  <mat-checkbox [checked]="usage.includes(i)" (change)="onUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  </section>
+              </section>
+          </section>
+      </div>
+    
+  </form>
+
   <form [formGroup]="certificateForm">
       <div fxLayout="column" fxLayoutGap="20px"  class="form register-form">
           <div fxLayout="row" fxLayoutGap="20px" class="section">
@@ -15,14 +49,6 @@
                   Alias is required.
               </mat-error>
               </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutGap="20px" class="section">
-            <mat-slide-toggle formControlName="ca">
-              CA
-            </mat-slide-toggle>
-  
-            <!--TODO usage -->
-  
           </div>
   
           
