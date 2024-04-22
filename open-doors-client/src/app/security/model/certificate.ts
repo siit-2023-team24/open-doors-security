@@ -13,7 +13,8 @@ export interface CertificateDTO {
     startDate: Date,
     expirationDate: Date,
     issuerAlias: string,
-    serialNumber: number,
+    serialNumber: string,
     subjectPublicKey: string,
-    valid?: boolean
+    valid?: boolean,
+    revoked?: boolean
 }

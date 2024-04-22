@@ -22,7 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CertificateDTO extends CertificateNewDTO {
-    protected BigInteger serialNumber;
+    protected String serialNumber;
     protected String subjectPublicKey;
 
     public CertificateDTO() {
@@ -30,7 +30,7 @@ public class CertificateDTO extends CertificateNewDTO {
     }
 
     public CertificateDTO(X509Certificate certificate, String alias, String issuerAlias) {
-        this.serialNumber = certificate.getSerialNumber();
+        this.serialNumber = certificate.getSerialNumber().toString();
         this.subjectPublicKey = Base64.getEncoder().encodeToString(certificate.getPublicKey().getEncoded());
 
         this.startDate = certificate.getNotBefore();

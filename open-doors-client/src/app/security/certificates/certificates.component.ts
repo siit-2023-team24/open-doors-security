@@ -33,6 +33,7 @@ export class CertificatesComponent implements OnInit{
     this.certificateService.getAll().subscribe({
       next: (dtos: CertificateDTO[]) => {
         for(let dto of dtos) {
+          
           if(dto.alias != dto.issuerAlias) {
             this.certificates.push(dto)
           } else {

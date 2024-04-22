@@ -12,10 +12,15 @@ import java.security.cert.X509Certificate;
 public class CertificateItemDTO extends CertificateDTO {
     private boolean valid;
 
-    public CertificateItemDTO(X509Certificate certificate, String alias, String issuerAlias, boolean valid){
+    private boolean revoked;
+
+    public CertificateItemDTO(X509Certificate certificate, String alias, String issuerAlias, boolean valid, boolean revoked){
         super(certificate, alias, issuerAlias);
         this.valid = valid;
+        this.revoked = revoked;
     }
+
+    public void setRevoked(boolean revoked) { this.revoked = revoked; }
 
     public void setValid(boolean valid) {
         this.valid = valid;

@@ -36,12 +36,12 @@ public class RevocationRepository {
         }
     }
 
-    public boolean isRevoked(BigInteger serialNumber) {
+    public boolean isRevoked(String serialNumber) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values[0].trim().equals(serialNumber.toString())) return Boolean.parseBoolean(values[1].trim());
+                if (values[0].trim().equals(serialNumber)) return Boolean.parseBoolean(values[1].trim());
             }
         } catch (IOException e) {
             System.err.println("Error reading CSV file: " + e.getMessage());
@@ -50,6 +50,7 @@ public class RevocationRepository {
     }
 
     public void revokeCertificate(CertificateDTO dto) {
+
         String serialNumber = dto.getSerialNumber().toString();
         String alias = dto.getAlias();
 

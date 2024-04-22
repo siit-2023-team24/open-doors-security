@@ -70,8 +70,9 @@ public class CertificateService {
             String issuerAlias = aliasRepository.getIssuerAlias(alias);
             X509Certificate certificate = certificates.get(alias);
             CertificateDTO certificateDTO = new CertificateDTO(certificate, alias, issuerAlias);
-            boolean valid = ocspService.checkCertificateStatus(certificateDTO);
-            dtos.add(new CertificateItemDTO(certificate, alias, issuerAlias, valid));
+            boolean valid = ocspService.isValid(certificateDTO);
+            boolean revoked = ocspService.isRevoked(certificateDTO.getSerialNumber());
+            dtos.add(new CertificateItemDTO(certificate, alias, issuerAlias, valid, revoked));
         }
         return dtos;
     }
@@ -168,7 +169,7 @@ public class CertificateService {
         if (certificate == null) {
             return false;
         }
-        return startDate.before(now) && endDate.after(now) && !revocationRepository.isRevoked(certificate.getSerialNumber());
+        return startDate.before(now) && endDate.after(now) && !revocationRepository.isRevoked(certificate.getSerialNumber().toString());
     }
 
     private boolean areDatesValid(CertificateNewDTO dto) {
@@ -236,6 +237,7 @@ public class CertificateService {
     }
 
     public void revoke(CertificateDTO dto) {
+        System.out.println(dto.getSerialNumber());
         revocationRepository.revokeCertificate(dto);
     }
 

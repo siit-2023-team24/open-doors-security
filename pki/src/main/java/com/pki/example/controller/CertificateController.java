@@ -61,6 +61,8 @@ public class CertificateController {
 
     @PostMapping("/revoke")
     public ResponseEntity<CertificateDTO> revoke(@RequestBody CertificateDTO dto) {
+        System.out.println("AAAAAA");
+        System.out.println(dto.getSerialNumber());
         service.revoke(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

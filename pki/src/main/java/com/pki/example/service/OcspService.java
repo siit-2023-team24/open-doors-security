@@ -18,14 +18,14 @@ public class OcspService {
         return isValid(certificate) && !isRevoked(certificate.getSerialNumber());
     }
 
-    private boolean isValid(CertificateDTO certificate) {
+    public boolean isValid(CertificateDTO certificate) {
         Date expirationDate = certificate.getExpirationDate();
         Date currentDate = new Date();
         Date startDate = certificate.getStartDate();
         return !currentDate.after(expirationDate) && !currentDate.before(startDate);
     }
 
-    private boolean isRevoked(BigInteger serialNumber) {
+    public boolean isRevoked(String serialNumber) {
         return revocationRepository.isRevoked(serialNumber);
     }
 

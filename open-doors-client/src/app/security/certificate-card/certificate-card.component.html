@@ -12,13 +12,13 @@
                 </div>
                 <div class="txt-col">
                     <div style="font-size: 16px;">Serial nubmer: {{ certificate.serialNumber }}</div>
-                    <div style="font-size: 16px;">Valid: {{ certificate.valid }}</div>
+                    <div style="font-size: 16px;">Valid: {{ certificate.valid }}, revoked: {{ certificate.revoked }}</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="delete-container">
-        <button mat-raised-button class="button delete-btn" (click)="openDeleteDialog()">Revoke</button>
+        <button *ngIf="!certificate.revoked" mat-raised-button class="button delete-btn" (click)="openDeleteDialog()">Revoke</button>
         <button *ngIf="certificate.extensions.ca" mat-raised-button class="button delete-btn" (click)="clickPlus()">+</button>
     </div>
 </div>

@@ -29,7 +29,7 @@ export class CertificateService {
   }
 
   revoke(certificateDto: CertificateDTO): Observable<Object> {
-    return this.httpClient.post<CertificateDTO>(environment.pkiHost + '/revoke', certificateDto)
+    return this.httpClient.post<CertificateDTO>(environment.pkiHost + '/certificates/revoke', certificateDto)
   }
 
 }
