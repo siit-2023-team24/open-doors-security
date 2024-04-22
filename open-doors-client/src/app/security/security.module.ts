@@ -23,6 +23,7 @@ import { RequestDialogComponent } from './request-dialog/request-dialog.componen
     CertificateRequestsComponent,
     CertificateCardComponent,
     CreateCertificateDialogComponent,
+    CertificateRequestCardComponent,
     CertificateTemplateComponent,
     RequestDialogComponent
   ],
@@ -38,7 +39,8 @@ import { RequestDialogComponent } from './request-dialog/request-dialog.componen
   exports: [
     CertificateCardComponent,
     CertificatesComponent,
-    CertificateRequestsComponent
+    CertificateRequestsComponent,
+
   ]
 })
 export class SecurityModule { }
