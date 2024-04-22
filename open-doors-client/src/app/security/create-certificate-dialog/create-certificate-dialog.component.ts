@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CertificateService } from '../certificate.service';
@@ -24,6 +24,8 @@ export class CreateCertificateDialogComponent implements OnInit{
 
   @Output()
   reload: EventEmitter<number> = new EventEmitter();
+
+  aliases: string[];
 
   certificateForm: FormGroup;
   visible = false;
@@ -69,8 +71,12 @@ export class CreateCertificateDialogComponent implements OnInit{
     if(!this.certificateForm.valid) {
       return;
     }
-    console.log(this.certificateForm.value.startDate);
-    console.log(this.certificateForm.value.expirationDate);
+    console.log(this.certificateForm.value.alias);
+    console.log(this.aliases);
+    if(this.aliases.includes(this.certificateForm.value.alias)) {
+      this.errorMessage = 'This alias is taken. Please choose a new one.';
+      return;
+    }
     this.errorMessage = ""
     let certificate: CertificateNewDTO = this.certificateForm.value;
     // certificate.startDate = new Date(this.certificateForm.value.startDateString);
@@ -91,11 +97,4 @@ export class CreateCertificateDialogComponent implements OnInit{
       }
     });
   }
-
-  // onSubmit(): void {
-    
-    
-
-  //   this.dialogRef.close(this.formData);
-  // }
 }
