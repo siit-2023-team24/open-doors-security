@@ -1,0 +1,22 @@
+<mat-card class="review">
+    <div class="review-details">
+        <div class="user-info">
+            <div class="user-text">
+                <div class="txt-col">
+                    <div style="font-size: 16px;">User ID: {{ request.userId }}</div>
+                    <div style="font-size: 16px;">Timestamp: {{ request.timestamp | date:'dd.MM.yyyy.' }}</div>
+                </div>
+                <div *ngIf="!request.pending" class="txt-col">
+                    <div style="font-size: 16px;">Issuer: {{ request.issuerAlias }}</div>
+                </div>
+                <div *ngIf="request.pending" class="txt-col">
+                    <div style="font-size: 16px;">Status: pending</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="request.pending" class="delete-container">
+        <button mat-raised-button class="button delete-btn" (click)="openDenyDialog()">Deny</button>
+        <button mat-raised-button class="button delete-btn" (click)="openApproveDialog()">Approve</button>
+    </div>
+</mat-card>

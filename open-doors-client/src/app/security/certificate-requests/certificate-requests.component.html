@@ -1,1 +1,12 @@
-<p>certificate-requests works!</p>
+<div class="container">
+    <div class="list-item">
+        <h2>Certificate requests:</h2>
+        <mat-grid-list cols="1" rowHeight="250px" class="review-list">
+            <mat-grid-tile class="tile" *ngFor="let req of requests">
+                <app-certificate-request-card [request]="req" (reload)="reloadParent($event)" (onPlusClicked)="openCreateForm($event)"></app-certificate-request-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
+    <app-request-dialog (reload)="reloadParent($event)"></app-request-dialog>
+</div>

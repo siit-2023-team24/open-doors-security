@@ -37,13 +37,7 @@ public class CertificateDTO extends CertificateNewDTO {
         this.expirationDate = certificate.getNotAfter();
 
         this.extensions = new Extensions();
-
-        //TODO ne radi ovo za CA
-
-
         this.extensions.setCA(isCACertificate(certificate));
-
-//        this.extensions.setUsage(certificate.getKeyUsage()); TODO i ovo
 
         this.alias = alias;
         this.issuerAlias = issuerAlias;
