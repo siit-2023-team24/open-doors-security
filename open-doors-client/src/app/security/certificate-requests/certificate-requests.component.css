@@ -1,0 +1,27 @@
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 1000px;
+}
+
+.create-cert-text {
+  font-size: 20px; /* Adjust the font size as needed */
+  text-align: center;
+  margin: 0;
+}
+
+
+
+.list-item {
+  align-content: center;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.tile {
+  height: 200px;
+}
