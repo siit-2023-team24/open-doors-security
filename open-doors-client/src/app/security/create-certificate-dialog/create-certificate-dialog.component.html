@@ -6,22 +6,27 @@
           <mat-slide-toggle color="#0C4A60" formControlName="ca">
             CA
           </mat-slide-toggle>
-
-          <mat-form-field>
-            <mat-label>Select an Option</mat-label>
-            <mat-select [(value)]="extendedUsage">
-              <mat-option *ngFor="let use of extendedUsageText; let i = index" [value]="i">
-                {{ use }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
       </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+        <section class="checkbox-column">
+            <mat-label>Choose extended key usages:</mat-label>
+            <br>
+            <section class="checkbox-grid">
+                <section class="checkbox-column" *ngFor="let use of extendedUsageText; let i = index">
+                <mat-checkbox [checked]="extendedUsages.includes(i)" (change)="onExtendedUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                </section>
+            </section>
+        </section>
+    </div>
+
       <div fxLayout="row" fxLayoutGap="20px" class="amenities">
           <section class="checkbox-column">
-              <mat-label>Choose amenities</mat-label>
+              <mat-label>Choose key usages:</mat-label>
+              <br>
               <section class="checkbox-grid">
                   <section class="checkbox-column" *ngFor="let use of usageText; let i = index">
-                  <mat-checkbox [checked]="usage.includes(i)" (change)="onCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  <mat-checkbox [checked]="usage.includes(i)" (change)="onUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
                   </section>
               </section>
           </section>

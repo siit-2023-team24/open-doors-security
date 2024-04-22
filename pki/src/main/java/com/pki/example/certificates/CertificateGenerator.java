@@ -21,8 +21,10 @@ import java.security.Security;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class CertificateGenerator {
@@ -52,24 +54,28 @@ public class CertificateGenerator {
 
             if(extensions.isCA())
                 certGen.addExtension(Extension.basicConstraints, true, new BasicConstraints(true));
-            int keys = 0;
-            for (int i : extensions.getUsage()) {
-                System.out.println(i);
-                keys |= (int)Math.pow(2, i);
-            }
-            if (keys!=0) {
-                System.out.println(keys);
+
+            int[] usage = extensions.getUsage();
+            if (usage.length > 0) {
+                int keys = 0;
+                for (int i : extensions.getUsage()) {
+                    System.out.println(i);
+                    keys |= (int)Math.pow(2, i);
+                }
                 certGen.addExtension(Extension.keyUsage, true, new KeyUsage(keys));
             }
-            int extendedUsage = extensions.getExtendedUsage();
-            if(extendedUsage>-1) {
-                String oidString = "1.3.6.1.5.5.7." + extendedUsage;
 
-                ASN1ObjectIdentifier oid = new ASN1ObjectIdentifier(oidString);
-                KeyPurposeId keyPurposeId = KeyPurposeId.getInstance(oid);
-                ExtendedKeyUsage extendedKeyUsage = new ExtendedKeyUsage(new KeyPurposeId[] { keyPurposeId });
+            int[] extendedUsages = extensions.getExtendedUsages();
+            if(extendedUsages.length>0) {
+                List<KeyPurposeId> keyPurposeIds = new ArrayList<>();
+                for(int i : extendedUsages) {
+                    String oidString = "1.3.6.1.5.5.7." + i;
+                    ASN1ObjectIdentifier oid = new ASN1ObjectIdentifier(oidString);
+                    keyPurposeIds.add(KeyPurposeId.getInstance(oid));
 
-                System.out.println(Arrays.toString(extendedKeyUsage.getUsages()));
+                }
+                ExtendedKeyUsage extendedKeyUsage = new ExtendedKeyUsage(keyPurposeIds.toArray(new KeyPurposeId[0]));
+
                 certGen.addExtension(Extension.extendedKeyUsage, true, extendedKeyUsage);
             }
 

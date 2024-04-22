@@ -31,12 +31,13 @@ export class CreateCertificateDialogComponent implements OnInit{
   usageText: string[] =
   ["Encipher only", "CRL Sign", "Key certificate signature", "Key agreement", "Data encipherment",
   "Key encipherment", "Non-repudiation", "Digital signature", "Decipher only"];
-  extendedUsageText: string[] = ["None",
+
+  extendedUsages: number[] = [];
+  extendedUsageText: string[] = [
   "Any extended key usage", "Server authentication", "Client authentication", "Code signing", "Email protection",
   "IPSEC end system", "IPSEC tunnel", "IPSEC user", "Time stamping", "OCSP signing",
-  "DVCS", "SBGP Certificate AA server authentication", "SCVP responder", "EAP over PPP", "EAP over LAN",
+  "DVCS", "SBGP cert AA server auth", "SCVP responder", "EAP over PPP", "EAP over LAN",
   "SCVP server", "SCVP client", "IPSEC IKE", "Capwap AC", "Capwap WTP"]
-  extendedUsage: number = 0;
 
   certificateForm: FormGroup;
   extensionForm: FormGroup;
@@ -73,7 +74,7 @@ export class CreateCertificateDialogComponent implements OnInit{
     return this.extensionForm.get('checkboxes') as FormArray;
   }
 
-  onCheckboxChange(value: number, isChecked: boolean) {
+  onUsageCheckboxChange(value: number, isChecked: boolean) {
     if(value == 8) value = 15;
     if (isChecked) {
       this.usage.push(value);
@@ -81,6 +82,18 @@ export class CreateCertificateDialogComponent implements OnInit{
       const index = this.usage.indexOf(value);
       if (index >= 0) {
         this.usage.splice(index, 1);
+      }
+    }
+    console.log(this.usage);
+  }
+
+  onExtendedUsageCheckboxChange(value: number, isChecked: boolean) {
+    if (isChecked) {
+      this.extendedUsages.push(value);
+    } else {
+      const index = this.extendedUsages.indexOf(value);
+      if (index >= 0) {
+        this.extendedUsages.splice(index, 1);
       }
     }
     console.log(this.usage);
@@ -112,7 +125,7 @@ export class CreateCertificateDialogComponent implements OnInit{
     certificate.extensions = {
       ca: this.extensionForm.value.ca,
       usage: this.usage,
-      extendedUsage: this.extendedUsage - 1
+      extendedUsages: this.extendedUsages
     };
 
     certificate.issuerAlias = this.issuer;

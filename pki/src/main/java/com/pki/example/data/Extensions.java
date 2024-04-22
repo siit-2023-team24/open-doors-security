@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Extensions {
     private boolean CA;
     private int[] usage;
-    private int extendedUsage;
+    private int[] extendedUsages;
     public Extensions() {
     }
 }
