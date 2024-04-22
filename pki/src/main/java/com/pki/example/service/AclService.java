@@ -1,46 +1,48 @@
 package com.pki.example.service;
 
+import com.sun.jna.platform.win32.Netapi32Util;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.AclEntry;
 import java.nio.file.attribute.AclEntryPermission;
 import java.nio.file.attribute.AclFileAttributeView;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 
-import static java.nio.file.attribute.AclEntryType.ALLOW;
 import static java.nio.file.attribute.AclEntryType.DENY;
 
 @Service
 public class AclService {
 
-
     public void doAclAll() {
-        try {
-            // Path to the directory containing user profiles on Windows
-            Path userProfilesPath = Paths.get("C:/Users");
-
-            // List all files and directories in the user profiles directory
-            List<Path> userDirectories = Files.list(userProfilesPath).toList();
-
-            // Extract usernames from directory names
-            for (Path userDirectory : userDirectories) {
-                String username = userDirectory.getFileName().toString();
-                System.out.println(username);
-                //if(!username.equals("milic"))
-                    //doAcl(username);
+        String[] files = {"src/main/resources/static/privateKeys",
+                            "src/main/resources/static/aliases.csv",
+                            "src/main/resources/static/keystore1.jks",
+                            "src/main/resources/static/kspass.txt",
+                            "src/main/resources/static/revocations.csv",
+                            "src/main/resources/application.properties"};
+        Netapi32Util.User[] users = Netapi32Util.getUsers();
+        for(Netapi32Util.User user : users) {
+            Netapi32Util.Group[] groups = Netapi32Util.getUserGroups(user.name);
+            boolean isAdmin = false;
+            for (Netapi32Util.Group group : groups) {
+                if (group.name.equalsIgnoreCase("Administrators")) {
+                    isAdmin = true;
+                    break;
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (!isAdmin) continue;
+            for (String file : files) {
+                 doAcl(user.name, file);
+            }
         }
     }
 
-    public void doAcl(String username) {
-        Path path = Path.of("src/main/resources/static/milica2.txt");
+    public void doAcl(String username, String filepath) {
+        Path path = Path.of(filepath);
         System.out.println(username);
         UserPrincipal user;
 
