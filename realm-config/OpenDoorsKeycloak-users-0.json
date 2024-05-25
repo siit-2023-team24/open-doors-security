@@ -1,0 +1,55 @@
+{
+  "realm" : "OpenDoorsKeycloak",
+  "users" : [ {
+    "id" : "961a8371-121a-4dd5-aa5c-85b653fb9e1f",
+    "username" : "parabucki.sonja@gmail.com",
+    "firstName" : "Sonja",
+    "lastName" : "Parabucki",
+    "email" : "parabucki.sonja@gmail.com",
+    "emailVerified" : true,
+    "attributes" : {
+      "LDAP_ENTRY_DN" : [ "uid=parabucki.sonja@gmail.com,ou=users,ou=system" ],
+      "LDAP_ID" : [ "9e7360fc-c6da-43d3-b0c2-22f922f12bfa" ],
+      "createTimestamp" : [ "20240522121210.463Z" ],
+      "modifyTimestamp" : [ "20240522121330.910Z" ]
+    },
+    "createdTimestamp" : 1716379930457,
+    "enabled" : true,
+    "totp" : false,
+    "federationLink" : "e5906e70-e292-4814-a57d-598b980374c5",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "federatedIdentities" : [ {
+      "identityProvider" : "google",
+      "userId" : "109083365632500883644",
+      "userName" : "parabucki.sonja@gmail.com"
+    } ],
+    "realmRoles" : [ "default-roles-opendoorskeycloak" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "0dabcdec-60d3-4b05-bf41-ee2b3629899e",
+    "username" : "parabucki.sonja@jjzmaj.edu.rs",
+    "firstName" : "Sonja",
+    "lastName" : "Parabucki",
+    "email" : "parabucki.sonja@jjzmaj.edu.rs",
+    "emailVerified" : true,
+    "attributes" : {
+      "LDAP_ENTRY_DN" : [ "uid=parabucki.sonja@jjzmaj.edu.rs,ou=users,ou=system" ],
+      "LDAP_ID" : [ "90416f53-06b4-44af-a5cf-e9ce526bce8d" ],
+      "createTimestamp" : [ "20240525124311.985Z" ],
+      "modifyTimestamp" : [ "20240525124422.110Z" ]
+    },
+    "createdTimestamp" : 1716640991974,
+    "enabled" : true,
+    "totp" : false,
+    "federationLink" : "e5906e70-e292-4814-a57d-598b980374c5",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-opendoorskeycloak" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
