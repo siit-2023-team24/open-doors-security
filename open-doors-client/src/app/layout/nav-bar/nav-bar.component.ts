@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
+import { KeycloakService } from 'src/app/keycloak/keycloak.service';
 import { SocketService } from 'src/app/shared/socket.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class NavBarComponent implements OnInit {
   id: number;
   constructor(private router: Router,
               public authService: AuthService,
-              private socketService: SocketService) {
+              private socketService: SocketService,
+              private keycloakService: KeycloakService) {
   }
 
 
@@ -36,12 +38,15 @@ export class NavBarComponent implements OnInit {
     });
   }
 
-  logout() {
-    localStorage.removeItem('user');
-    this.router.navigate(['login']);
-    this.socketService.closeSockets();
-
+  async login() {
+    await this.keycloakService.init();
+    await this.keycloakService.login();
   }
+
+  async logout() {
+    await this.keycloakService.logout();
+  }
+
   refreshNavbar() {
     
   }

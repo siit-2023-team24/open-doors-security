@@ -71,11 +71,11 @@
     </div>
     
     <div *ngIf="role!='ROLE_ADMIN' && role!='ROLE_HOST' && role!='ROLE_GUEST' && role!='ROLE_SECURITY'" class="dark-orange-button-wrapper">
-        <button [routerLink]="['login']" [queryParams]="{title: 'Login'}" class="orangeBtn" mat-flat-button >Log in</button>
+        <button (click)="login()" class="orangeBtn" mat-flat-button >Log in</button>
     </div>
 
     <div *ngIf="role=='ROLE_ADMIN' || role=='ROLE_HOST' || role=='ROLE_GUEST' || role=='ROLE_SECURITY'" class="dark-orange-button-wrapper">
-        <button [routerLink]="['log out']" [queryParams]="{title: 'Logout'}" (click)="logout()" class="orangeBtn" mat-flat-button >Log out</button>
+        <button (click)="logout()" class="orangeBtn" mat-flat-button >Log out</button>
     </div>
 
 </div>
