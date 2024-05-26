@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +13,34 @@ import { ReservationManagementModule } from './reservation-management/reservatio
 import { FinancialReportManagementModule } from './financial-report-management/financial-report-management.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SecurityModule } from './security/security.module';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8080',
+        realm: 'OpenDoorsRealm',
+        clientId: 'OpenDoors'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      },
+      // shouldAddToken: (request) => {
+      //   const { method, url } = request;
+    
+      //   const isGetRequest = 'GET' === method.toUpperCase();
+      //   const acceptablePaths = ['/assets', '/clients/public'];
+      //   const isAcceptablePathMatch = acceptablePaths.some((path) =>
+      //     url.includes(path)
+      //   );
+    
+      //   return !(isGetRequest && isAcceptablePathMatch);
+      // }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -30,7 +57,8 @@ import { SecurityModule } from './security/security.module';
     ReservationManagementModule,
     FinancialReportManagementModule,
     NotificationsModule,
-    SecurityModule
+    SecurityModule,
+    KeycloakAngularModule
   ],
   providers: [
     {
@@ -38,6 +66,12 @@ import { SecurityModule } from './security/security.module';
       useClass: Interceptor,
       multi: true,
     },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
   ],
   bootstrap: [AppComponent]
 })

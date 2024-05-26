@@ -10,7 +10,7 @@ import { ChangePasswordComponent } from './user-management/change-password/chang
 import { MyAccommodationsComponent } from './accommodation-management/my-accommodations/my-accommodations.component';
 import { CreateAccommodationComponent } from './accommodation-management/create-accommodation/create-accommodation.component';
 import { AccountActivationComponent } from './user-management/account-activation/account-activation.component';
-import { AuthGuard } from './auth/guard';
+//import { AuthGuard } from './auth/guard';
 import { PendingAccommodationsComponent } from './accommodation-management/pending-accommodations/pending-accommodations.component';
 import { ReservationRequestGuestPageComponent } from './reservation-management/reservation-request-guest-page/reservation-request-guest-page.component';
 import { FavoritesPageComponent } from './accommodation-management/favorites-page/favorites-page.component';
@@ -22,6 +22,7 @@ import { UserReportsComponent } from './user-management/user-reports/user-report
 import { NotificationsComponent } from './notifications/notifications/notifications.component';
 import { CertificatesComponent } from './security/certificates/certificates.component';
 import { CertificateRequestsComponent } from './security/certificate-requests/certificate-requests.component';
+import { AuthGuard } from './keycloak/auth-guard';
 
 const routes: Routes = [
     {component: LoginComponent, path:"login"},
