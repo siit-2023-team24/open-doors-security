@@ -30,8 +30,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
-@RestController
-@RequestMapping("open-doors/auth")
+//@RestController
+//@RequestMapping("open-doors/auth")
 public class AuthenticationController {
     @Autowired
     private TokenUtils tokenUtils;

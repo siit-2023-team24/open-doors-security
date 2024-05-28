@@ -47,6 +47,10 @@ export class NavBarComponent implements OnInit {
     await this.keycloakService.logout();
   }
 
+  async openAccountManagement() {
+    await this.keycloakService.openAccountManagement();
+  }
+
   refreshNavbar() {
     
   }

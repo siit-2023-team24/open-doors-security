@@ -63,11 +63,7 @@
 
 
     <div *ngIf="role=='ROLE_ADMIN' || role=='ROLE_HOST' || role=='ROLE_GUEST'" class="transparent-button-wrapper">
-        <button [routerLink]="['profile']" [queryParams]="{title: 'My profile'}" class="tranparentBtn" mat-flat-button >Profile</button>
-    </div>
-
-    <div *ngIf="role!='ROLE_ADMIN' && role!='ROLE_HOST' && role!='ROLE_GUEST' && role!='ROLE_SECURITY'" class="transparent-button-wrapper">
-        <button [routerLink]="['register']" [queryParams]="{title: 'Registration'}" class="tranparentBtn" mat-flat-button >Register</button>
+        <button (click)="openAccountManagement()" class="tranparentBtn" mat-flat-button >Profile</button>
     </div>
     
     <div *ngIf="role!='ROLE_ADMIN' && role!='ROLE_HOST' && role!='ROLE_GUEST' && role!='ROLE_SECURITY'" class="dark-orange-button-wrapper">

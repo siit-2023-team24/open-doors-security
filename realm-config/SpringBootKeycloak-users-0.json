@@ -1,0 +1,24 @@
+{
+  "realm" : "SpringBootKeycloak",
+  "users" : [ {
+    "id" : "e8b17e82-d5da-443a-8a2b-8b304271b7bd",
+    "username" : "user1",
+    "emailVerified" : false,
+    "createdTimestamp" : 1715796546761,
+    "enabled" : true,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "eb40d66e-21e0-442a-b009-7c7b531ecd3f",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1715796587855,
+      "secretData" : "{\"value\":\"npbpSznXDZHRs4TAdbFuoSGlmxIYXVHUh4aRXkAaBE8KCbr6Yijr8I8LVbTwo01LPOcKbwhHD5zMEg+ZNr7woQ==\",\"salt\":\"AfmAT6x44Taj8fd63vH7Ng==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "default-roles-springbootkeycloak", "user" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

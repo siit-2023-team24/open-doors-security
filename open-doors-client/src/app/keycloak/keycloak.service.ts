@@ -36,12 +36,16 @@ export class KeycloakService {
   }
 
   login() {
-    return this.keycloak.login();
+    return this.keycloak?.login();
   }
 
   logout() {
     // this.keycloak.accountManagement();
-    return this.keycloak.logout({redirectUri: 'http://localhost:4200'});
+    return this.keycloak?.logout();
+  }
+
+  openAccountManagement() {
+    return this.keycloak?.accountManagement();
   }
 
 }
