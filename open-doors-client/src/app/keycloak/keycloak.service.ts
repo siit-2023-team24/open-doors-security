@@ -25,14 +25,23 @@ export class KeycloakService {
   }
 
   async init() {
-    const authenticated = await this.keycloak.init({
-      onLoad: 'login-required', // check-sso instead of login-required
+
+    this.keycloak.init({
+      onLoad: 'login-required', // Use check-sso instead of login-required
+      silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html' // Optional: Use this for silent SSO
+    }).then(authenticated => {
+      if (authenticated) {
+        console.log('User is authenticated');
+        this._profile = (this.keycloak.loadUserProfile()) as UserProfile;
+        this._profile.token = this.keycloak.token || '';
+      } else {
+        console.log('User is not authenticated');
+        // Perform actions for non-authenticated users
+      }
+    }).catch(err => {
+      console.error('Failed to initialize Keycloak', err);
     });
 
-    if (authenticated) {
-      this._profile = (await this.keycloak.loadUserProfile()) as UserProfile;
-      this._profile.token = this.keycloak.token || '';
-    }
   }
 
   login() {

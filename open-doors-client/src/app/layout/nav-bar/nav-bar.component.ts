@@ -39,7 +39,7 @@ export class NavBarComponent implements OnInit {
   }
 
   async login() {
-    await this.keycloakService.init();
+    // await this.keycloakService.init();
     await this.keycloakService.login();
   }
 

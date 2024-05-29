@@ -10,7 +10,7 @@ import { ChangePasswordComponent } from './user-management/change-password/chang
 import { MyAccommodationsComponent } from './accommodation-management/my-accommodations/my-accommodations.component';
 import { CreateAccommodationComponent } from './accommodation-management/create-accommodation/create-accommodation.component';
 import { AccountActivationComponent } from './user-management/account-activation/account-activation.component';
-import { AuthGuard } from './auth/guard';
+import { authGuard } from './guard/auth.guard';
 import { PendingAccommodationsComponent } from './accommodation-management/pending-accommodations/pending-accommodations.component';
 import { ReservationRequestGuestPageComponent } from './reservation-management/reservation-request-guest-page/reservation-request-guest-page.component';
 import { FavoritesPageComponent } from './accommodation-management/favorites-page/favorites-page.component';
@@ -27,24 +27,24 @@ const routes: Routes = [
     {component: LoginComponent, path:"login"},
     {component: RegisterComponent, path:"register"},
     {component: HomePageComponent, path:"home"},
-    {component: ProfileComponent, path:"profile", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
-    {component: ProfileEditComponent, path:"edit-profile", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
-    {component: ChangePasswordComponent, path:"edit-profile/change-password", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
-    {component: MyAccommodationsComponent, path:"my-accommodations", canActivate: [AuthGuard], data : {role: ['ROLE_HOST']}},
-    {component: CreateAccommodationComponent, path:"create-accommodation/:id/:accommodationId", canActivate: [AuthGuard], data : {role: ['ROLE_HOST']}},
+    {component: ProfileComponent, path:"profile", canActivate: [authGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
+    {component: ProfileEditComponent, path:"edit-profile", canActivate: [authGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
+    {component: ChangePasswordComponent, path:"edit-profile/change-password", canActivate: [authGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
+    {component: MyAccommodationsComponent, path:"my-accommodations", canActivate: [authGuard], data : {role: ['ROLE_HOST']}},
+    {component: CreateAccommodationComponent, path:"create-accommodation/:id/:accommodationId", canActivate: [authGuard], data : {role: ['ROLE_HOST']}},
     {component: AccountActivationComponent, path:"activate-account"},
     {component: AccommodationPageComponent, path:"accommodation/:id/:accommodationId"},
-    {component: PendingAccommodationsComponent, path: "pending-accommodations", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN']}},
-    {component: ReservationRequestGuestPageComponent, path: "reservation-requests", canActivate: [AuthGuard], data: {role: ['ROLE_GUEST', 'ROLE_HOST']}},
-    {component: FavoritesPageComponent, path:"favorites", canActivate: [AuthGuard], data : {role: ['ROLE_GUEST']}},
+    {component: PendingAccommodationsComponent, path: "pending-accommodations", canActivate: [authGuard], data : {role: ['ROLE_ADMIN']}},
+    {component: ReservationRequestGuestPageComponent, path: "reservation-requests", canActivate: [authGuard], data: {role: ['ROLE_GUEST', 'ROLE_HOST']}},
+    {component: FavoritesPageComponent, path:"favorites", canActivate: [authGuard], data : {role: ['ROLE_GUEST']}},
     {component: HostReviewsComponent, path:"host-reviews/:hostId"},
-    {component: FinancialReportPageComponent, path:"financial-reports", canActivate: [AuthGuard], data : {role: ['ROLE_HOST']}},
-    {component: ReportUserComponent, path:"report-users", canActivate: [AuthGuard], data : {role: ['ROLE_GUEST', 'ROLE_HOST']}},
-    {component: UserReportsComponent, path: "user-reports", canActivate: [AuthGuard], data: {role: ['ROLE_ADMIN']}},
-    {component: ReviewsAdminPageComponent, path: "reviews", canActivate: [AuthGuard], data : {role: ['ROLE_ADMIN']}},
-    {component: NotificationsComponent, path: "notifications", canActivate: [AuthGuard], data: {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
-    {component: CertificatesComponent, path: "certificates", canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
-    {component: CertificateRequestsComponent, path: "certificate-requests", canActivate: [AuthGuard], data: {role: ['ROLE_SECURITY']}},
+    {component: FinancialReportPageComponent, path:"financial-reports", canActivate: [authGuard], data : {role: ['ROLE_HOST']}},
+    {component: ReportUserComponent, path:"report-users", canActivate: [authGuard], data : {role: ['ROLE_GUEST', 'ROLE_HOST']}},
+    {component: UserReportsComponent, path: "user-reports", canActivate: [authGuard], data: {role: ['ROLE_ADMIN']}},
+    {component: ReviewsAdminPageComponent, path: "reviews", canActivate: [authGuard], data : {role: ['ROLE_ADMIN']}},
+    {component: NotificationsComponent, path: "notifications", canActivate: [authGuard], data: {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
+    {component: CertificatesComponent, path: "certificates", canActivate: [authGuard], data: {role: ['ROLE_SECURITY']}},
+    {component: CertificateRequestsComponent, path: "certificate-requests", canActivate: [authGuard], data: {role: ['ROLE_SECURITY']}},
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' },
 ];

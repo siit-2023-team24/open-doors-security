@@ -54,12 +54,12 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
-    @PutMapping(consumes = "application/json", value = "/new-password")
-    public ResponseEntity<Void> updateAccount(@RequestBody NewPasswordDTO newPasswordDTO){
-        this.service.changePassword(newPasswordDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PutMapping(consumes = "application/json", value = "/new-password")
+//    public ResponseEntity<Void> updateAccount(@RequestBody NewPasswordDTO newPasswordDTO){
+//        this.service.changePassword(newPasswordDTO);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @DeleteMapping(value = "/{id}")

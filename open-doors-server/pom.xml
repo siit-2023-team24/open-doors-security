@@ -129,6 +129,12 @@
 			<groupId>com.unboundid</groupId>
 			<artifactId>unboundid-ldapsdk</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-policy-enforcer</artifactId>
+			<version>24.0.4</version>
+		</dependency>
 	</dependencies>
 
 

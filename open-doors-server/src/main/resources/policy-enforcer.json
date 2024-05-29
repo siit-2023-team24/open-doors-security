@@ -1,0 +1,10 @@
+{
+  "realm": "OpenDoorsKeycloak",
+  "auth-server-url": "http://localhost:8080",
+  "resource": "OpenDoorsBackend",
+  "credentials":
+  {
+    "secret": "3U6WSMUJLo5TBIFvxSYSdgtomtRsAxSh"
+  },
+  "http-method-as-scope": true
+}
