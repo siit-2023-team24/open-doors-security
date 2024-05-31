@@ -8,12 +8,12 @@ import { UserManagementModule } from './user-management/user-management.module';
 import { AccommodationManagementModule } from './accommodation-management/accommodation-management.module';
 import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Interceptor } from './user-management/interceptor';
 import { ReservationManagementModule } from './reservation-management/reservation-management.module';
 import { FinancialReportManagementModule } from './financial-report-management/financial-report-management.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SecurityModule } from './security/security.module';
 import { KeycloakService } from './keycloak/keycloak.service';
+import { HttpTokenInterceptor } from './interceptor/http-token.interceptor';
 
 
 export function kcFactory(kcService: KeycloakService) {
@@ -40,7 +40,7 @@ export function kcFactory(kcService: KeycloakService) {
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: Interceptor,
+      useClass: HttpTokenInterceptor,
       multi: true,
     },
     {

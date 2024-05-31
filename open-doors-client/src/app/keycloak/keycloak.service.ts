@@ -12,7 +12,7 @@ export class KeycloakService {
   get keycloak() {
     if (!this._keycloak) {
       this._keycloak = new Keycloak({
-        url: 'http://localhost:8080',
+        url: 'http://127.0.0.1:8080',
         realm: 'OpenDoorsKeycloak',
         clientId: 'OpenDoors'
       });
@@ -26,7 +26,7 @@ export class KeycloakService {
 
   async init() {
     const authenticated = await this.keycloak.init({
-      onLoad: 'login-required', // check-sso instead of login-required
+      onLoad: 'check-sso', // check-sso instead of login-required
     });
 
     if (authenticated) {
