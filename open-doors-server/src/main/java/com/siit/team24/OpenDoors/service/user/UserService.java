@@ -283,4 +283,23 @@ public class UserService {
         return user.getId();
     }
 
+    public void refreshUser(UserTokenDTO dto) {
+        User user = findByUsername(dto.getUsername());
+        if (user == null) { //new user
+            user = new User();
+//            user.setId(dto.getId());
+            user.setUsername(dto.getUsername());
+            user.setRole(UserRole.valueOf(dto.getRole()));
+        }
+        //update values
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setPhone(dto.getPhone());
+        user.setEnabled(dto.isEnabled());
+        Address address = new Address(dto.getStreet(), dto.getNumber(), dto.getCity(), Country.fromString(dto.getCountry()));
+        user.setAddress(address);
+
+//        repo.save(user);
+    }
+
 }

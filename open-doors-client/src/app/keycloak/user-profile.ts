@@ -4,4 +4,10 @@ export interface UserProfile {
     firstName?: string;
     lastName?: string;
     token?: string;
+    phone?: string;
+    street?: string;
+    city?: string;
+    country?: string;
+    number?: number;
+    id?: string;
   }
