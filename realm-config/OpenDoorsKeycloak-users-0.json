@@ -1,47 +1,47 @@
 {
   "realm" : "OpenDoorsKeycloak",
   "users" : [ {
-    "id" : "961a8371-121a-4dd5-aa5c-85b653fb9e1f",
+    "id" : "e1e58d6b-da74-40f4-bcf2-b7ba88636819",
     "username" : "parabucki.sonja@gmail.com",
     "firstName" : "Sonja",
     "lastName" : "Parabucki",
     "email" : "parabucki.sonja@gmail.com",
     "emailVerified" : true,
     "attributes" : {
+      "country" : [ "Serbia" ],
+      "number" : [ "6" ],
       "LDAP_ENTRY_DN" : [ "uid=parabucki.sonja@gmail.com,ou=users,ou=system" ],
-      "LDAP_ID" : [ "9e7360fc-c6da-43d3-b0c2-22f922f12bfa" ],
+      "city" : [ "Novi Sad" ],
+      "phone" : [ "0621730300" ],
+      "street" : [ "Pennsylvania Avenue" ],
       "createTimestamp" : [ "20240522121210.463Z" ],
-      "modifyTimestamp" : [ "20240522121330.910Z" ]
+      "modifyTimestamp" : [ "20240522121330.910Z" ],
+      "LDAP_ID" : [ "9e7360fc-c6da-43d3-b0c2-22f922f12bfa" ]
     },
-    "createdTimestamp" : 1716379930457,
+    "createdTimestamp" : 1717246065039,
     "enabled" : true,
     "totp" : false,
     "federationLink" : "e5906e70-e292-4814-a57d-598b980374c5",
     "credentials" : [ ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "federatedIdentities" : [ {
-      "identityProvider" : "google",
-      "userId" : "109083365632500883644",
-      "userName" : "parabucki.sonja@gmail.com"
-    } ],
-    "realmRoles" : [ "default-roles-opendoorskeycloak" ],
+    "realmRoles" : [ "default-roles-opendoorskeycloak", "guest" ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {
-    "id" : "0dabcdec-60d3-4b05-bf41-ee2b3629899e",
+    "id" : "36e00791-8777-4b53-8b12-0f1134f4cf5c",
     "username" : "parabucki.sonja@jjzmaj.edu.rs",
     "firstName" : "Sonja",
     "lastName" : "Parabucki",
     "email" : "parabucki.sonja@jjzmaj.edu.rs",
-    "emailVerified" : true,
+    "emailVerified" : false,
     "attributes" : {
       "LDAP_ENTRY_DN" : [ "uid=parabucki.sonja@jjzmaj.edu.rs,ou=users,ou=system" ],
-      "LDAP_ID" : [ "90416f53-06b4-44af-a5cf-e9ce526bce8d" ],
       "createTimestamp" : [ "20240525124311.985Z" ],
-      "modifyTimestamp" : [ "20240525124422.110Z" ]
+      "modifyTimestamp" : [ "20240525124422.110Z" ],
+      "LDAP_ID" : [ "90416f53-06b4-44af-a5cf-e9ce526bce8d" ]
     },
-    "createdTimestamp" : 1716640991974,
+    "createdTimestamp" : 1717246065098,
     "enabled" : true,
     "totp" : false,
     "federationLink" : "e5906e70-e292-4814-a57d-598b980374c5",
@@ -49,6 +49,23 @@
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-opendoorskeycloak" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "922ec895-3337-4d00-bc43-3903e9c433e9",
+    "username" : "service-account-opendoorsbackend",
+    "emailVerified" : false,
+    "createdTimestamp" : 1717246022449,
+    "enabled" : true,
+    "totp" : false,
+    "serviceAccountClientId" : "OpenDoorsBackend",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-opendoorskeycloak" ],
+    "clientRoles" : {
+      "OpenDoorsBackend" : [ "uma_protection" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   } ]
