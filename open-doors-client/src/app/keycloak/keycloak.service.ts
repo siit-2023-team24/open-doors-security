@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import { UserProfile } from './user-profile';
+import { environment } from 'src/env/env';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +12,10 @@ import { UserProfile } from './user-profile';
 export class KeycloakService {
   private _keycloak: Keycloak | undefined;
   private _profile: UserProfile | undefined;
+
+  constructor(private http: HttpClient) {}
+
+  helper: JwtHelperService = new JwtHelperService();
   
   get keycloak() {
     if (!this._keycloak) {
@@ -40,12 +48,29 @@ export class KeycloakService {
   }
 
   logout() {
-    // this.keycloak.accountManagement();
     return this.keycloak?.logout();
   }
 
   openAccountManagement() {
     return this.keycloak?.accountManagement();
+  }
+
+  getId(): number{
+    return 0;
+  }
+
+  getUsername(): string {
+    let token = this.keycloak.token || "";
+    if (!token)
+      return "";
+    const decodedToken = this.helper.decodeToken(token);
+    return decodedToken.prefered_username || decodedToken.username || null;
+    // return this.helper.decodeToken(localStorage.getItem('user') || '').sub;
+  }
+
+  sendIdRequest(): Observable<number> {
+    const username = this.getUsername();
+    return this.http.get<number>(environment.apiHost + "/users/id/" + username);
   }
 
 }

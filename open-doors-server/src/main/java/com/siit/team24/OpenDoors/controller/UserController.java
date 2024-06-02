@@ -122,4 +122,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping(value = "/id/{username}")
+    public ResponseEntity<Long> getIdForUsername(@PathVariable String username) {
+        Long id = service.getIdForUsername(username);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
 }

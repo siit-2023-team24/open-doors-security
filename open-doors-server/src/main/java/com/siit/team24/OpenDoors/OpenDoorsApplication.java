@@ -12,8 +12,8 @@ public class OpenDoorsApplication {
 		SpringApplication.run(OpenDoorsApplication.class, args);
 	}
 
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+//	@Bean
+//	public RestTemplate restTemplate() {
+//		return new RestTemplate();
+//	}
 }

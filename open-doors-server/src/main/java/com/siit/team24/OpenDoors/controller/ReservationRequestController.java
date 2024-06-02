@@ -37,7 +37,7 @@ public class ReservationRequestController {
     private AccommodationService accommodationService;
 
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/guest/{guestId}")
     public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable Long guestId) {
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.findByGuestId(guestId);

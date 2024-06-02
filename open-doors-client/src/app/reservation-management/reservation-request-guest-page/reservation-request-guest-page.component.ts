@@ -34,6 +34,7 @@ export class ReservationRequestGuestPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
+    console.log(this.role);
     this.loadRequestStatuses();
     this.fetchRequests()
   }
@@ -49,17 +50,17 @@ export class ReservationRequestGuestPageComponent implements OnInit{
 
   private fetchRequests(): void {
     if (this.role == 'ROLE_GUEST') {
-      this.requestService.getAllForGuestId(this.authService.getId()).subscribe(
-        (requests: ReservationRequestForGuestDTO[]) => {
+      this.requestService.getAllForGuestId(this.authService.getId()).subscribe({
+        next: (requests: ReservationRequestForGuestDTO[]) => {
           this.requests = requests;
           requests.forEach(request => {
             console.log(request);
           })
         },
-        error => {
+        error: (error) => {
           console.error("Error fetching requests: ", error);
         }
-      )
+      });
     } else {
       this.requestService.getAllForHost(this.authService.getId()).subscribe({
         next: (data: ReservationRequestForHost[]) => {
