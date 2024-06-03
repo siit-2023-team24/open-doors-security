@@ -2,11 +2,12 @@ package com.siit.team24.OpenDoors.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.owasp.encoder.Encode;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -41,6 +42,21 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         String sanitizedBody = sanitizeInput(requestBody);
 
         return new ServletInputStream() {
+            @Override
+            public boolean isFinished() {
+                return false;
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setReadListener(ReadListener readListener) {
+
+            }
+
             private final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
                     sanitizedBody.getBytes()
             );
