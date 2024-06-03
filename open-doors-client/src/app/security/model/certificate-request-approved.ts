@@ -1,4 +1,4 @@
 export interface CertificateRequestApprovedDTO {
-    userId: number,
+    userId: string,
     issuer: string
 }

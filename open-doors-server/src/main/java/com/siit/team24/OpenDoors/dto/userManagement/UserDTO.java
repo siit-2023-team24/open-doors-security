@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 public class UserDTO {
-    protected Long id;
+    protected String id;
     protected String firstName;
     protected String lastName;
     @Pattern(regexp = "\\d{10}")
@@ -18,7 +18,7 @@ public class UserDTO {
     protected String country;
     protected Long imageId;
 
-    public UserDTO(Long id, String firstName, String lastName, String phone, String street, int number, String city, String country, Long imageId) {
+    public UserDTO(String id, String firstName, String lastName, String phone, String street, int number, String city, String country, Long imageId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +46,7 @@ public class UserDTO {
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 

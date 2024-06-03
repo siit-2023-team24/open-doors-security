@@ -35,7 +35,7 @@ public class CertificateRequestService {
         return new CertificateRequestDTO(request);
     }
 
-    private CertificateRequest findById(Long id) {
+    private CertificateRequest findById(String id) {
         Optional<CertificateRequest> request = repo.findById(id);
         return request.orElse(null);
     }
@@ -49,7 +49,7 @@ public class CertificateRequestService {
     }
 
 
-    public void deny(Long userId) {
+    public void deny(String userId) {
         CertificateRequest request = findById(userId);
         if (request == null) throw new EntityNotFoundException();
         repo.delete(request);
@@ -84,14 +84,14 @@ public class CertificateRequestService {
         return certificateService.createDTO(newDTO);
     }
 
-    public int getStatusFor(Long userId) {
+    public int getStatusFor(String userId) {
         CertificateRequest request = findById(userId);
         if (request == null) return -1;
         if (request.isPending()) return 0;
         return 1;
     }
 
-    public void delete(Long id) {
+    public void delete(String id) {
         repo.deleteById(id);
     }
 }

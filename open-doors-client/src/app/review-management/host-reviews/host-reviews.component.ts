@@ -16,7 +16,7 @@ export class HostReviewsComponent implements OnInit {
   username: string;
   name: string;
   isReviewable: boolean;
-  hostId: number;
+  hostId: string;
   averageRating: number;
   canReport: boolean;
   reviews: ReviewDetailsDTO[] = [];
@@ -27,9 +27,9 @@ export class HostReviewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.hostId = +params['hostId'];
+      this.hostId = params['hostId'];
       this.canReport = this.authService.isLoggedIn() && this.authService.getId() == this.hostId;
-      let guestId: number = 0;
+      let guestId: string = "none";
       if (this.authService.isLoggedIn() && this.authService.getRole()=="ROLE_GUEST") {
         guestId = this.authService.getId();
       }

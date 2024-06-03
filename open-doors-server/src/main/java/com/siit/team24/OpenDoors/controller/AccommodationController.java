@@ -60,9 +60,9 @@ public class AccommodationController {
         return new ResponseEntity<>(AccommodationSearchDTOS, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/{guestId}")
-    public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsWhenGuest(@PathVariable Long guestId) {
+    public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsWhenGuest(@PathVariable String guestId) {
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = accommodationService.findAllWithFavorites(guest);
         for (AccommodationSearchDTO as : accommodationSearchDTOS) {
@@ -71,7 +71,7 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodationSearchDTOS, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "editable/{id}")
     public ResponseEntity<AccommodationWholeDTO> getAccommodationForEdit(@PathVariable Long id) {
         try {
@@ -97,9 +97,9 @@ public class AccommodationController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/{accommodationId}/{guestId}")
-    public ResponseEntity<AccommodationWithTotalPriceDTO> getAccommodationWhenGuest(@PathVariable Long accommodationId, @PathVariable Long guestId) {
+    public ResponseEntity<AccommodationWithTotalPriceDTO> getAccommodationWhenGuest(@PathVariable Long accommodationId, @PathVariable String guestId) {
         Guest guest = (Guest) userService.findById(guestId);
         Accommodation accommodation = accommodationService.findById(accommodationId);
         AccommodationWithTotalPriceDTO dto = new AccommodationWithTotalPriceDTO(accommodation, 0.0);
@@ -109,7 +109,7 @@ public class AccommodationController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteAccommodation(@PathVariable Long id) {
         if (!reservationRequestService.isAccommodationReadyForDelete(id))
@@ -132,9 +132,9 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/search/{guestId}")
-    public ResponseEntity<List<AccommodationSearchDTO>> searchAccommodationsWhenGuest(@PathVariable Long guestId, @RequestBody SearchAndFilterDTO searchAndFilterDTO) {
+    public ResponseEntity<List<AccommodationSearchDTO>> searchAccommodationsWhenGuest(@PathVariable String guestId, @RequestBody SearchAndFilterDTO searchAndFilterDTO) {
 
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = accommodationService.searchWithFavorites(guest, searchAndFilterDTO);
@@ -158,7 +158,7 @@ public class AccommodationController {
         return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
     public ResponseEntity<Collection<AccommodationHostDTO>> getForHost(@PathVariable Long hostId) {
         Collection<AccommodationHostDTO> accommodations = accommodationService.getDTOsForHost(hostId);
@@ -187,7 +187,7 @@ public class AccommodationController {
         return ResponseEntity.ok(dtos);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @PostMapping("/addToFavorites")
     public ResponseEntity<Void> addToFavorites(@Valid @RequestBody AccommodationFavoritesDTO dto) {
         Accommodation accommodation = accommodationService.findById(dto.getAccommodationId());
@@ -197,7 +197,7 @@ public class AccommodationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @PostMapping("/removeFromFavorites")
     public ResponseEntity<Void> removeFromFavorites(@Valid @RequestBody AccommodationFavoritesDTO dto) {
         Accommodation accommodation = accommodationService.findById(dto.getAccommodationId());
@@ -207,9 +207,9 @@ public class AccommodationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+//    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/favorites/{guestId}")
-    public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsFavoritesPage(@PathVariable Long guestId) {
+    public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsFavoritesPage(@PathVariable String guestId) {
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = new ArrayList<>();
         for(Accommodation a: guest.getFavorites()) {
@@ -221,9 +221,9 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodationSearchDTOS, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/names/{hostId}")
-    public ResponseEntity<Collection<AccommodationNameDTO>> getHostAccommodations(@PathVariable Long hostId) {
+    public ResponseEntity<Collection<AccommodationNameDTO>> getHostAccommodations(@PathVariable String hostId) {
         Collection<AccommodationNameDTO> accommodations = accommodationService.getHostAccommodations(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }

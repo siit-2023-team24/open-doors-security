@@ -1,4 +1,4 @@
 export interface CertificateRequestNew {
-    userId: number,
+    userId: string,
     timestamp: Date
 }

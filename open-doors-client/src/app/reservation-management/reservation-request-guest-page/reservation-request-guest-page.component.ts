@@ -34,7 +34,6 @@ export class ReservationRequestGuestPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.role = this.authService.getRole();
-    console.log(this.role);
     this.loadRequestStatuses();
     this.fetchRequests()
   }

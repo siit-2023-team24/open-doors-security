@@ -13,7 +13,7 @@ import { SocketService } from 'src/app/shared/socket.service';
 export class NavBarComponent implements OnInit {
 
   role: string;
-  id: number;
+  id: string;
   constructor(private router: Router,
               public authService: AuthService,
               private socketService: SocketService,

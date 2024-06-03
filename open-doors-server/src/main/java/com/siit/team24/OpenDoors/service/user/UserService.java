@@ -55,7 +55,7 @@ public class UserService {
     @Autowired
     private HostReviewService hostReviewService;
 
-    public User findById(Long id) {
+    public User findById(String id) {
         Optional<User> user = repo.findById(id);
         if (user.isEmpty()){
             throw new EntityNotFoundException();}
@@ -111,53 +111,6 @@ public class UserService {
         return updated.toEditedDTO();
     }
 
-//    public User create(UserAccountDTO userAccountDTO) {
-//        if(userAccountDTO.getRole().equals("ROLE_GUEST")) {
-//            Guest guest = new Guest();
-//            guest.setFavorites(new HashSet<>());
-//            guest.setUsername(userAccountDTO.getUsername());
-//            guest.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//            guest.setLastPasswordResetDate(null);
-//            guest.setRole(UserRole.ROLE_GUEST);
-//            guest.setFirstName(userAccountDTO.getFirstName());
-//            guest.setLastName(userAccountDTO.getLastName());
-//            guest.setPhone(userAccountDTO.getPhone());
-//            guest.setImage(null);
-//            guest.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//            , Country.fromString(userAccountDTO.getCountry())));
-//            guest.setEnabled(false);
-//            return repo.save(guest);
-//        }
-//        if(userAccountDTO.getRole().equals("ROLE_HOST")){
-//            Host host = new Host();
-//            host.setUsername(userAccountDTO.getUsername());
-//            host.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//            host.setLastPasswordResetDate(null);
-//            host.setRole(UserRole.ROLE_HOST);
-//            host.setFirstName(userAccountDTO.getFirstName());
-//            host.setLastName(userAccountDTO.getLastName());
-//            host.setPhone(userAccountDTO.getPhone());
-//            host.setImage(null);
-//            host.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//                    , Country.fromString(userAccountDTO.getCountry())));
-//            host.setEnabled(false);
-//            return repo.save(host);
-//        }
-//        Admin admin = new Admin();
-//        admin.setUsername(userAccountDTO.getUsername());
-//        admin.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//        admin.setLastPasswordResetDate(null);
-//        admin.setRole(UserRole.ROLE_ADMIN);
-//        admin.setFirstName(userAccountDTO.getFirstName());
-//        admin.setLastName(userAccountDTO.getLastName());
-//        admin.setPhone(userAccountDTO.getPhone());
-//        admin.setImage(null);
-//        admin.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//                , Country.fromString(userAccountDTO.getCountry())));
-//        admin.setEnabled(false);
-//        return repo.save(admin);
-//    }
-
 //    public void sendActivationEmail(String recipient, String link) {
 //        SimpleMailMessage message = new SimpleMailMessage();
 //        message.setFrom("opendoorsteam24@gmail.com");
@@ -168,7 +121,7 @@ public class UserService {
 //    }
 
 
-    public void delete(Long id) {
+    public void delete(String id) {
         User user = findById(id);
 
         if (user.getRole() == UserRole.ROLE_GUEST) {
@@ -221,19 +174,19 @@ public class UserService {
         repo.save(user);
     }
 
-    public HostPublicDataDTO getPublicData(Long hostId) {
+    public HostPublicDataDTO getPublicData(String hostId) {
         Host host = (Host) repo.findById(hostId).get();
         HostPublicDataDTO dto = new HostPublicDataDTO(host);
         return dto;
     }
 
-    public List<String> getUsernames(List<Long> ids) { return this.repo.findUsernamesByIds(ids); }
+    public List<String> getUsernames(List<String> ids) { return this.repo.findUsernamesByIds(ids); }
 
     public List<UserSummaryDTO> getBlockedDTOs() {
         return repo.getBlockedDTOs();
     }
 
-    public void block(Long id, UserRole role) {
+    public void block(String id, UserRole role) {
         User user = findById(id);
         if (role.equals(UserRole.ROLE_GUEST))
             handlePendingRequests(user.getUsername());
@@ -244,7 +197,7 @@ public class UserService {
         repo.save(user);
     }
 
-    private void disableHostsAccommodations(Long id) {
+    private void disableHostsAccommodations(String id) {
         List<Accommodation> accommodations = accommodationService.findAllByHostId(id);
         for (Accommodation accommodation: accommodations) {
             reservationRequestService.denyActiveForAccommodation(accommodation.getId());
@@ -259,7 +212,7 @@ public class UserService {
         reservationRequestService.cancelFutureForGuest(username);
     }
 
-    public void unblock(Long id) {
+    public void unblock(String id) {
         User user = findById(id);
         if (user.getRole() == UserRole.ROLE_HOST)
             accommodationService.reviveByHostId(id);
@@ -267,18 +220,18 @@ public class UserService {
         repo.save(user);
     }
 
-    public List<NotificationType> getDisabledNotificationTypesFor(Long id) {
+    public List<NotificationType> getDisabledNotificationTypesFor(String id) {
         User user = findById(id);
         return user.getDisabledTypes();
     }
 
-    public void setDisabledNotificationTypesFor(Long id, List<NotificationType> types) {
+    public void setDisabledNotificationTypesFor(String id, List<NotificationType> types) {
         User user = findById(id);
         user.setDisabledTypes(types);
         repo.save(user);
     }
 
-    public Long getIdForUsername(String username) {
+    public String getIdForUsername(String username) {
         User user = repo.findByUsername(username);
         return user.getId();
     }
@@ -286,8 +239,11 @@ public class UserService {
     public void refreshUser(UserTokenDTO dto) {
         User user = findByUsername(dto.getUsername());
         if (user == null) { //new user
-            user = new User();
-//            user.setId(dto.getId());
+            if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_ADMIN)) user = new Admin();
+            else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_HOST)) user = new Host();
+            else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_SECURITY)) user = new Security();
+            else user = new Guest();
+            user.setId(dto.getId());
             user.setUsername(dto.getUsername());
             user.setRole(UserRole.valueOf(dto.getRole()));
         }
@@ -299,7 +255,7 @@ public class UserService {
         Address address = new Address(dto.getStreet(), dto.getNumber(), dto.getCity(), Country.fromString(dto.getCountry()));
         user.setAddress(address);
 
-//        repo.save(user);
+        repo.save(user);
     }
 
 }

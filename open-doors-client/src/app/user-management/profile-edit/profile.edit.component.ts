@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class ProfileEditComponent {
   
-  userDto: EditUser = {firstName: "", lastName: "", id: 0, country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
+  userDto: EditUser = {firstName: "", lastName: "", id: "", country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
  
   imgPath: string = "";
   selectedImage: File;

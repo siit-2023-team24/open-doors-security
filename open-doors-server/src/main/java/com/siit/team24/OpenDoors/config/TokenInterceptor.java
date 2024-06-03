@@ -53,10 +53,10 @@ public class TokenInterceptor implements HandlerInterceptor {
         String city = claims.getStringClaim("city");
         String street = claims.getStringClaim("street");
         int number = Integer.parseInt(claims.getStringClaim("number"));
-        String role = getRole(claims);
+//        String role = getRole(claims);
         boolean enabled = claims.getBooleanClaim("email_verified");
 
-        return new UserTokenDTO(username, role, userId, firstName, lastName,
+        return new UserTokenDTO(username, "ROLE_GUEST", userId, firstName, lastName, //TODO: extract role
                 phone, street, number, city, country, enabled);
     }
 

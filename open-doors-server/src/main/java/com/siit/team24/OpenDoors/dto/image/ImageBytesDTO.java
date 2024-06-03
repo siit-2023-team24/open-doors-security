@@ -7,13 +7,13 @@ import java.util.Arrays;
 public class ImageBytesDTO {
     private String name;
     private byte[] bytes;
-    private Long entityId;
+    private String entityId;
     private ImageType type;
 
     public ImageBytesDTO() {
     }
 
-    public ImageBytesDTO(String name, byte[] bytes, Long entityId, ImageType type) {
+    public ImageBytesDTO(String name, byte[] bytes, String entityId, ImageType type) {
         this.name = name;
         this.bytes = bytes;
         this.entityId = entityId;
@@ -36,11 +36,11 @@ public class ImageBytesDTO {
         this.bytes = bytes;
     }
 
-    public Long getEntityId() {
+    public String getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(Long entityId) {
+    public void setEntityId(String entityId) {
         this.entityId = entityId;
     }
 

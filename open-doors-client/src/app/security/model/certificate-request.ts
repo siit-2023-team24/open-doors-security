@@ -1,5 +1,5 @@
 export interface CertificateRequestDTO {
-    userId: number,
+    userId: string,
     timestamp: Date,
     pending: boolean,
     issuerAlias: string

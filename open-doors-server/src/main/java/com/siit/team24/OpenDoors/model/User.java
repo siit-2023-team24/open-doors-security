@@ -17,8 +17,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private String id;
     @Column(unique = true, nullable = false)
     private String username;
     @Enumerated
@@ -37,11 +36,11 @@ public class User {
     private List<NotificationType> disabledTypes;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -137,7 +136,7 @@ public class User {
 
     }
 
-    public User(Long id, String email, UserRole role, String firstName, String lastName, String phone, @Nullable Image image, Address address, boolean enabled, List<NotificationType> disabledTypes) {
+    public User(String id, String email, UserRole role, String firstName, String lastName, String phone, @Nullable Image image, Address address, boolean enabled, List<NotificationType> disabledTypes) {
         this.id = id;
         this.username = email;
         this.role = role;

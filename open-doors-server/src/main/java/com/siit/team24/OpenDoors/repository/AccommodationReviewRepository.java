@@ -13,13 +13,13 @@ public interface AccommodationReviewRepository extends JpaRepository<Accommodati
     List<AccommodationReview> findAllByAccommodationIdApproved(Long accommodationId);
 
     @Query("select ar from AccommodationReview ar where ar.accommodation.id = ?1 and ar.author.id = ?2")
-    List<AccommodationReview> findByAccommodationAndAuthor(Long accommodationId, Long guestId);
+    List<AccommodationReview> findByAccommodationAndAuthor(Long accommodationId, String guestId);
 
     @Query("select avg(ar.rating) from AccommodationReview ar where ar.accommodation.id = ?1 and ar.approved = true")
     Double getAverageRating(Long accommodationId);
 
     @Query("select ar from AccommodationReview ar where ar.author.id=?1 and ar.approved=false")
-    List<AccommodationReview> findByGuestId(Long guestId);
+    List<AccommodationReview> findByGuestId(String guestId);
 
     @Query("select new com.siit.team24.OpenDoors.dto.review.PendingAccommodationReviewDetailsDTO(r) from AccommodationReview r where r.approved=false")
     List<PendingAccommodationReviewDetailsDTO> findAllPending();

@@ -13,8 +13,8 @@ export class RequestDialogComponent {
   @Output()
   reload: EventEmitter<number> = new EventEmitter();
 
-  visible = false;
-  userId = 0;
+  visible: boolean = false;
+  userId: string = "";
   selectedIssuer: string = "";
 
   issuers: string[] = [];

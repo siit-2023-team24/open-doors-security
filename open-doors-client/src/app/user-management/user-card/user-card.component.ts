@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserCardComponent {
 
   @Input()
-  user: UserSummary = {id: 0, username: "", firstName: "", lastName: "", role: ""};
+  user: UserSummary = {id: "", username: "", firstName: "", lastName: "", role: ""};
 
   @Output()
   reload: EventEmitter<number> = new EventEmitter();
@@ -38,7 +38,7 @@ export class UserCardComponent {
       next: () => {
         this.showSnackBar("Unblocked user");
         console.log("Unblocked user " + this.user.id)
-        this.reload.emit(this.user.id);
+        this.reload.emit(1);
       },
       error: (error) => {
         console.error("Error unblocking user: " + this.user.id);

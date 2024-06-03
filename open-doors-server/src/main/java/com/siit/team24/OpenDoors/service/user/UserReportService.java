@@ -36,7 +36,7 @@ public class UserReportService {
         return report.get();
     }
 
-    public List<String> getReportableUsers(Long userId, boolean isGuestComplainant){
+    public List<String> getReportableUsers(String userId, boolean isGuestComplainant){
 
         List<Long> evidencedReservationIds = new ArrayList<Long>();
         evidencedReservationIds.add(-1L);
@@ -47,8 +47,8 @@ public class UserReportService {
             }
         }
 
-        List<Long> reportableUserIds = this.reservationRequestService.getReportableUserIds(userId, evidencedReservationIds, isGuestComplainant);
-        reportableUserIds.add(-1L);
+        List<String> reportableUserIds = this.reservationRequestService.getReportableUserIds(userId, evidencedReservationIds, isGuestComplainant);
+        reportableUserIds.add("-1L");
         return this.userService.getUsernames(reportableUserIds);
     }
 
@@ -82,11 +82,11 @@ public class UserReportService {
     public void resolve(Long id) {
         UserReport report = findById(id);
         userService.block(report.getRecipient().getId(), report.getRecipient().getRole());
-        pendingAccommodationService.deleteAllForHost(report.getId());
+        pendingAccommodationService.deleteAllForHost(report.getRecipient().getId()); // GRESKA?
         resolveAllFor(report.getRecipient().getId());
     }
 
-    private void resolveAllFor(Long recipientId) {
+    private void resolveAllFor(String recipientId) {
         List<UserReport> reports = userReportRepository.findAllByRecipientId(recipientId);
         for (UserReport report: reports) {
             if (report.getStatus() == UserReportStatus.ACTIVE) {
@@ -96,7 +96,7 @@ public class UserReportService {
         }
     }
 
-    public void deleteAllFor(Long recipientId) {
+    public void deleteAllFor(String recipientId) {
         List<UserReport> reports = userReportRepository.findAllByRecipientId(recipientId);
         userReportRepository.deleteAll(reports);
     }

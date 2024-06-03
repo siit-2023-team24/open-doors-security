@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @Entity
 public class CertificateRequest {
     @Id
-    private Long userId;
+    private String userId;
     private boolean pending;
     private Timestamp timestamp;
     @Nullable
@@ -31,18 +31,18 @@ public class CertificateRequest {
 
     }
 
-    public CertificateRequest(Long userId, boolean pending, Timestamp timestamp, @Nullable String issuerAlias) {
+    public CertificateRequest(String userId, boolean pending, Timestamp timestamp, @Nullable String issuerAlias) {
         this.userId = userId;
         this.pending = pending;
         this.timestamp = timestamp;
         this.issuerAlias = issuerAlias;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

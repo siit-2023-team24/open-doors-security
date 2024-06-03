@@ -35,7 +35,7 @@ export class CertificateRequestsComponent {
     this.ngOnInit();
   }
 
-  openCreateForm(id: number) {
+  openCreateForm(id: string) {
     this.otherChild.userId = id;
     this.otherChild.visible = true;
     this.otherChild.ngOnInit();

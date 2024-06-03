@@ -1,5 +1,5 @@
 export interface DateRangeReportParams {
-    hostId: number;
+    hostId: string;
     startDate: Date | null;
     endDate: Date | null;
 }

@@ -1,5 +1,5 @@
 export interface EditUser {
-    id: number;
+    id: string;
 
     imageId?: number;
 

@@ -14,10 +14,10 @@ public class AccommodationReviewWholeDTO extends NewReviewDTO {
     }
 
     public AccommodationReviewWholeDTO(AccommodationReview review) {
-        this(review.getRating(), review.getComment(), review.getAuthor().getId(), review.getAccommodation().getId(), review.getId(), review.getTimestamp(), review.isApproved());
+        this(review.getRating(), review.getComment(), review.getAuthor().getId(), review.getAccommodation().getId().toString(), review.getId(), review.getTimestamp(), review.isApproved());
     }
 
-    public AccommodationReviewWholeDTO(int rating, String comment, Long authorId, Long recipientId, Long id, Timestamp timestamp, boolean approved) {
+    public AccommodationReviewWholeDTO(int rating, String comment, String authorId, String recipientId, Long id, Timestamp timestamp, boolean approved) {
         super(rating, comment, authorId, recipientId);
         this.id = id;
         this.timestamp = timestamp;

@@ -32,7 +32,7 @@ const routes: Routes = [
     {component: ChangePasswordComponent, path:"edit-profile/change-password", canActivate: [authGuard], data : {role: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_GUEST']}},
     {component: MyAccommodationsComponent, path:"my-accommodations", canActivate: [authGuard], data : {role: ['ROLE_HOST']}},
     {component: CreateAccommodationComponent, path:"create-accommodation/:id/:accommodationId", canActivate: [authGuard], data : {role: ['ROLE_HOST']}},
-    {component: AccountActivationComponent, path:"activate-account"},
+    // {component: AccountActivationComponent, path:"activate-account"},
     {component: AccommodationPageComponent, path:"accommodation/:id/:accommodationId"},
     {component: PendingAccommodationsComponent, path: "pending-accommodations", canActivate: [authGuard], data : {role: ['ROLE_ADMIN']}},
     {component: ReservationRequestGuestPageComponent, path: "reservation-requests", canActivate: [authGuard], data: {role: ['ROLE_GUEST', 'ROLE_HOST']}},

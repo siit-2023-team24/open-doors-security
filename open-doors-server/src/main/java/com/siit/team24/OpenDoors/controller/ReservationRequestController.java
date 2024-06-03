@@ -39,7 +39,7 @@ public class ReservationRequestController {
 
 //    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/guest/{guestId}")
-    public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable Long guestId) {
+    public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable String guestId) {
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.findByGuestId(guestId);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class ReservationRequestController {
     @PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/search/{guestId}")
     public ResponseEntity<List<ReservationRequestForGuestDTO>> searchReservationRequests(
-            @PathVariable Long guestId,
+            @PathVariable String guestId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
 
         System.out.println(requestSearchAndFilterDTO);

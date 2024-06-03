@@ -47,11 +47,11 @@ export class UserService {
     });
   }
 
-  activateUser(ip: string, id: number): Observable<String> {
+  activateUser(ip: string, id: string): Observable<String> {
     return this.httpClient.post<String>('http://' + ip +':9090/open-doors/auth/activate-user/' + id, null, {headers: this.headers});
   }
   
-  getUser(id: number): Observable<EditUser> {
+  getUser(id: string): Observable<EditUser> {
     return this.httpClient.get<EditUser>(environment.apiHost + '/users/' + id);
   }
 
@@ -63,7 +63,7 @@ export class UserService {
     return this.httpClient.put<NewPasswordDTO>(environment.apiHost + '/users/new-password', dto);
   }
 
-  delete(id: number): Observable<Object> {
+  delete(id: string): Observable<Object> {
     return this.httpClient.delete(environment.apiHost + '/users/' + id);
   }
 
@@ -71,7 +71,7 @@ export class UserService {
     return this.httpClient.get<UserSummary[]>(environment.apiHost + '/users/blocked');
   }
 
-  unblock(id: number): Observable<Object> {
+  unblock(id: string): Observable<Object> {
     return this.httpClient.get(environment.apiHost + '/users/unblock/' + id);
   }
 }

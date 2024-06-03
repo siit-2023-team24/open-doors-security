@@ -33,7 +33,7 @@ public class UserReportController {
 
     @PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
     @GetMapping(value="/{id}")
-    public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable Long id,
+    public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable String id,
                         @RequestParam boolean isGuestComplainant) {
         List<String> reportableUserIds = userReportService.getReportableUsers(id, isGuestComplainant);
         return new ResponseEntity<>(reportableUserIds, HttpStatus.OK);

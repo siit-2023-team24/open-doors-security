@@ -2,8 +2,8 @@ export interface AccommodationReviewWholeDTO {
     id: number,
     rating: number,
     comment: string,
-    authorId: number,
-    recipientId: number,
+    authorId: string,
+    recipientId: string,
     timestamp: Date,
     approved: boolean
 }

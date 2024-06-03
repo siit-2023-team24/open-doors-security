@@ -55,8 +55,12 @@ export class KeycloakService {
     return this.keycloak?.accountManagement();
   }
 
-  getId(): number{
-    return 0;
+  getId(): string{
+    let token = this.keycloak.token || "";
+    if (!token)
+      return "";
+    const decodedToken = this.helper.decodeToken(token);
+    return decodedToken.sub
   }
 
   getUsername(): string {
@@ -71,6 +75,10 @@ export class KeycloakService {
   sendIdRequest(): Observable<number> {
     const username = this.getUsername();
     return this.http.get<number>(environment.apiHost + "/users/id/" + username);
+  }
+
+  async refreshToken() {
+    await this.keycloak.updateToken(0);
   }
 
 }

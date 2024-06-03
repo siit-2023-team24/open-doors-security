@@ -38,7 +38,7 @@ public class AccommodationReviewService {
         return dtos;
     }
 
-    public boolean isReviewable(Long accommodationId, Long guestId) {
+    public boolean isReviewable(Long accommodationId, String guestId) {
         boolean hasNotYetReviewed = accommodationReviewRepository.findByAccommodationAndAuthor(accommodationId, guestId).isEmpty();
         return hasNotYetReviewed;
     }
@@ -47,7 +47,7 @@ public class AccommodationReviewService {
 
     public Double getAverageRating(Long accommodationId) { return accommodationReviewRepository.getAverageRating(accommodationId); }
 
-    public ReviewDetailsDTO findUnapprovedForGuest(Long guestId) {
+    public ReviewDetailsDTO findUnapprovedForGuest(String guestId) {
         List<AccommodationReview> reviews = accommodationReviewRepository.findByGuestId(guestId);
         if (reviews.isEmpty()) return null;
         return new ReviewDetailsDTO(reviews.get(0));
