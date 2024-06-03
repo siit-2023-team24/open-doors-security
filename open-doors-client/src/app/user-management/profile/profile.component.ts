@@ -22,7 +22,7 @@ import { saveAs } from 'file-saver';
 })
 export class ProfileComponent implements OnInit {
   
-  user: EditUser = {firstName: "", lastName: "", id: 0, country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
+  user: EditUser = {firstName: "", lastName: "", id: "", country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
 
   username: string = this.authService.getUsername();
   

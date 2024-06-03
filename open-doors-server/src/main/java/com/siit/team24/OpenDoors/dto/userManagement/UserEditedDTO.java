@@ -8,7 +8,7 @@ public class UserEditedDTO extends UserDTO {
     public UserEditedDTO() {
     }
 
-    public UserEditedDTO(Long id, String firstName, String lastName, String phone, String street, int number,
+    public UserEditedDTO(String id, String firstName, String lastName, String phone, String street, int number,
                          String city, String country, Long imageId, MultipartFile file) {
         super(id, firstName, lastName, phone, street, number, city, country, imageId);
         this.file = file;

@@ -44,7 +44,7 @@ public class CertificateRequestController {
     }
 
     @DeleteMapping("/deny/{userId}")
-    public ResponseEntity<Void> deny(@PathVariable Long userId) {
+    public ResponseEntity<Void> deny(@PathVariable String userId) {
         service.deny(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -73,7 +73,7 @@ public class CertificateRequestController {
     }
 
     @GetMapping("/userId/{userId}")
-    public ResponseEntity<Integer> getCertificateStatus(@PathVariable Long userId) {
+    public ResponseEntity<Integer> getCertificateStatus(@PathVariable String userId) {
         int status = service.getStatusFor(userId);
         return new ResponseEntity<>(status, HttpStatus.OK);
     }

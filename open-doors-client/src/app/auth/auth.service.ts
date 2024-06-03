@@ -14,11 +14,8 @@ export class AuthService {
 
   helper: JwtHelperService = new JwtHelperService();
   
-  getId(): number {
-    // return this.keycloakService.getId();
-    return 2;
-    // return this.helper.decodeToken(localStorage.getItem('user') || '').id;
-    
+  getId(): string {
+    return this.keycloakService.getId();
   }
 
   getUsername(): string {

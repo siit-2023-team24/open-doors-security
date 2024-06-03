@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CertificateRequestApproved {
-    private Long userId;
+    private String userId;
     private String issuer;
 }

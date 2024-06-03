@@ -5,10 +5,9 @@ import jakarta.validation.constraints.Min;
 public class AccommodationFavoritesDTO {
     @Min(1)
     private Long accommodationId;
-    @Min(1)
-    private Long guestId;
+    private String guestId;
 
-    public AccommodationFavoritesDTO(Long accommodationId, Long guestId) {
+    public AccommodationFavoritesDTO(Long accommodationId, String guestId) {
         this.accommodationId = accommodationId;
         this.guestId = guestId;
     }
@@ -21,11 +20,11 @@ public class AccommodationFavoritesDTO {
         this.accommodationId = accommodationId;
     }
 
-    public Long getGuestId() {
+    public String getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(Long guestId) {
+    public void setGuestId(String guestId) {
         this.guestId = guestId;
     }
 

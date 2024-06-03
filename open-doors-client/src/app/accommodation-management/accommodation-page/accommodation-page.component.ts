@@ -47,7 +47,7 @@ export class AccommodationPageComponent implements OnInit{
     street: "",
     number: 0,
     isFavoriteForGuest: false,
-    hostId: 0,
+    hostId: "",
     blocked: false
   };
   imagePaths: string[] = [];
@@ -175,7 +175,7 @@ export class AccommodationPageComponent implements OnInit{
           this.isAccommodationDetailsReady = true;
           this.imagePaths = this.accommodation.images.map(id => this.imageService.getPath(id, false));
           if (accommodationId){
-            this.loadReviews(accommodationId, 0);
+            this.loadReviews(accommodationId, "none");
           }
         },
         error: (error) => {
@@ -186,7 +186,7 @@ export class AccommodationPageComponent implements OnInit{
     
   }
 
-  loadReviews(accommodationId: number, guestId: number): void {
+  loadReviews(accommodationId: number, guestId: string): void {
     this.reviewService.getReviewsForAccommodation(accommodationId, guestId).subscribe({
       next: (accommodationReviews: AccommodationReviewsDTO) => {
       this.reviews = accommodationReviews.reviews;
@@ -199,7 +199,7 @@ export class AccommodationPageComponent implements OnInit{
   }
 
   reloadReviews(id: number) {
-    let guestId = 0;
+    let guestId: string = "none";
     if (this.isGuest)
       guestId = this.authService.getId();
 

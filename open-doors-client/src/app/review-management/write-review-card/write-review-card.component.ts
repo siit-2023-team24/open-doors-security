@@ -19,7 +19,7 @@ export class WriteReviewCardComponent {
               private reviewService: ReviewService,
               private socketService: SocketService) {}
 
-  @Input() recipientId: number;
+  @Input() recipientId: string;
   @Input() isHost: boolean;
   @Input() hostUsername: string;
   stars: boolean[] = [false, false, false, false, false]

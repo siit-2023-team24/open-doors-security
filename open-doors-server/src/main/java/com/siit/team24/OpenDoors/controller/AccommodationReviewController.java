@@ -36,12 +36,12 @@ public class AccommodationReviewController {
 
 
     @GetMapping(value = "/{accommodationId}")
-    public ResponseEntity<AccommodationReviewsDTO> getAccommodationReviewsForDetails(@PathVariable Long accommodationId, @RequestParam Long guestId) {
+    public ResponseEntity<AccommodationReviewsDTO> getAccommodationReviewsForDetails(@PathVariable Long accommodationId, @RequestParam String guestId) {
         AccommodationReviewsDTO dto = new AccommodationReviewsDTO(
                 accommodationReviewService.findApprovedForAccommodation(accommodationId),
                 false,
                 null);
-        if (guestId != 0) {
+        if (!guestId.equals("none")) {
             dto.setIsReviewable(accommodationReviewService.isReviewable(accommodationId, guestId)
             && reservationRequestService.hasStayed(guestId, accommodationId));
             dto.setUnapprovedReview(accommodationReviewService.findUnapprovedForGuest(guestId));
@@ -53,7 +53,7 @@ public class AccommodationReviewController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<AccommodationReviewWholeDTO> createAccommodationReview(@Valid @RequestBody NewReviewDTO reviewDTO) {
         AccommodationReview review = new AccommodationReview(reviewDTO);
-        review.setAccommodation(accommodationService.findById(reviewDTO.getRecipientId()));
+        review.setAccommodation(accommodationService.findById(Long.parseLong(reviewDTO.getRecipientId())));
         review.setAuthor((Guest) userService.findById(reviewDTO.getAuthorId()));
         accommodationReviewService.save(review);
         AccommodationReviewWholeDTO returnDto = new AccommodationReviewWholeDTO(review);

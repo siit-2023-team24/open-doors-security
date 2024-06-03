@@ -33,7 +33,7 @@ public class ImageService {
     }
 
 
-    public ImageBytesDTO getImageBytesDTO(Long id, boolean isProfile, Long entityId) throws IOException {
+    public ImageBytesDTO getImageBytesDTO(Long id, boolean isProfile, String entityId) throws IOException {
         Optional<Image> image = repo.findById(id);
         if (image.isEmpty()) throw new EntityNotFoundException();
 

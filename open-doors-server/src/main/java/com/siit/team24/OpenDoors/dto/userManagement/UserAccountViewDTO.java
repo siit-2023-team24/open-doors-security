@@ -11,7 +11,7 @@ public class UserAccountViewDTO extends UserDTO {
 
     }
 
-    public UserAccountViewDTO(Long id, String firstName, String lastName, String phone, String street, int number, String city, String country, Long imageId, String email, String role) {
+    public UserAccountViewDTO(String id, String firstName, String lastName, String phone, String street, int number, String city, String country, Long imageId, String email, String role) {
         super(id, firstName, lastName, phone, street, number, city, country, imageId);
         this.username = email;
         this.role = role;

@@ -12,15 +12,15 @@ export class NotificationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllFor(id: number): Observable<Notification[]> {
+  getAllFor(id: string): Observable<Notification[]> {
     return this.httpClient.get<Notification[]>(environment.apiHost + '/users/' + id + '/notifications');
   }
 
-  getDisabledFor(id: number): Observable<NotificationType[]> {
+  getDisabledFor(id: string): Observable<NotificationType[]> {
     return this.httpClient.get<NotificationType[]>(environment.apiHost + '/users/' + id + '/disabled-notifications');
   }
 
-  setDisabledFor(id: number, types: NotificationType[]): Observable<Object> {
+  setDisabledFor(id: string, types: NotificationType[]): Observable<Object> {
     return this.httpClient.put(environment.apiHost + '/users/' + id + '/disabled-notifications', types);
   }
 }

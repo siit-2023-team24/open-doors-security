@@ -19,7 +19,7 @@ export class CertificateRequestCardComponent {
   reload: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  onPlusClicked: EventEmitter<number> = new EventEmitter();
+  onPlusClicked: EventEmitter<string> = new EventEmitter();
 
   
   constructor(private service: CertificateRequestService,

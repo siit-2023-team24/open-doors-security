@@ -31,7 +31,7 @@ public class AccommodationWithTotalPriceDTO {
     private String street;
     private int number;
     private boolean isFavoriteForGuest;
-    private Long hostId;
+    private String hostId;
     private boolean blocked;
 
     public AccommodationWithTotalPriceDTO() {}
@@ -41,7 +41,7 @@ public class AccommodationWithTotalPriceDTO {
                 accommodation.getAddress().getCity(), accommodation.getAddress().getCountry().getCountryName(), accommodation.getAddress().getStreet(), accommodation.getAddress().getNumber(), accommodation.getIsPricePerGuest(), totalPrice, null, accommodation.getHost().getUsername(), accommodation.getHost().getId(), accommodation.isBlocked());
     }
 
-    public AccommodationWithTotalPriceDTO(Long id, String name, String description, String location, List<Amenity> amenities, Set<Image> images, int minGuests, int maxGuests, AccommodationType accommodationType, List<DateRange> availability, double price, List<SeasonalRate> seasonalRates, String city, String country, String street, int number, boolean isPricePerNight, Double totalPrice, Double averageRating, String host, Long hostId, boolean blocked) {
+    public AccommodationWithTotalPriceDTO(Long id, String name, String description, String location, List<Amenity> amenities, Set<Image> images, int minGuests, int maxGuests, AccommodationType accommodationType, List<DateRange> availability, double price, List<SeasonalRate> seasonalRates, String city, String country, String street, int number, boolean isPricePerNight, Double totalPrice, Double averageRating, String host, String hostId, boolean blocked) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -70,11 +70,11 @@ public class AccommodationWithTotalPriceDTO {
         this.blocked = blocked;
     }
 
-    public Long getHostId() {
+    public String getHostId() {
         return hostId;
     }
 
-    public void setHostId(Long hostId) {
+    public void setHostId(String hostId) {
         this.hostId = hostId;
     }
 

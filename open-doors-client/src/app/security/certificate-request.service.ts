@@ -26,11 +26,11 @@ export class CertificateRequestService {
     return this.httpClient.post<CertificateRequestDTO>(environment.pkiHost + '/certificate-requests/approve', certificateDTO)
   }
 
-  deny(userId: number): Observable<Object> {
+  deny(userId: string): Observable<Object> {
     return this.httpClient.delete(environment.pkiHost + '/certificate-requests/deny/' + userId)
   }
 
-  getFor(userId: number): Observable<number> {
+  getFor(userId: string): Observable<number> {
     return this.httpClient.get<number>(environment.pkiHost + '/certificate-requests/userId/' + userId);
   }
 

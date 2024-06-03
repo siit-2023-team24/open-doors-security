@@ -83,7 +83,7 @@ public class ReservationRequestService {
         }
     }
 
-    public List<ReservationRequestForGuestDTO> findByGuestId(Long guestId) {
+    public List<ReservationRequestForGuestDTO> findByGuestId(String guestId) {
         List<ReservationRequest> allRequests = repo.findAll();
         List<ReservationRequestForGuestDTO> dtos = new ArrayList<>();
 
@@ -98,7 +98,7 @@ public class ReservationRequestService {
         return dtos;
     }
 
-    public List<ReservationRequestForGuestDTO> searchRequests(Long guestId, ReservationRequestSearchAndFilterDTO searchAndFilterDTO) {
+    public List<ReservationRequestForGuestDTO> searchRequests(String guestId, ReservationRequestSearchAndFilterDTO searchAndFilterDTO) {
         List<ReservationRequestForGuestDTO> guestRequests = findByGuestId(guestId);
         List<ReservationRequestForGuestDTO> filteredRequests = new ArrayList<>();
 
@@ -239,7 +239,7 @@ public class ReservationRequestService {
     }
 
 
-    public boolean wasHosted(Long guestId, Long hostId) {
+    public boolean wasHosted(String guestId, String hostId) {
         List<ReservationRequest> stays = repo.getPastForGuestAndHostConfirmed(guestId, hostId);
         return (!stays.isEmpty());
     }
@@ -247,7 +247,7 @@ public class ReservationRequestService {
     //    For testing purposes, replace the deadline for reviewing an accommodation
     //    (7 days = 1000 * 60 * 60 * 24 * 7) with 7 minutes:
     //    1000 * 60 * 7
-    public boolean hasStayed(Long guestId, Long accommodationId) {
+    public boolean hasStayed(String guestId, Long accommodationId) {
         Timestamp deadline = new Timestamp(System.currentTimeMillis() -
                 1000 * 60 * 60 * 24 * 20 -
                 1000 * 60 * 60 * 24 * 20
@@ -256,10 +256,10 @@ public class ReservationRequestService {
         return (!stays.isEmpty());
     }
 
-    public List<Long> getReportableUserIds(Long userId, List<Long> evidencedReservationIds, boolean isGuestComplainant) {
+    public List<String> getReportableUserIds(String userId, List<Long> evidencedReservationIds, boolean isGuestComplainant) {
         if (isGuestComplainant) return repo.getHostsByGuestId(userId, evidencedReservationIds);
         return repo.getGuestsByHostId(userId, evidencedReservationIds);
     }
 
-    public List<ReservationRequest> findByHostAndGuest(Long hostId, Long guestId) { return this.repo.findByHostAndGuest(hostId, guestId); }
+    public List<ReservationRequest> findByHostAndGuest(String hostId, String guestId) { return this.repo.findByHostAndGuest(hostId, guestId); }
 }

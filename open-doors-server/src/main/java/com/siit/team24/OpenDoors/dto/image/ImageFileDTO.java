@@ -7,12 +7,12 @@ public class ImageFileDTO {
     private Long imageId;
     private MultipartFile file;
     private ImageType imageType;
-    private Long entityId;
+    private String entityId;
 
     public ImageFileDTO() {
     }
 
-    public ImageFileDTO(Long imageId, MultipartFile file, ImageType imageType, Long entityId) {
+    public ImageFileDTO(Long imageId, MultipartFile file, ImageType imageType, String entityId) {
         this.imageId = imageId;
         this.file = file;
         this.imageType = imageType;
@@ -43,11 +43,11 @@ public class ImageFileDTO {
         this.imageType = imageType;
     }
 
-    public Long getEntityId() {
+    public String getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(Long entityId) {
+    public void setEntityId(String entityId) {
         this.entityId = entityId;
     }
 

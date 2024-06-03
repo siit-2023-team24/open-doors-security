@@ -55,8 +55,12 @@ export class KeycloakService {
     return this.keycloak?.accountManagement();
   }
 
-  getId(): number{
-    return 0;
+  getId(): string{
+    let token = this.keycloak.token || "";
+    if (!token)
+      return "";
+    const decodedToken = this.helper.decodeToken(token);
+    return decodedToken.sub
   }
 
   getUsername(): string {

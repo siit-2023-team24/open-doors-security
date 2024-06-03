@@ -55,7 +55,7 @@ public class UserService {
     @Autowired
     private HostReviewService hostReviewService;
 
-    public User findById(Long id) {
+    public User findById(String id) {
         Optional<User> user = repo.findById(id);
         if (user.isEmpty()){
             throw new EntityNotFoundException();}
@@ -168,7 +168,7 @@ public class UserService {
 //    }
 
 
-    public void delete(Long id) {
+    public void delete(String id) {
         User user = findById(id);
 
         if (user.getRole() == UserRole.ROLE_GUEST) {
@@ -221,19 +221,19 @@ public class UserService {
         repo.save(user);
     }
 
-    public HostPublicDataDTO getPublicData(Long hostId) {
+    public HostPublicDataDTO getPublicData(String hostId) {
         Host host = (Host) repo.findById(hostId).get();
         HostPublicDataDTO dto = new HostPublicDataDTO(host);
         return dto;
     }
 
-    public List<String> getUsernames(List<Long> ids) { return this.repo.findUsernamesByIds(ids); }
+    public List<String> getUsernames(List<String> ids) { return this.repo.findUsernamesByIds(ids); }
 
     public List<UserSummaryDTO> getBlockedDTOs() {
         return repo.getBlockedDTOs();
     }
 
-    public void block(Long id, UserRole role) {
+    public void block(String id, UserRole role) {
         User user = findById(id);
         if (role.equals(UserRole.ROLE_GUEST))
             handlePendingRequests(user.getUsername());
@@ -244,7 +244,7 @@ public class UserService {
         repo.save(user);
     }
 
-    private void disableHostsAccommodations(Long id) {
+    private void disableHostsAccommodations(String id) {
         List<Accommodation> accommodations = accommodationService.findAllByHostId(id);
         for (Accommodation accommodation: accommodations) {
             reservationRequestService.denyActiveForAccommodation(accommodation.getId());
@@ -259,7 +259,7 @@ public class UserService {
         reservationRequestService.cancelFutureForGuest(username);
     }
 
-    public void unblock(Long id) {
+    public void unblock(String id) {
         User user = findById(id);
         if (user.getRole() == UserRole.ROLE_HOST)
             accommodationService.reviveByHostId(id);
@@ -267,18 +267,18 @@ public class UserService {
         repo.save(user);
     }
 
-    public List<NotificationType> getDisabledNotificationTypesFor(Long id) {
+    public List<NotificationType> getDisabledNotificationTypesFor(String id) {
         User user = findById(id);
         return user.getDisabledTypes();
     }
 
-    public void setDisabledNotificationTypesFor(Long id, List<NotificationType> types) {
+    public void setDisabledNotificationTypesFor(String id, List<NotificationType> types) {
         User user = findById(id);
         user.setDisabledTypes(types);
         repo.save(user);
     }
 
-    public Long getIdForUsername(String username) {
+    public String getIdForUsername(String username) {
         User user = repo.findByUsername(username);
         return user.getId();
     }
@@ -287,7 +287,7 @@ public class UserService {
         User user = findByUsername(dto.getUsername());
         if (user == null) { //new user
             user = new User();
-//            user.setId(dto.getId());
+            user.setId(dto.getId());
             user.setUsername(dto.getUsername());
             user.setRole(UserRole.valueOf(dto.getRole()));
         }
@@ -299,7 +299,7 @@ public class UserService {
         Address address = new Address(dto.getStreet(), dto.getNumber(), dto.getCity(), Country.fromString(dto.getCountry()));
         user.setAddress(address);
 
-//        repo.save(user);
+        repo.save(user);
     }
 
 }

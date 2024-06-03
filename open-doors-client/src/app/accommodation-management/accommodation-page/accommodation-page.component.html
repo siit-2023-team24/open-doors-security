@@ -134,7 +134,7 @@
     <div *ngIf="isReviewable">
       <hr class="horizontal-separator">
       <h2>Since you have stayed at this accommodation in the past 7 days, why not leave a review?</h2>
-      <app-write-review-card [recipientId]="accommodation.id" [isHost]="false" [hostUsername]="accommodation.host" (reload)="reloadReviews($event)"></app-write-review-card>
+      <app-write-review-card [recipientId]="accommodation.id.toString()" [isHost]="false" [hostUsername]="accommodation.host" (reload)="reloadReviews($event)"></app-write-review-card>
     </div>
     <div *ngIf="reviews.length == 0">
       <hr class="horizontal-separator">

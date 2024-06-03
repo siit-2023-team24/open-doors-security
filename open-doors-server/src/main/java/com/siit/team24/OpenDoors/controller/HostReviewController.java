@@ -30,9 +30,9 @@ public class HostReviewController {
 
 
     @GetMapping(value = "/{hostId}")
-    public ResponseEntity<HostPublicDataDTO> getHostReviewsForProfile(@PathVariable Long hostId, @RequestParam Long guestId) {
+    public ResponseEntity<HostPublicDataDTO> getHostReviewsForProfile(@PathVariable String hostId, @RequestParam String guestId) {
         HostPublicDataDTO host = userService.getPublicData(hostId);
-        if (guestId != 0) {
+        if (!guestId.equals("none")) {
             host.setIsReviewable(hostReviewService.isReviewable(hostId, guestId));
         }
         List<ReviewDetailsDTO> reviews = hostReviewService.findAllForHost(hostId);

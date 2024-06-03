@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 public class MakeReservationRequestDTO {
     Long accommodationId;
-    Long guestId;
+    String guestId;
     @FutureOrPresent
     Timestamp startDate;
     @FutureOrPresent
@@ -19,7 +19,7 @@ public class MakeReservationRequestDTO {
 
     public MakeReservationRequestDTO() {}
 
-    public MakeReservationRequestDTO(Long accommodationId, Long guestId, Timestamp startDate, Timestamp endDate, int numberOfGuests, Double totalPrice) {
+    public MakeReservationRequestDTO(Long accommodationId, String guestId, Timestamp startDate, Timestamp endDate, int numberOfGuests, Double totalPrice) {
         this.accommodationId = accommodationId;
         this.guestId = guestId;
         this.startDate = startDate;
@@ -36,11 +36,11 @@ public class MakeReservationRequestDTO {
         this.accommodationId = accommodationId;
     }
 
-    public Long getGuestId() {
+    public String getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(Long guestId) {
+    public void setGuestId(String guestId) {
         this.guestId = guestId;
     }
 

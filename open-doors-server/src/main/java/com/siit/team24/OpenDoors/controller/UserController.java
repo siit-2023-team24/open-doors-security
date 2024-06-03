@@ -63,7 +63,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         service.delete(id);
         pendingAccommodationService.deleteAllForHost(id);
         userReportService.deleteAllFor(id);
@@ -81,7 +81,7 @@ public class UserController {
     @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserAccountViewDTO> getUser(
-            @PathVariable Long id) {
+            @PathVariable String id) {
         try {
             User user = service.findById(id);
             return new ResponseEntity<>(user.toAccountViewDTO(), HttpStatus.OK);
@@ -102,29 +102,29 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/unblock/{id}")
-    public ResponseEntity<Void> unblock(@PathVariable Long id){
+    public ResponseEntity<Void> unblock(@PathVariable String id){
         service.unblock(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}/disabled-notifications")
-    public ResponseEntity<List<NotificationType>> getDisabledNotificationTypes(@PathVariable Long id) {
+    public ResponseEntity<List<NotificationType>> getDisabledNotificationTypes(@PathVariable String id) {
         List<NotificationType> types = service.getDisabledNotificationTypesFor(id);
         return new ResponseEntity<>(types, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(value = "/{id}/disabled-notifications")
-    public ResponseEntity<Void> setDisabledNotificationTypes(@PathVariable Long id,
+    public ResponseEntity<Void> setDisabledNotificationTypes(@PathVariable String id,
                                                              @RequestBody List<NotificationType> types) {
         service.setDisabledNotificationTypesFor(id, types);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/id/{username}")
-    public ResponseEntity<Long> getIdForUsername(@PathVariable String username) {
-        Long id = service.getIdForUsername(username);
+    public ResponseEntity<String> getIdForUsername(@PathVariable String username) {
+        String id = service.getIdForUsername(username);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 

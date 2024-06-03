@@ -11,6 +11,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Data
 public class CertificateNewRequestDTO {
-    protected Long userId;
+    protected String userId;
     protected Timestamp timestamp;
 }

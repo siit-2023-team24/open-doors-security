@@ -18,5 +18,5 @@ public interface PendingAccommodationRepository extends JpaRepository<PendingAcc
     Collection<PendingAccommodationHostDTO> findByHost(Long hostId);
 
     @Query("select a from PendingAccommodation a where a.host.id =:hostId")
-    List<PendingAccommodation> findAllByHostId(Long hostId);
+    List<PendingAccommodation> findAllByHostId(String hostId);
 }
