@@ -111,53 +111,6 @@ public class UserService {
         return updated.toEditedDTO();
     }
 
-//    public User create(UserAccountDTO userAccountDTO) {
-//        if(userAccountDTO.getRole().equals("ROLE_GUEST")) {
-//            Guest guest = new Guest();
-//            guest.setFavorites(new HashSet<>());
-//            guest.setUsername(userAccountDTO.getUsername());
-//            guest.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//            guest.setLastPasswordResetDate(null);
-//            guest.setRole(UserRole.ROLE_GUEST);
-//            guest.setFirstName(userAccountDTO.getFirstName());
-//            guest.setLastName(userAccountDTO.getLastName());
-//            guest.setPhone(userAccountDTO.getPhone());
-//            guest.setImage(null);
-//            guest.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//            , Country.fromString(userAccountDTO.getCountry())));
-//            guest.setEnabled(false);
-//            return repo.save(guest);
-//        }
-//        if(userAccountDTO.getRole().equals("ROLE_HOST")){
-//            Host host = new Host();
-//            host.setUsername(userAccountDTO.getUsername());
-//            host.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//            host.setLastPasswordResetDate(null);
-//            host.setRole(UserRole.ROLE_HOST);
-//            host.setFirstName(userAccountDTO.getFirstName());
-//            host.setLastName(userAccountDTO.getLastName());
-//            host.setPhone(userAccountDTO.getPhone());
-//            host.setImage(null);
-//            host.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//                    , Country.fromString(userAccountDTO.getCountry())));
-//            host.setEnabled(false);
-//            return repo.save(host);
-//        }
-//        Admin admin = new Admin();
-//        admin.setUsername(userAccountDTO.getUsername());
-//        admin.setPassword(passwordEncoder.encode(userAccountDTO.getPassword()));
-//        admin.setLastPasswordResetDate(null);
-//        admin.setRole(UserRole.ROLE_ADMIN);
-//        admin.setFirstName(userAccountDTO.getFirstName());
-//        admin.setLastName(userAccountDTO.getLastName());
-//        admin.setPhone(userAccountDTO.getPhone());
-//        admin.setImage(null);
-//        admin.setAddress(new Address(userAccountDTO.getStreet(), userAccountDTO.getNumber(), userAccountDTO.getCity()
-//                , Country.fromString(userAccountDTO.getCountry())));
-//        admin.setEnabled(false);
-//        return repo.save(admin);
-//    }
-
 //    public void sendActivationEmail(String recipient, String link) {
 //        SimpleMailMessage message = new SimpleMailMessage();
 //        message.setFrom("opendoorsteam24@gmail.com");
@@ -286,7 +239,10 @@ public class UserService {
     public void refreshUser(UserTokenDTO dto) {
         User user = findByUsername(dto.getUsername());
         if (user == null) { //new user
-            user = new User();
+            if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_ADMIN)) user = new Admin();
+            else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_HOST)) user = new Host();
+            else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_SECURITY)) user = new Security();
+            else user = new Guest();
             user.setId(dto.getId());
             user.setUsername(dto.getUsername());
             user.setRole(UserRole.valueOf(dto.getRole()));

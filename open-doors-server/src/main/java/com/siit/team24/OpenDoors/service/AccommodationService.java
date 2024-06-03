@@ -298,7 +298,7 @@ public class AccommodationService {
         return dtos;
     }
 
-    public Collection<AccommodationNameDTO> getHostAccommodations(Long hostId) {
+    public Collection<AccommodationNameDTO> getHostAccommodations(String hostId) {
         List<Accommodation> accommodations = findAll();
         List<AccommodationNameDTO> hostAccommodations = new ArrayList<>();
         for(Accommodation a: accommodations) {
