@@ -77,4 +77,8 @@ export class KeycloakService {
     return this.http.get<number>(environment.apiHost + "/users/id/" + username);
   }
 
+  async refreshToken() {
+    await this.keycloak.updateToken(0);
+  }
+
 }

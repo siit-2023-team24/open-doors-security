@@ -41,12 +41,10 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    // return localStorage.getItem('user')!=null;
     return this.keycloakService.keycloak.authenticated || false;
   }
 
-  logout(): void {
-    // localStorage.removeItem('user');
-    this.keycloakService.logout();
+  async logout() {
+    await this.keycloakService.logout();
   }
 }

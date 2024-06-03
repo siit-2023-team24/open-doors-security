@@ -56,8 +56,4 @@ export class NavBarComponent implements OnInit {
   refreshNavbar() {
     
   }
-
-  printRole() {
-    console.log(this.authService.getRole())
-  }
 }
