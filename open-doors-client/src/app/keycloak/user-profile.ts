@@ -10,4 +10,5 @@ export interface UserProfile {
     country?: string;
     number?: number;
     id?: string;
+    memberOf?: string;
   }
