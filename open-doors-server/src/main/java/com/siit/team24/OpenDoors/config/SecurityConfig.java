@@ -67,7 +67,7 @@ public class SecurityConfig {
                         headers.xssProtection(
                                 xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)
                         ).contentSecurityPolicy(
-                                cps -> cps.policyDirectives("script-src 'self'")
+                                cps -> cps.policyDirectives("default-src 'self'; script-src 'self'")
                         ));
         return http.build();
     }
