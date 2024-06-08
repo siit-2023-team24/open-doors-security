@@ -15,7 +15,7 @@ public interface PendingAccommodationRepository extends JpaRepository<PendingAcc
     Collection<PendingAccommodationHostDTO> findAllDtos();
 
     @Query("select new com.siit.team24.OpenDoors.dto.pendingAccommodation.PendingAccommodationHostDTO(a) from PendingAccommodation a where a.host.id =:hostId")
-    Collection<PendingAccommodationHostDTO> findByHost(Long hostId);
+    Collection<PendingAccommodationHostDTO> findByHost(String hostId);
 
     @Query("select a from PendingAccommodation a where a.host.id =:hostId")
     List<PendingAccommodation> findAllByHostId(String hostId);

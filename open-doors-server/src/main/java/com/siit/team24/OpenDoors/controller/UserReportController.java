@@ -24,14 +24,14 @@ public class UserReportController {
     @Autowired
     private UserReportService userReportService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserReportDTO>> getAllUserReports() {
         List<UserReportDTO> reports = userReportService.findAllDTOs();
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
+    //@PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
     @GetMapping(value="/{id}")
     public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable String id,
                         @RequestParam boolean isGuestComplainant) {
@@ -39,8 +39,8 @@ public class UserReportController {
         return new ResponseEntity<>(reportableUserIds, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
-    @PostMapping(consumes = "application/json")
+    //@PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
+    @PostMapping(value="/create" ,consumes = "application/json")
     public ResponseEntity<UserReportDTO> createUserReport(@Valid @RequestBody NewUserReportDTO dto) {
         UserReport report = userReportService.createReport(dto);
         UserReportDTO returnDto = new UserReportDTO(report);
@@ -48,14 +48,14 @@ public class UserReportController {
         return new ResponseEntity<>(returnDto, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/dismiss/{id}")
     public ResponseEntity<UserReportDTO> dismiss(@PathVariable Long id) {
         UserReportDTO dto = userReportService.dismiss(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/resolve/{id}")
     public ResponseEntity<Void> resolve(@PathVariable Long id) {
         userReportService.resolve(id);

@@ -21,8 +21,8 @@ public class FinancialReportController {
     @Autowired
     FinancialReportService financialReportService;
 
-    @PreAuthorize("hasRole('HOST')")
-//    @PostMapping(value = "/dateRangeReport")
+//    @PreAuthorize("hasRole('HOST')")
+    @PostMapping(value = "/dateRangeReport")
     public ResponseEntity<List<DateRangeReportDTO>> getDateRangeReport(@Valid @RequestBody DateRangeReportParamsDTO reportParams) {
         List<DateRangeReportDTO> report = financialReportService.getDateRangeReports(reportParams.getHostId(), reportParams.getStartDate(), reportParams.getEndDate());
 

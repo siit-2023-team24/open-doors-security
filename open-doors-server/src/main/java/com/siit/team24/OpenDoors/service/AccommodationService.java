@@ -93,7 +93,7 @@ public class AccommodationService {
             revive(accommodation.getId());
     }
 
-    public Collection<AccommodationHostDTO> getDTOsForHost(Long hostId) {
+    public Collection<AccommodationHostDTO> getDTOsForHost(String hostId) {
         return accommodationRepository.findAllDtoByHostId(hostId);
     }
 

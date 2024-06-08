@@ -23,7 +23,7 @@ export class AuthService {
     if (!token)
       return "";
     const decodedToken = this.helper.decodeToken(token);
-    return decodedToken.prefered_username || decodedToken.username || null;
+    return decodedToken.preferred_username || decodedToken.username || null;
     // return this.helper.decodeToken(localStorage.getItem('user') || '').sub;
   }
 

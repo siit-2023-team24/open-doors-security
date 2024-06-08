@@ -25,7 +25,7 @@ export class AccommodationService {
   add(dto: AccommodationWholeEdited): Observable<AccommodationWholeEdited>{
     console.log("in service:");
     console.log(dto);
-    return this.http.post<AccommodationWholeEdited>(environment.apiHost + '/pending-accommodations', dto);
+    return this.http.post<AccommodationWholeEdited>(environment.apiHost + '/pending-accommodations/save', dto);
   }
 
   getAll() : Observable<AccommodationSearchDTO[]> {

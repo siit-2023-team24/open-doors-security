@@ -27,7 +27,7 @@ public interface ReservationRequestRepository extends JpaRepository<ReservationR
 
 
     @Query("select r from ReservationRequest r where r.accommodation.host.id = :hostId")
-    List<ReservationRequest> findByHost(Long hostId);
+    List<ReservationRequest> findByHost(String hostId);
 
     @Query("select count(r) from ReservationRequest r where r.guest.id = :guestId and r.status = 3")
     int countCancelledBy(String guestId);

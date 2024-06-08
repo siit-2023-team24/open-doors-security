@@ -18,7 +18,7 @@ import java.util.List;
 public class User {
     @Id
     private String id;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String username;
     @Enumerated
     private UserRole role;

@@ -13,7 +13,7 @@ import java.util.List;
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
 
     @Query("select new com.siit.team24.OpenDoors.dto.accommodation.AccommodationHostDTO(a) from Accommodation a where a.host.id =:hostId and a.blocked=false")
-    Collection<AccommodationHostDTO> findAllDtoByHostId(Long hostId);
+    Collection<AccommodationHostDTO> findAllDtoByHostId(String hostId);
 
     @Query("select a from Accommodation a where a.host.id =:hostId")
     List<Accommodation> findAllByHostId(String hostId);

@@ -70,6 +70,13 @@
       "containerId" : "85872c72-1031-488e-a334-6beba5ec357a",
       "attributes" : { }
     }, {
+      "id" : "07edc881-b2a0-488f-a999-c9f06dbe8840",
+      "name" : "security",
+      "composite" : false,
+      "clientRole" : false,
+      "containerId" : "85872c72-1031-488e-a334-6beba5ec357a",
+      "attributes" : { }
+    }, {
       "id" : "5a209af5-22ec-4bd7-9184-86f6f778e326",
       "name" : "admin",
       "description" : "",
@@ -132,7 +139,7 @@
         "composite" : true,
         "composites" : {
           "client" : {
-            "realm-management" : [ "manage-realm", "view-identity-providers", "manage-events", "query-groups", "query-users", "query-clients", "view-clients", "view-events", "view-realm", "manage-authorization", "create-client", "view-authorization", "query-realms", "view-users", "manage-clients", "impersonation", "manage-users", "manage-identity-providers" ]
+            "realm-management" : [ "manage-realm", "manage-events", "view-identity-providers", "query-groups", "query-users", "query-clients", "view-clients", "view-events", "view-realm", "manage-authorization", "create-client", "view-authorization", "query-realms", "view-users", "manage-clients", "impersonation", "manage-users", "manage-identity-providers" ]
           }
         },
         "clientRole" : true,
@@ -282,14 +289,6 @@
         "containerId" : "84ca391b-0cde-4d72-b6b3-656dd65650ff",
         "attributes" : { }
       } ],
-      "OpenDoorsBackend" : [ {
-        "id" : "25c2cc0b-fb07-4a7b-87da-7c4117f4f6fc",
-        "name" : "uma_protection",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "006cf1a3-900a-4df6-a92e-86e24d952eaa",
-        "attributes" : { }
-      } ],
       "account" : [ {
         "id" : "e9fc6df0-fa89-44ba-8286-4fbb03def2a4",
         "name" : "view-applications",
@@ -364,6 +363,14 @@
         "clientRole" : true,
         "containerId" : "c75a7535-3f4c-4939-86b9-b025d21c0c6a",
         "attributes" : { }
+      } ],
+      "OpenDoorsBackend" : [ {
+        "id" : "25c2cc0b-fb07-4a7b-87da-7c4117f4f6fc",
+        "name" : "uma_protection",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "006cf1a3-900a-4df6-a92e-86e24d952eaa",
+        "attributes" : { }
       } ]
     }
   },
@@ -420,6 +427,154 @@
     } ]
   },
   "clients" : [ {
+    "id" : "c75a7535-3f4c-4939-86b9-b025d21c0c6a",
+    "clientId" : "account",
+    "name" : "${client_account}",
+    "description" : "",
+    "rootUrl" : "${authBaseUrl}",
+    "adminUrl" : "",
+    "baseUrl" : "/realms/OpenDoorsKeycloak/account/",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-secret",
+    "redirectUris" : [ "/realms/OpenDoorsKeycloak/account/*" ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : false,
+    "consentRequired" : false,
+    "standardFlowEnabled" : true,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : false,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : true,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "oidc.ciba.grant.enabled" : "false",
+      "post.logout.redirect.uris" : "+",
+      "oauth2.device.authorization.grant.enabled" : "true",
+      "display.on.consent.screen" : "false",
+      "backchannel.logout.session.required" : "true",
+      "backchannel.logout.revoke.offline.tokens" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : false,
+    "nodeReRegistrationTimeout" : 0,
+    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  }, {
+    "id" : "6285d362-55ca-4311-95e4-13f393119d75",
+    "clientId" : "account-console",
+    "name" : "${client_account-console}",
+    "description" : "",
+    "rootUrl" : "${authBaseUrl}",
+    "adminUrl" : "",
+    "baseUrl" : "/realms/OpenDoorsKeycloak/account/",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-secret",
+    "redirectUris" : [ "/realms/OpenDoorsKeycloak/account/*" ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : false,
+    "consentRequired" : false,
+    "standardFlowEnabled" : true,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : false,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : true,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "oidc.ciba.grant.enabled" : "false",
+      "backchannel.logout.session.required" : "true",
+      "post.logout.redirect.uris" : "+",
+      "oauth2.device.authorization.grant.enabled" : "true",
+      "display.on.consent.screen" : "false",
+      "pkce.code.challenge.method" : "S256",
+      "backchannel.logout.revoke.offline.tokens" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : false,
+    "nodeReRegistrationTimeout" : 0,
+    "protocolMappers" : [ {
+      "id" : "ee299a7f-ca54-4b6e-b3c7-225c21f22e54",
+      "name" : "audience resolve",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-audience-resolve-mapper",
+      "consentRequired" : false,
+      "config" : { }
+    } ],
+    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  }, {
+    "id" : "90a0c911-b36e-40ea-8d85-09da341b3139",
+    "clientId" : "admin-cli",
+    "name" : "${client_admin-cli}",
+    "description" : "",
+    "rootUrl" : "",
+    "adminUrl" : "",
+    "baseUrl" : "",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-secret",
+    "redirectUris" : [ ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : false,
+    "consentRequired" : false,
+    "standardFlowEnabled" : false,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : true,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : true,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "oidc.ciba.grant.enabled" : "false",
+      "post.logout.redirect.uris" : "+",
+      "oauth2.device.authorization.grant.enabled" : "true",
+      "display.on.consent.screen" : "false",
+      "backchannel.logout.session.required" : "true",
+      "backchannel.logout.revoke.offline.tokens" : "false"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : false,
+    "nodeReRegistrationTimeout" : 0,
+    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  }, {
+    "id" : "84ca391b-0cde-4d72-b6b3-656dd65650ff",
+    "clientId" : "broker",
+    "name" : "${client_broker}",
+    "surrogateAuthRequired" : false,
+    "enabled" : true,
+    "alwaysDisplayInConsole" : false,
+    "clientAuthenticatorType" : "client-secret",
+    "redirectUris" : [ ],
+    "webOrigins" : [ ],
+    "notBefore" : 0,
+    "bearerOnly" : true,
+    "consentRequired" : false,
+    "standardFlowEnabled" : true,
+    "implicitFlowEnabled" : false,
+    "directAccessGrantsEnabled" : false,
+    "serviceAccountsEnabled" : false,
+    "publicClient" : false,
+    "frontchannelLogout" : false,
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "post.logout.redirect.uris" : "+"
+    },
+    "authenticationFlowBindingOverrides" : { },
+    "fullScopeAllowed" : false,
+    "nodeReRegistrationTimeout" : 0,
+    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
+    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
+  }, {
     "id" : "48997939-ce87-4024-b24b-f9b41b349e3a",
     "clientId" : "OpenDoors",
     "name" : "Open Doors",
@@ -445,11 +600,11 @@
     "protocol" : "openid-connect",
     "attributes" : {
       "oidc.ciba.grant.enabled" : "false",
-      "client.secret.creation.time" : "1717250581",
+      "client.secret.creation.time" : "1717366113",
       "backchannel.logout.session.required" : "true",
       "login_theme" : "keycloak",
       "post.logout.redirect.uris" : "https://localhost:4200/*",
-      "oauth2.device.authorization.grant.enabled" : "false",
+      "oauth2.device.authorization.grant.enabled" : "true",
       "display.on.consent.screen" : "false",
       "backchannel.logout.revoke.offline.tokens" : "false"
     },
@@ -489,7 +644,7 @@
     "clientAuthenticatorType" : "client-secret",
     "secret" : "3U6WSMUJLo5TBIFvxSYSdgtomtRsAxSh",
     "redirectUris" : [ "/*" ],
-    "webOrigins" : [ "/*" ],
+    "webOrigins" : [ "*" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,
@@ -506,7 +661,7 @@
       "client.secret.creation.time" : "1716752862",
       "backchannel.logout.session.required" : "true",
       "post.logout.redirect.uris" : "+",
-      "oauth2.device.authorization.grant.enabled" : "false",
+      "oauth2.device.authorization.grant.enabled" : "true",
       "display.on.consent.screen" : "false",
       "backchannel.logout.revoke.offline.tokens" : "false"
     },
@@ -565,6 +720,17 @@
       "allowRemoteResourceManagement" : true,
       "policyEnforcementMode" : "ENFORCING",
       "resources" : [ {
+        "name" : "pending-accommodations-save",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "c4291617-7a4b-4ef4-893d-2f24db04c5e0",
+        "uris" : [ "/open-doors/pending-accommodations/save" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
         "name" : "Default Resource",
         "type" : "urn:OpenDoorsBackend:resources:default",
         "ownerManagedAccess" : false,
@@ -580,6 +746,460 @@
         "attributes" : { },
         "_id" : "f20c903f-b5d5-4d82-9d34-4a96a857ab79",
         "uris" : [ "/open-doors/reservations/all/guest/{guestId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "user-reports",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "e59dbc62-aee1-4eea-9666-30d538c87df1",
+        "uris" : [ "/open-doors/user-reports/resolve/{id}", "/open-doors/user-reports", "/open-doors/user-reports/dismiss/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "user-reports-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "f370f677-0d9d-49ca-9c26-718c6f876346",
+        "uris" : [ "/open-doors/user-reports/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "user-reports-create",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "6cdc4cd3-d7db-485b-97f6-8e8df387538d",
+        "uris" : [ "/open-doors/user-reports/create" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "reservations-host",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "727e13e3-065b-4646-94a7-65f4997359c1",
+        "uris" : [ "/open-doors/reservations/confirm/{id}", "/open-doors/reservations/host/{hostId}", "/open-doors/reservations/deny/{id}", "/open-doors/reservations/host-search/{hostId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        }, {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "reservations-guest",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "46325f76-cf11-407f-94ca-a0d54e8ef42b",
+        "uris" : [ "/open-doors/reservations/createRequest", "/open-doors/reservations/search/{guestId}", "/open-doors/reservations/{id}", "/open-doors/reservations/cancel/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        }, {
+          "name" : "GET"
+        }, {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-all-guestId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "183febc1-2ecb-49fb-bf82-9000d773f539",
+        "uris" : [ "/open-doors/accommodations/all/{guestId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-editable-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "40971da8-ea88-4486-a69b-de8d2ca68702",
+        "uris" : [ "/open-doors/accommodations/editable/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-accommodationId-guestId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "edc81b4a-1c3c-4366-872f-374561c95ccb",
+        "uris" : [ "/open-doors/accommodations/{accommodationId}/{guestId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "91767cad-0ede-46cb-b485-a59deb2930d3",
+        "uris" : [ "/open-doors/accommodations/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-search-guestId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "05f88a78-40c1-497f-b9ac-b71987870a8b",
+        "uris" : [ "/open-doors/accommodations/search/{guestId}" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-host-hostId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "aeacae90-7bf6-4b7d-a1a2-799a3806e22a",
+        "uris" : [ "/open-doors/accommodations/host/{hostId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-addToFavorites",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "c63674df-39c8-4443-a3af-ecad316b8736",
+        "uris" : [ "/open-doors/accommodations/addToFavorites" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-removeFromFavorites",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "cb8cc96e-4450-470c-89fb-6bc38b80843e",
+        "uris" : [ "/open-doors/accommodations/removeFromFavorites" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-favorites-guestId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "45f76e93-1975-4cbf-9240-b3b3103ad902",
+        "uris" : [ "/open-doors/accommodations/favorites/{guestId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodations-names-hostId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "20d0406b-ff36-4529-9125-3a97adf4336f",
+        "uris" : [ "/open-doors/accommodations/names/{hostId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodation-reviews",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "b25458e8-15a2-4e64-b1b2-b62545751c88",
+        "uris" : [ "/open-doors/accommodation-reviews" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodation-reviews-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "15b1e29a-7256-4739-9df2-4a2737848f88",
+        "uris" : [ "/open-doors/accommodation-reviews/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodation-reviews-pending",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "4a3da305-aa87-4b12-9208-8e066e6dbb63",
+        "uris" : [ "/open-doors/accommodation-reviews/pending" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodation-reviews-approve-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "714ed269-7ed7-4e43-b87a-e8c5b02f1b6e",
+        "uris" : [ "/open-doors/accommodation-reviews/approve/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "accommodation-reviews-deny-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "e0ecd7fe-be05-4669-8a3c-cd95d8bfaa1f",
+        "uris" : [ "/open-doors/accommodation-reviews/deny/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "financialReport-dateRangeReport",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "090f9247-6064-41ab-8c60-18055f1c7785",
+        "uris" : [ "/open-doors/financialReport/dateRangeReport" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "financialReport-accommodationIdReport-accommodationId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "9012ab57-c99b-485c-a518-09a33df6b93e",
+        "uris" : [ "/open-doors/financialReport/accommodationIdReport/{accommodationId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "financialReport-dateRangeReport-export",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "5eb81360-53fd-40e0-90c2-8a03067cc0d0",
+        "uris" : [ "/open-doors/financialReport/dateRangeReport/export" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "financialReport-accommodationIdReport-export",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "804fed93-1e3b-4383-b1bd-3bfe93e79854",
+        "uris" : [ "/open-doors/financialReport/accommodationIdReport/export" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "host-reviews-reported",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "69f436ac-6652-49bc-b9ae-303031417f5e",
+        "uris" : [ "/open-doors/host-reviews/reported" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "host-reviews",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "e5a22070-a18b-41b7-a13b-68a0245d5ecb",
+        "uris" : [ "/open-doors/host-reviews" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "host-reviews-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "8d6902ed-f8d4-4f00-a8d2-6e83142562f6",
+        "uris" : [ "/open-doors/host-reviews/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "host-reviews-reviewId-status",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "8d633a53-4f1c-4720-9c44-ab229572bec4",
+        "uris" : [ "/open-doors/host-reviews/{reviewId}/status" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "pending-accommodations",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "7cf49fdb-6b87-44c8-9bc2-3245c186d974",
+        "uris" : [ "/open-doors/pending-accommodations" ],
+        "scopes" : [ {
+          "name" : "GET"
+        }, {
+          "name" : "PUT"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "pending-accommodations/host/{hostId}",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "9fcf2455-80ce-4055-8613-7a8f60c3bf88",
+        "uris" : [ "/open-doors/pending-accommodations/host/{hostId}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "pending-accommodations/deny/{id}",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "0edd54b0-3ab2-4760-8e6f-b2c590458f21",
+        "uris" : [ "/open-doors/pending-accommodations/deny/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "pending-accommodations/{id}/images",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "3c3ad26f-30f5-4de2-9772-a3dae9366214",
+        "uris" : [ "/open-doors/pending-accommodations/{id}/images" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "0e30c03c-43ff-4921-8f67-c614ba7cfa8d",
+        "uris" : [ "/open-doors/users" ],
+        "scopes" : [ {
+          "name" : "PUT"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users/new-passowrd",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "de4b5584-d8a9-418e-a365-dc2f4b0c5f9a",
+        "uris" : [ "/open-doors/users/new-password" ],
+        "scopes" : [ {
+          "name" : "PUT"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users/{id}",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "fdeec82a-23fc-43ee-a660-31934e24ad45",
+        "uris" : [ "/open-doors/users/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        }, {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users/blocked",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "99072ecb-8832-4fdf-9b00-c90041d4124e",
+        "uris" : [ "/open-doors/users/blocked" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users/unblock/{id}",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "8293489f-f5ef-46d6-9daf-113028888e6d",
+        "uris" : [ "/open-doors/users/unblock/{id}" ],
+        "scopes" : [ {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users/{id}/disabled-notifications",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "ea37b7fa-f0a2-4148-ba8a-20615d95d0d8",
+        "uris" : [ "/open-doors/users/{id}/disabled-notifications" ],
+        "scopes" : [ {
+          "name" : "GET"
+        }, {
+          "name" : "PUT"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "pending-accommodations-id",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "b4068611-b8ab-4b94-89da-00ee4372dcf2",
+        "uris" : [ "/open-doors/pending-accommodations/{id}" ],
+        "scopes" : [ {
+          "name" : "DELETE"
+        }, {
+          "name" : "GET"
+        } ],
+        "icon_uri" : ""
+      }, {
+        "name" : "users-userId-notifications",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "54dd2e88-6e75-42c1-8a6e-d6f18f835378",
+        "uris" : [ "/open-doors/users/{userId}/notifications" ],
         "scopes" : [ {
           "name" : "GET"
         } ],
@@ -616,6 +1236,354 @@
           "roles" : "[{\"id\":\"guest\",\"required\":false}]"
         }
       }, {
+        "id" : "a972e2bb-ddc6-4a3e-aaa0-b2f5c47f4218",
+        "name" : "getAllPendingAccommodationReviews",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodation-reviews-pending\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "88c90905-8d84-4bed-89f3-dbb251ec485a",
+        "name" : "adminUserReports",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"user-reports\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "8add4964-43df-496a-9766-e589dec10d9a",
+        "name" : "getReportableUsersForUser",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"user-reports-id\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "2f8a0780-1bd2-4382-8e93-368c08306d8a",
+        "name" : "createUserReport",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"user-reports-create\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "9675253b-bc7a-4ab3-9d4f-223aa930574a",
+        "name" : "reservationsHost",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"reservations-host\"]",
+          "scopes" : "[\"GET\",\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "ac6ba231-8dbb-4757-93f9-c7d30ed5279b",
+        "name" : "reservationsGuest",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"reservations-guest\"]",
+          "scopes" : "[\"DELETE\",\"GET\",\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "401aa3f5-2e07-4285-9242-c984b3f83116",
+        "name" : "getAccommodationsWhenGuest",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-all-guestId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "bc2eecce-87c6-4501-a0b8-b1da3aff9a60",
+        "name" : "getAccommodationForEdit",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-editable-id\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "3412852a-0edd-4f71-af53-61a447714d41",
+        "name" : "getAccommodationWhenGuest",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-accommodationId-guestId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "5c31e0b1-3ba7-42f4-8db1-369d87529163",
+        "name" : "deleteAccommodation",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-id\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "010161c3-c377-4f00-949c-895b5b9f3b47",
+        "name" : "searchAccommodationsWhenGuest",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-search-guestId\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "0ccd6ecb-6372-4a29-9eb2-5305ec5335a4",
+        "name" : "getForHost",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-host-hostId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "62812e55-7b7a-4c81-bce4-ccf1e4b96175",
+        "name" : "addToFavorites",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-addToFavorites\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "63716d1f-4464-433a-9d4d-0154ea133618",
+        "name" : "removeFromFavorites",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-removeFromFavorites\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "8c702534-9c1f-42c7-a69a-5a72a4034efe",
+        "name" : "getAccommodationsFavoritesPage",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-favorites-guestId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "315c5c79-c5db-498f-9070-09330ed19e58",
+        "name" : "getHostAccommodations",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodations-names-hostId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "69283f7a-3daf-4a6a-aa00-f7ad4f2970df",
+        "name" : "createAccommodationReview",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodation-reviews\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "ddd7baa7-d510-4f86-81b1-ffb4e2f30e1f",
+        "name" : "deleteAccommodationReview",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodation-reviews-id\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "9aaed62f-4ebe-4bc7-b7d9-cfb8bcc53630",
+        "name" : "getAllPending",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "7e515ce2-e5d4-44fa-bdb9-714e6e950bb8",
+        "name" : "deny",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"accommodation-reviews-deny-id\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "dd4b275d-c0bf-4062-8f97-bdeff0e34604",
+        "name" : "getDateRangeReport",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"financialReport-dateRangeReport\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "4c3d936c-8980-42e9-accf-c2c46f88e44e",
+        "name" : "getAccommodationIdReport",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"financialReport-accommodationIdReport-accommodationId\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "fb2ad1e8-0a15-44e5-ba83-5ae6b4061738",
+        "name" : "getDateRangeReportExport",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"financialReport-dateRangeReport-export\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "38f1de52-0c3b-4dec-bd73-4e43b89a8179",
+        "name" : "getAccommodationIdReportExport",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"financialReport-accommodationIdReport-export\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "4d15e14c-3ded-4a80-87b8-026336172f0f",
+        "name" : "getAllReported",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"host-reviews-reported\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "e6a824da-a886-4f6b-8ec7-1cbd028774ea",
+        "name" : "createHostReview",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"host-reviews\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "aeb4dfc5-9fc6-46e1-91f0-c3b70fd016f8",
+        "name" : "deleteHostReview",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"host-reviews-id\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"admin\",\"guest\"]"
+        }
+      }, {
+        "id" : "5c0ab8f8-fb8f-4484-b9d3-903d6bbb782e",
+        "name" : "approve",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"pending-accommodations\"]",
+          "scopes" : "[\"PUT\"]",
+          "applyPolicies" : "[\"admin\",\"host\"]"
+        }
+      }, {
+        "id" : "6628eafe-2da9-4fe4-8e1f-d35e7b7e7312",
+        "name" : "changeReportedStatus",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"host-reviews-reviewId-status\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"admin\",\"host\"]"
+        }
+      }, {
         "id" : "87a44263-c2a0-4581-b2af-5e5d17d5757c",
         "name" : "getAllForGuest",
         "description" : "",
@@ -626,6 +1594,186 @@
           "resources" : "[\"reservations-all-guest-id\"]",
           "scopes" : "[\"GET\"]",
           "applyPolicies" : "[\"guest\"]"
+        }
+      }, {
+        "id" : "7d12c13f-6870-4e83-bd10-a3d0396762af",
+        "name" : "updateUser",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users\"]",
+          "scopes" : "[\"PUT\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "8bf3eea4-78cd-4028-bc04-ec77641ecaca",
+        "name" : "updateAccount",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users/new-passowrd\"]",
+          "scopes" : "[\"PUT\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "e62db8b0-deff-4837-b5d8-f22ac987b942",
+        "name" : "deleteUser",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"users/{id}\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "0f3907dd-7daf-42e0-b3b2-6ca7b3d554eb",
+        "name" : "getBlockedUsers",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"users/blocked\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "a84352f5-ab63-439b-830c-9ebb32bec3fc",
+        "name" : "getUser",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users/{id}\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "8e1a3f33-bc1f-4e4d-a829-559cfebeadd9",
+        "name" : "getNotificationsByUserId",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users-userId-notifications\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "9494217d-da3b-4f04-9f56-5b147f56e528",
+        "name" : "unblock",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"users/unblock/{id}\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "aab7b2b7-9acc-40d7-a032-90a43fd0bcc5",
+        "name" : "getDisabledNotificationTypes",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users/{id}/disabled-notifications\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "c17434c9-9f9c-46f9-8ff9-055c917ce886",
+        "name" : "setDisabledNotificationTypes",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"users/{id}/disabled-notifications\"]",
+          "scopes" : "[\"PUT\"]",
+          "applyPolicies" : "[\"admin\",\"host\",\"guest\"]"
+        }
+      }, {
+        "id" : "7ae2d88d-5b03-47e4-972b-6a4bb9d1d669",
+        "name" : "getById",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "AFFIRMATIVE",
+        "config" : {
+          "resources" : "[\"pending-accommodations-id\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"admin\",\"host\"]"
+        }
+      }, {
+        "id" : "0ba9af44-558d-4ea3-ad3e-9de55405ae61",
+        "name" : "getPendingForHost",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations/host/{hostId}\"]",
+          "scopes" : "[\"GET\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "c027c49e-4035-4a25-8b46-c7d5b22f2cea",
+        "name" : "deletePending",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations-id\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "445647d0-3b32-4d20-8596-ee3ef8fa6fd2",
+        "name" : "denyPending",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations/deny/{id}\"]",
+          "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"admin\"]"
+        }
+      }, {
+        "id" : "5ba92340-b2c1-4deb-b1dc-671c9f8a29d9",
+        "name" : "save",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations-save\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "337daad2-e110-4cac-b0b0-9097766dc599",
+        "name" : "saveImages",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"pending-accommodations/{id}/images\"]",
+          "scopes" : "[\"POST\"]",
+          "applyPolicies" : "[\"host\"]"
         }
       } ],
       "scopes" : [ {
@@ -651,131 +1799,6 @@
       } ],
       "decisionStrategy" : "UNANIMOUS"
     }
-  }, {
-    "id" : "c75a7535-3f4c-4939-86b9-b025d21c0c6a",
-    "clientId" : "account",
-    "name" : "${client_account}",
-    "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/OpenDoorsKeycloak/account/",
-    "surrogateAuthRequired" : false,
-    "enabled" : true,
-    "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/OpenDoorsKeycloak/account/*" ],
-    "webOrigins" : [ ],
-    "notBefore" : 0,
-    "bearerOnly" : false,
-    "consentRequired" : false,
-    "standardFlowEnabled" : true,
-    "implicitFlowEnabled" : false,
-    "directAccessGrantsEnabled" : false,
-    "serviceAccountsEnabled" : false,
-    "publicClient" : true,
-    "frontchannelLogout" : false,
-    "protocol" : "openid-connect",
-    "attributes" : {
-      "post.logout.redirect.uris" : "+"
-    },
-    "authenticationFlowBindingOverrides" : { },
-    "fullScopeAllowed" : false,
-    "nodeReRegistrationTimeout" : 0,
-    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
-  }, {
-    "id" : "6285d362-55ca-4311-95e4-13f393119d75",
-    "clientId" : "account-console",
-    "name" : "${client_account-console}",
-    "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/OpenDoorsKeycloak/account/",
-    "surrogateAuthRequired" : false,
-    "enabled" : true,
-    "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/OpenDoorsKeycloak/account/*" ],
-    "webOrigins" : [ ],
-    "notBefore" : 0,
-    "bearerOnly" : false,
-    "consentRequired" : false,
-    "standardFlowEnabled" : true,
-    "implicitFlowEnabled" : false,
-    "directAccessGrantsEnabled" : false,
-    "serviceAccountsEnabled" : false,
-    "publicClient" : true,
-    "frontchannelLogout" : false,
-    "protocol" : "openid-connect",
-    "attributes" : {
-      "post.logout.redirect.uris" : "+",
-      "pkce.code.challenge.method" : "S256"
-    },
-    "authenticationFlowBindingOverrides" : { },
-    "fullScopeAllowed" : false,
-    "nodeReRegistrationTimeout" : 0,
-    "protocolMappers" : [ {
-      "id" : "ee299a7f-ca54-4b6e-b3c7-225c21f22e54",
-      "name" : "audience resolve",
-      "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-audience-resolve-mapper",
-      "consentRequired" : false,
-      "config" : { }
-    } ],
-    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
-  }, {
-    "id" : "90a0c911-b36e-40ea-8d85-09da341b3139",
-    "clientId" : "admin-cli",
-    "name" : "${client_admin-cli}",
-    "surrogateAuthRequired" : false,
-    "enabled" : true,
-    "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ ],
-    "webOrigins" : [ ],
-    "notBefore" : 0,
-    "bearerOnly" : false,
-    "consentRequired" : false,
-    "standardFlowEnabled" : false,
-    "implicitFlowEnabled" : false,
-    "directAccessGrantsEnabled" : true,
-    "serviceAccountsEnabled" : false,
-    "publicClient" : true,
-    "frontchannelLogout" : false,
-    "protocol" : "openid-connect",
-    "attributes" : {
-      "post.logout.redirect.uris" : "+"
-    },
-    "authenticationFlowBindingOverrides" : { },
-    "fullScopeAllowed" : false,
-    "nodeReRegistrationTimeout" : 0,
-    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
-  }, {
-    "id" : "84ca391b-0cde-4d72-b6b3-656dd65650ff",
-    "clientId" : "broker",
-    "name" : "${client_broker}",
-    "surrogateAuthRequired" : false,
-    "enabled" : true,
-    "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ ],
-    "webOrigins" : [ ],
-    "notBefore" : 0,
-    "bearerOnly" : true,
-    "consentRequired" : false,
-    "standardFlowEnabled" : true,
-    "implicitFlowEnabled" : false,
-    "directAccessGrantsEnabled" : false,
-    "serviceAccountsEnabled" : false,
-    "publicClient" : false,
-    "frontchannelLogout" : false,
-    "protocol" : "openid-connect",
-    "attributes" : {
-      "post.logout.redirect.uris" : "+"
-    },
-    "authenticationFlowBindingOverrides" : { },
-    "fullScopeAllowed" : false,
-    "nodeReRegistrationTimeout" : 0,
-    "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "621b4150-c75a-4e62-b4de-40873571f054",
     "clientId" : "realm-management",
@@ -808,7 +1831,9 @@
     "id" : "5ba77dbf-8ff2-46bc-9195-a33bbb760fd3",
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
+    "description" : "",
     "rootUrl" : "${authAdminUrl}",
+    "adminUrl" : "",
     "baseUrl" : "/admin/OpenDoorsKeycloak/console/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
@@ -827,8 +1852,13 @@
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
     "attributes" : {
+      "oidc.ciba.grant.enabled" : "false",
+      "backchannel.logout.session.required" : "true",
       "post.logout.redirect.uris" : "+",
-      "pkce.code.challenge.method" : "S256"
+      "oauth2.device.authorization.grant.enabled" : "true",
+      "display.on.consent.screen" : "false",
+      "pkce.code.challenge.method" : "S256",
+      "backchannel.logout.revoke.offline.tokens" : "false"
     },
     "authenticationFlowBindingOverrides" : { },
     "fullScopeAllowed" : false,
@@ -1455,8 +2485,8 @@
     "user" : "opendoorstim24@gmail.com"
   },
   "eventsEnabled" : false,
-  "eventsListeners" : [ "jboss-logging" ],
-  "enabledEventTypes" : [ ],
+  "eventsListeners" : [ "role-assignment-listener", "jboss-logging" ],
+  "enabledEventTypes" : [ "SEND_RESET_PASSWORD", "UPDATE_CONSENT_ERROR", "GRANT_CONSENT", "VERIFY_PROFILE_ERROR", "REMOVE_TOTP", "REVOKE_GRANT", "UPDATE_TOTP", "LOGIN_ERROR", "CLIENT_LOGIN", "RESET_PASSWORD_ERROR", "IMPERSONATE_ERROR", "CODE_TO_TOKEN_ERROR", "CUSTOM_REQUIRED_ACTION", "OAUTH2_DEVICE_CODE_TO_TOKEN_ERROR", "RESTART_AUTHENTICATION", "IMPERSONATE", "UPDATE_PROFILE_ERROR", "LOGIN", "OAUTH2_DEVICE_VERIFY_USER_CODE", "UPDATE_PASSWORD_ERROR", "CLIENT_INITIATED_ACCOUNT_LINKING", "OAUTH2_EXTENSION_GRANT", "USER_DISABLED_BY_PERMANENT_LOCKOUT", "TOKEN_EXCHANGE", "AUTHREQID_TO_TOKEN", "LOGOUT", "REGISTER", "DELETE_ACCOUNT_ERROR", "CLIENT_REGISTER", "IDENTITY_PROVIDER_LINK_ACCOUNT", "USER_DISABLED_BY_TEMPORARY_LOCKOUT", "DELETE_ACCOUNT", "UPDATE_PASSWORD", "CLIENT_DELETE", "FEDERATED_IDENTITY_LINK_ERROR", "IDENTITY_PROVIDER_FIRST_LOGIN", "CLIENT_DELETE_ERROR", "VERIFY_EMAIL", "CLIENT_LOGIN_ERROR", "RESTART_AUTHENTICATION_ERROR", "EXECUTE_ACTIONS", "REMOVE_FEDERATED_IDENTITY_ERROR", "TOKEN_EXCHANGE_ERROR", "PERMISSION_TOKEN", "SEND_IDENTITY_PROVIDER_LINK_ERROR", "EXECUTE_ACTION_TOKEN_ERROR", "OAUTH2_EXTENSION_GRANT_ERROR", "SEND_VERIFY_EMAIL", "OAUTH2_DEVICE_AUTH", "EXECUTE_ACTIONS_ERROR", "REMOVE_FEDERATED_IDENTITY", "OAUTH2_DEVICE_CODE_TO_TOKEN", "IDENTITY_PROVIDER_POST_LOGIN", "IDENTITY_PROVIDER_LINK_ACCOUNT_ERROR", "OAUTH2_DEVICE_VERIFY_USER_CODE_ERROR", "UPDATE_EMAIL", "REGISTER_ERROR", "REVOKE_GRANT_ERROR", "EXECUTE_ACTION_TOKEN", "LOGOUT_ERROR", "UPDATE_EMAIL_ERROR", "CLIENT_UPDATE_ERROR", "AUTHREQID_TO_TOKEN_ERROR", "UPDATE_PROFILE", "CLIENT_REGISTER_ERROR", "FEDERATED_IDENTITY_LINK", "SEND_IDENTITY_PROVIDER_LINK", "SEND_VERIFY_EMAIL_ERROR", "RESET_PASSWORD", "CLIENT_INITIATED_ACCOUNT_LINKING_ERROR", "OAUTH2_DEVICE_AUTH_ERROR", "UPDATE_CONSENT", "REMOVE_TOTP_ERROR", "VERIFY_EMAIL_ERROR", "SEND_RESET_PASSWORD_ERROR", "CLIENT_UPDATE", "CUSTOM_REQUIRED_ACTION_ERROR", "IDENTITY_PROVIDER_POST_LOGIN_ERROR", "UPDATE_TOTP_ERROR", "CODE_TO_TOKEN", "VERIFY_PROFILE", "GRANT_CONSENT_ERROR", "IDENTITY_PROVIDER_FIRST_LOGIN_ERROR" ],
   "adminEventsEnabled" : false,
   "adminEventsDetailsEnabled" : false,
   "identityProviders" : [ {
@@ -1489,7 +2519,7 @@
       "subType" : "anonymous",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-full-name-mapper", "saml-role-list-mapper", "saml-user-property-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper" ]
+        "allowed-protocol-mapper-types" : [ "oidc-address-mapper", "oidc-full-name-mapper", "oidc-sha256-pairwise-sub-mapper", "saml-user-property-mapper", "oidc-usermodel-property-mapper", "oidc-usermodel-attribute-mapper", "saml-user-attribute-mapper", "saml-role-list-mapper" ]
       }
     }, {
       "id" : "540ed3f0-d9f7-45f0-aa64-dbf22d033203",
@@ -1533,7 +2563,7 @@
       "subType" : "authenticated",
       "subComponents" : { },
       "config" : {
-        "allowed-protocol-mapper-types" : [ "saml-user-attribute-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-usermodel-property-mapper", "oidc-full-name-mapper", "saml-user-property-mapper", "oidc-address-mapper", "saml-role-list-mapper", "oidc-usermodel-attribute-mapper" ]
+        "allowed-protocol-mapper-types" : [ "saml-user-attribute-mapper", "saml-user-property-mapper", "oidc-full-name-mapper", "oidc-usermodel-attribute-mapper", "saml-role-list-mapper", "oidc-usermodel-property-mapper", "oidc-sha256-pairwise-sub-mapper", "oidc-address-mapper" ]
       }
     }, {
       "id" : "825ecb21-7086-4d28-82e7-585dd06e51d2",
@@ -1577,8 +2607,8 @@
           "config" : {
             "ldap.attribute" : [ "cn" ],
             "is.mandatory.in.ldap" : [ "true" ],
-            "read.only" : [ "false" ],
             "always.read.value.from.ldap" : [ "true" ],
+            "read.only" : [ "false" ],
             "user.model.attribute" : [ "firstName" ]
           }
         }, {
@@ -1589,8 +2619,8 @@
           "config" : {
             "ldap.attribute" : [ "modifyTimestamp" ],
             "is.mandatory.in.ldap" : [ "false" ],
-            "read.only" : [ "true" ],
             "always.read.value.from.ldap" : [ "true" ],
+            "read.only" : [ "true" ],
             "user.model.attribute" : [ "modifyTimestamp" ]
           }
         }, {
@@ -1601,8 +2631,8 @@
           "config" : {
             "ldap.attribute" : [ "mail" ],
             "is.mandatory.in.ldap" : [ "false" ],
-            "always.read.value.from.ldap" : [ "false" ],
             "read.only" : [ "false" ],
+            "always.read.value.from.ldap" : [ "false" ],
             "user.model.attribute" : [ "email" ]
           }
         }, {
@@ -1613,9 +2643,26 @@
           "config" : {
             "ldap.attribute" : [ "sn" ],
             "is.mandatory.in.ldap" : [ "true" ],
-            "always.read.value.from.ldap" : [ "true" ],
             "read.only" : [ "false" ],
+            "always.read.value.from.ldap" : [ "true" ],
             "user.model.attribute" : [ "lastName" ]
+          }
+        }, {
+          "id" : "543fc6e1-525e-49c8-91e2-23de807e29c6",
+          "name" : "role mapper",
+          "providerId" : "role-ldap-mapper",
+          "subComponents" : { },
+          "config" : {
+            "mode" : [ "LDAP_ONLY" ],
+            "membership.attribute.type" : [ "DN" ],
+            "roles.dn" : [ "ou=roles,dc=example,dc=com" ],
+            "user.roles.retrieve.strategy" : [ "LOAD_ROLES_BY_MEMBER_ATTRIBUTE" ],
+            "membership.user.ldap.attribute" : [ "uid" ],
+            "membership.ldap.attribute" : [ "member" ],
+            "role.name.ldap.attribute" : [ "cn" ],
+            "memberof.ldap.attribute" : [ "memberOf" ],
+            "use.realm.roles.mapping" : [ "true" ],
+            "role.object.classes" : [ "groupOfNames" ]
           }
         }, {
           "id" : "10fb0c28-477c-4a88-8615-233b005c6b58",
@@ -1632,19 +2679,19 @@
         } ]
       },
       "config" : {
-        "pagination" : [ "true" ],
         "fullSyncPeriod" : [ "-1" ],
+        "pagination" : [ "true" ],
         "startTls" : [ "false" ],
-        "connectionPooling" : [ "false" ],
         "usersDn" : [ "ou=users,ou=system" ],
+        "connectionPooling" : [ "false" ],
         "cachePolicy" : [ "DEFAULT" ],
         "useKerberosForPasswordAuthentication" : [ "false" ],
         "importEnabled" : [ "true" ],
         "enabled" : [ "true" ],
-        "usernameLDAPAttribute" : [ "uid" ],
         "changedSyncPeriod" : [ "-1" ],
-        "bindCredential" : [ "secret" ],
+        "usernameLDAPAttribute" : [ "uid" ],
         "bindDn" : [ "uid=admin,ou=system" ],
+        "bindCredential" : [ "secret" ],
         "vendor" : [ "other" ],
         "uuidLDAPAttribute" : [ "entryUUID" ],
         "allowKerberosAuthentication" : [ "false" ],
@@ -1666,7 +2713,7 @@
       "providerId" : "declarative-user-profile",
       "subComponents" : { },
       "config" : {
-        "kc.user.profile.config" : [ "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"phone\",\"displayName\":\"Phone number\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"country\",\"displayName\":\"Country\",\"validations\":{\"options\":{\"options\":[\"Afghanistan\",\"Australia\",\"Brunei\",\"Dominica\",\"Kenya\",\"Norway\",\"Suriname\",\"Serbia\",\"Zambia\",\"Yemen\"]}},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"city\",\"displayName\":\"City\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"street\",\"displayName\":\"Street\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"number\",\"displayName\":\"House number\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}" ]
+        "kc.user.profile.config" : [ "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"phone\",\"displayName\":\"Phone number\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"country\",\"displayName\":\"Country\",\"validations\":{\"options\":{\"options\":[\"Afghanistan\",\"Australia\",\"Brunei\",\"Dominica\",\"Kenya\",\"Norway\",\"Suriname\",\"Serbia\",\"Zambia\",\"Yemen\"]}},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"city\",\"displayName\":\"City\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"street\",\"displayName\":\"Street\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"number\",\"displayName\":\"House number\",\"validations\":{},\"annotations\":{},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"user\"]},\"multivalued\":false},{\"name\":\"memberOf\",\"displayName\":\"Register as\",\"validations\":{\"options\":{\"options\":[\"guest\",\"host\"]}},\"annotations\":{\"inputType\":\"select\"},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}" ]
       }
     } ],
     "org.keycloak.keys.KeyProvider" : [ {
@@ -2161,6 +3208,14 @@
     } ]
   } ],
   "authenticatorConfig" : [ {
+    "id" : "ed83ccb6-4b68-43c8-af92-97fa22200cd2",
+    "alias" : "Copy of registration opkc",
+    "config" : {
+      "site.key" : "6LfHz-QpAAAAADHN52yEPJrl7rOeoWYCTrdk6yNP",
+      "secret" : "6LfHz-QpAAAAAAysFqZ3iGF1QHVxTAvYfNOq2CGE",
+      "useRecaptchaNet" : "false"
+    }
+  }, {
     "id" : "772dc4a8-1efd-4ad8-8846-21b7aae596c3",
     "alias" : "create unique user config",
     "config" : {

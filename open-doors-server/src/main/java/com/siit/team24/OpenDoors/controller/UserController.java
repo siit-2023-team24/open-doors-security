@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     private NotificationService notificationService;
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+    //@PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(consumes = "multipart/form-data")
     public ResponseEntity<Void> updateUser(@Valid UserFormDataDTO data) {
         UserEditedDTO dto = null;
@@ -54,14 +54,14 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/new-password")
     public ResponseEntity<Void> updateAccount(@RequestBody NewPasswordDTO newPasswordDTO){
         this.service.changePassword(newPasswordDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         service.delete(id);
@@ -70,7 +70,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/blocked")
     public ResponseEntity<List<UserSummaryDTO>> getBlockedUsers() {
         List<UserSummaryDTO> users = service.getBlockedDTOs();
@@ -78,7 +78,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserAccountViewDTO> getUser(
             @PathVariable String id) {
@@ -93,28 +93,28 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{userId}/notifications")
-    public ResponseEntity<List<NotificationShowDTO>> getNotificationsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<NotificationShowDTO>> getNotificationsByUserId(@PathVariable String userId) {
         List<NotificationShowDTO> notifications = notificationService.findAllByUserId(userId);
         return new ResponseEntity<>(notifications, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/unblock/{id}")
     public ResponseEntity<Void> unblock(@PathVariable String id){
         service.unblock(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}/disabled-notifications")
     public ResponseEntity<List<NotificationType>> getDisabledNotificationTypes(@PathVariable String id) {
         List<NotificationType> types = service.getDisabledNotificationTypesFor(id);
         return new ResponseEntity<>(types, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(value = "/{id}/disabled-notifications")
     public ResponseEntity<Void> setDisabledNotificationTypes(@PathVariable String id,
                                                              @RequestBody List<NotificationType> types) {

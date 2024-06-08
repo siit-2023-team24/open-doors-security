@@ -160,7 +160,7 @@ public class AccommodationController {
 
 //    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
-    public ResponseEntity<Collection<AccommodationHostDTO>> getForHost(@PathVariable Long hostId) {
+    public ResponseEntity<Collection<AccommodationHostDTO>> getForHost(@PathVariable String hostId) {
         Collection<AccommodationHostDTO> accommodations = accommodationService.getDTOsForHost(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }

@@ -125,7 +125,7 @@ public class PendingAccommodationService {
         return repo.findAllDtos();
     }
 
-    public Collection<PendingAccommodationHostDTO> getForHost(Long hostId) {
+    public Collection<PendingAccommodationHostDTO> getForHost(String hostId) {
         return repo.findByHost(hostId);
     }
 

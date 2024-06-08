@@ -30,7 +30,7 @@ public class PendingAccommodationController {
     private PendingAccommodationService pendingService;
 
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('HOST') or hasRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<PendingAccommodationWholeDTO> getById(@PathVariable Long id) {
         try {
@@ -42,21 +42,21 @@ public class PendingAccommodationController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Collection<PendingAccommodationHostDTO>> getAllPending() {
         Collection<PendingAccommodationHostDTO> accommodations = pendingService.getAll();
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
-    public ResponseEntity<Collection<PendingAccommodationHostDTO>> getPendingForHost(@PathVariable Long hostId) {
+    public ResponseEntity<Collection<PendingAccommodationHostDTO>> getPendingForHost(@PathVariable String hostId) {
         Collection<PendingAccommodationHostDTO> accommodations = pendingService.getForHost(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deletePending(@PathVariable Long id) {
         PendingAccommodation pending = pendingService.findById(id);
@@ -64,7 +64,7 @@ public class PendingAccommodationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "deny/{id}")
     public ResponseEntity<Void> denyPending(@PathVariable Long id) {
         PendingAccommodation pending = pendingService.findById(id);
@@ -72,8 +72,8 @@ public class PendingAccommodationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
-    @PostMapping
+//    @PreAuthorize("hasRole('HOST')")
+    @PostMapping("/save")
     public ResponseEntity<PendingAccommodationWholeDTO> save(@Valid @RequestBody PendingAccommodationWholeEditedDTO dto) {
         System.out.println("Received: " + dto);
         try {
@@ -86,7 +86,7 @@ public class PendingAccommodationController {
         }
     }
 
-    @PreAuthorize("hasRole('HOST')")
+//    @PreAuthorize("hasRole('HOST')")
     @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
     public ResponseEntity<PendingAccommodationWholeDTO> saveImages(@PathVariable Long id,
                                                              @RequestBody List<MultipartFile> images) {
@@ -107,7 +107,7 @@ public class PendingAccommodationController {
 
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('HOST')")
+//    @PreAuthorize("hasRole('ADMIN') or hasRole('HOST')")
     @PutMapping(consumes = "application/json")
     public ResponseEntity<Void> approve(@RequestBody PendingAccommodationHostDTO dto) throws IOException {
         pendingService.approve(dto);

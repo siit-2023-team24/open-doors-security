@@ -131,7 +131,7 @@ public class ReservationRequestService {
         return true;
     }
 
-    public List<ReservationRequestForHostDTO> searchRequestsForHost(Long hostId, ReservationRequestSearchAndFilterDTO searchAndFilterDTO) {
+    public List<ReservationRequestForHostDTO> searchRequestsForHost(String hostId, ReservationRequestSearchAndFilterDTO searchAndFilterDTO) {
         List<ReservationRequest> requests = repo.findByHost(hostId);
         List<ReservationRequestForHostDTO> filteredRequests = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class ReservationRequestService {
         return filteredRequests;
     }
 
-    public List<ReservationRequestForHostDTO> getAllForHost(Long hostId) {
+    public List<ReservationRequestForHostDTO> getAllForHost(String hostId) {
         List<ReservationRequest> requests = repo.findByHost(hostId);
         List<ReservationRequestForHostDTO> dtos = new ArrayList<>();
         for (ReservationRequest request: requests) {
