@@ -7,6 +7,7 @@ import com.siit.team24.OpenDoors.model.Host;
 import com.siit.team24.OpenDoors.model.HostReview;
 import com.siit.team24.OpenDoors.service.HostReviewService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,15 @@ public class HostReviewController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ValidationUtils validationUtils;
+
 
     @GetMapping(value = "/{hostId}")
     public ResponseEntity<HostPublicDataDTO> getHostReviewsForProfile(@PathVariable String hostId, @RequestParam String guestId) {
+        validationUtils.isPotentialXSS(hostId);
+        validationUtils.isPotentialXSS(guestId);
+
         HostPublicDataDTO host = userService.getPublicData(hostId);
         if (!guestId.equals("none")) {
             host.setIsReviewable(hostReviewService.isReviewable(hostId, guestId));
@@ -50,6 +57,8 @@ public class HostReviewController {
 //    @PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<HostReviewWholeDTO> createHostReview(@Valid @RequestBody NewReviewDTO reviewDTO) {
+        validationUtils.checkForXSS(reviewDTO);
+
         HostReview review = new HostReview(reviewDTO);
         review.setHost((Host) userService.findById(reviewDTO.getRecipientId()));
         review.setAuthor((Guest) userService.findById(reviewDTO.getAuthorId()));

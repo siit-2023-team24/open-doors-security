@@ -237,17 +237,17 @@ public class UserService {
     }
 
     public void refreshUser(UserTokenDTO dto) {
-        User user; // = findByUsername(dto.getUsername());
-        //if (user == null) { //new user
+        User user = findByUsername(dto.getUsername());
+        if (user == null) { //new user
             if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_ADMIN)) user = new Admin();
             else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_HOST)) user = new Host();
             else if (UserRole.valueOf(dto.getRole()).equals(UserRole.ROLE_SECURITY)) user = new Security();
             else user = new Guest();
             user.setId(dto.getId());
             user.setUsername(dto.getUsername());
-        //}
+            user.setRole(UserRole.valueOf(dto.getRole()));
+        }
         //update values
-        user.setRole(UserRole.valueOf(dto.getRole()));
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setPhone(dto.getPhone());

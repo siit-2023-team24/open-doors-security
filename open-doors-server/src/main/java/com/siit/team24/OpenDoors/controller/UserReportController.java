@@ -6,6 +6,7 @@ import com.siit.team24.OpenDoors.model.User;
 import com.siit.team24.OpenDoors.model.UserReport;
 import com.siit.team24.OpenDoors.service.user.UserReportService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ public class UserReportController {
     @Autowired
     private UserReportService userReportService;
 
+    @Autowired
+    private ValidationUtils validationUtils;
+
     //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserReportDTO>> getAllUserReports() {
@@ -35,6 +39,7 @@ public class UserReportController {
     @GetMapping(value="/{id}")
     public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable String id,
                         @RequestParam boolean isGuestComplainant) {
+        validationUtils.isPotentialXSS(id);
         List<String> reportableUserIds = userReportService.getReportableUsers(id, isGuestComplainant);
         return new ResponseEntity<>(reportableUserIds, HttpStatus.OK);
     }
@@ -42,6 +47,7 @@ public class UserReportController {
     //@PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
     @PostMapping(value="/create" ,consumes = "application/json")
     public ResponseEntity<UserReportDTO> createUserReport(@Valid @RequestBody NewUserReportDTO dto) {
+        validationUtils.checkForXSS(dto);
         UserReport report = userReportService.createReport(dto);
         UserReportDTO returnDto = new UserReportDTO(report);
         System.out.println(returnDto);

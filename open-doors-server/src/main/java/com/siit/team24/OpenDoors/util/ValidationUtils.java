@@ -3,21 +3,19 @@ package com.siit.team24.OpenDoors.util;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.regex.Pattern;
 
 @Component
 public class ValidationUtils {
 
-    public void printFields(Object o) {
+    public void checkForXSS(Object o) {
         Field[] fields = o.getClass().getDeclaredFields();
 
         for (Field field : fields) {
-            // Set the field accessible in case it's private
             field.setAccessible(true);
             try {
                 if(!(field.get(o) instanceof String)) continue;
-                if(isPotentialXSS((String) field.get(o))) throw new RuntimeException("XSS attack detected!");
+                isPotentialXSS((String) field.get(o));
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -51,17 +49,13 @@ public class ValidationUtils {
      Checks if the input string could be interpreted as an XSS injection.*
      @param input the string to check
      @return true if the input is potentially an XSS injection, false otherwise*/
-    public boolean isPotentialXSS(String input) {
-        if (input == null) {
-            return false;}
+    public void isPotentialXSS(String input) {
+        if (input == null) return;
 
-        // Iterate over all the XSS patterns
         for (Pattern pattern : XSS_PATTERNS) {
             if (pattern.matcher(input).find()) {
-                return true; // Potential XSS detected
+                throw new RuntimeException("XSS attack detected!");
             }
         }
-
-        return false; // No XSS patterns detected
     }
 }

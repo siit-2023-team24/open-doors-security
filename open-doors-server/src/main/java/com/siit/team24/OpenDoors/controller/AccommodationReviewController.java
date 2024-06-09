@@ -9,6 +9,7 @@ import com.siit.team24.OpenDoors.service.AccommodationReviewService;
 import com.siit.team24.OpenDoors.service.AccommodationService;
 import com.siit.team24.OpenDoors.service.ReservationRequestService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,14 @@ public class AccommodationReviewController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ValidationUtils validationUtils;
+
 
     @GetMapping(value = "/{accommodationId}")
     public ResponseEntity<AccommodationReviewsDTO> getAccommodationReviewsForDetails(@PathVariable Long accommodationId, @RequestParam String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         AccommodationReviewsDTO dto = new AccommodationReviewsDTO(
                 accommodationReviewService.findApprovedForAccommodation(accommodationId),
                 false,
@@ -52,6 +58,8 @@ public class AccommodationReviewController {
 //    @PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json")
     public ResponseEntity<AccommodationReviewWholeDTO> createAccommodationReview(@Valid @RequestBody NewReviewDTO reviewDTO) {
+        validationUtils.checkForXSS(reviewDTO);
+
         AccommodationReview review = new AccommodationReview(reviewDTO);
         review.setAccommodation(accommodationService.findById(Long.parseLong(reviewDTO.getRecipientId())));
         review.setAuthor((Guest) userService.findById(reviewDTO.getAuthorId()));

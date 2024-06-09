@@ -15,13 +15,13 @@ import com.siit.team24.OpenDoors.service.AccommodationService;
 
 import com.siit.team24.OpenDoors.service.ReservationRequestService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.persistence.EntityNotFoundException;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -44,6 +44,9 @@ public class AccommodationController {
     
     @Autowired
     private ReservationRequestService reservationRequestService;
+
+    @Autowired
+    private ValidationUtils validationUtils;
   
     @GetMapping(value = "/all")
     public ResponseEntity<List<AccommodationSearchDTO>> getAllAccommodations() {
@@ -63,6 +66,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/{guestId}")
     public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsWhenGuest(@PathVariable String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = accommodationService.findAllWithFavorites(guest);
         for (AccommodationSearchDTO as : accommodationSearchDTOS) {
@@ -100,6 +105,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/{accommodationId}/{guestId}")
     public ResponseEntity<AccommodationWithTotalPriceDTO> getAccommodationWhenGuest(@PathVariable Long accommodationId, @PathVariable String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         Guest guest = (Guest) userService.findById(guestId);
         Accommodation accommodation = accommodationService.findById(accommodationId);
         AccommodationWithTotalPriceDTO dto = new AccommodationWithTotalPriceDTO(accommodation, 0.0);
@@ -123,6 +130,7 @@ public class AccommodationController {
 
     @PostMapping(consumes = "application/json", value = "/search")
     public ResponseEntity<List<AccommodationSearchDTO>> searchAccommodations(@Valid @RequestBody SearchAndFilterDTO searchAndFilterDTO) {
+        validationUtils.checkForXSS(searchAndFilterDTO);
 
         List<AccommodationSearchDTO> accommodations = accommodationService.searchAndFilter(searchAndFilterDTO);
         for (AccommodationSearchDTO as : accommodations) {
@@ -135,6 +143,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/search/{guestId}")
     public ResponseEntity<List<AccommodationSearchDTO>> searchAccommodationsWhenGuest(@PathVariable String guestId, @RequestBody SearchAndFilterDTO searchAndFilterDTO) {
+        validationUtils.checkForXSS(searchAndFilterDTO);
+        validationUtils.isPotentialXSS(guestId);
 
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = accommodationService.searchWithFavorites(guest, searchAndFilterDTO);
@@ -161,6 +171,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
     public ResponseEntity<Collection<AccommodationHostDTO>> getForHost(@PathVariable String hostId) {
+        validationUtils.isPotentialXSS(hostId);
+
         Collection<AccommodationHostDTO> accommodations = accommodationService.getDTOsForHost(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
@@ -190,6 +202,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @PostMapping("/addToFavorites")
     public ResponseEntity<Void> addToFavorites(@Valid @RequestBody AccommodationFavoritesDTO dto) {
+        validationUtils.checkForXSS(dto);
+
         Accommodation accommodation = accommodationService.findById(dto.getAccommodationId());
         Guest guest = (Guest) userService.findById(dto.getGuestId());
         guest.addFavoriteAccommodation(accommodation);
@@ -200,6 +214,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @PostMapping("/removeFromFavorites")
     public ResponseEntity<Void> removeFromFavorites(@Valid @RequestBody AccommodationFavoritesDTO dto) {
+        validationUtils.checkForXSS(dto);
+
         Accommodation accommodation = accommodationService.findById(dto.getAccommodationId());
         Guest guest = (Guest) userService.findById(dto.getGuestId());
         guest.removeFavoriteAccommodation(accommodation);
@@ -210,6 +226,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/favorites/{guestId}")
     public ResponseEntity<List<AccommodationSearchDTO>> getAccommodationsFavoritesPage(@PathVariable String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         Guest guest = (Guest) userService.findById(guestId);
         List<AccommodationSearchDTO> accommodationSearchDTOS = new ArrayList<>();
         for(Accommodation a: guest.getFavorites()) {
@@ -224,6 +242,8 @@ public class AccommodationController {
 //    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/names/{hostId}")
     public ResponseEntity<Collection<AccommodationNameDTO>> getHostAccommodations(@PathVariable String hostId) {
+        validationUtils.isPotentialXSS(hostId);
+
         Collection<AccommodationNameDTO> accommodations = accommodationService.getHostAccommodations(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }

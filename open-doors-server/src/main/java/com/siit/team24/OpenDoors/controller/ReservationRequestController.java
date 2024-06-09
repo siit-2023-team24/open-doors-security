@@ -15,7 +15,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -44,6 +43,8 @@ public class ReservationRequestController {
 //    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/guest/{guestId}")
     public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.findByGuestId(guestId);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
@@ -51,6 +52,8 @@ public class ReservationRequestController {
     //@PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
     public ResponseEntity<List<ReservationRequestForHostDTO>> getAllForHost(@PathVariable String hostId) {
+        validationUtils.isPotentialXSS(hostId);
+
         List<ReservationRequestForHostDTO> requests = reservationRequestService.getAllForHost(hostId);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
@@ -60,6 +63,8 @@ public class ReservationRequestController {
     public ResponseEntity<List<ReservationRequestForGuestDTO>> searchReservationRequests(
             @PathVariable String guestId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
+        validationUtils.isPotentialXSS(guestId);
+        validationUtils.checkForXSS(requestSearchAndFilterDTO);
 
         System.out.println(requestSearchAndFilterDTO);
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.searchRequests(guestId, requestSearchAndFilterDTO);
@@ -72,7 +77,9 @@ public class ReservationRequestController {
             @PathVariable String hostId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
 
-        validationUtils.printFields(requestSearchAndFilterDTO);
+        validationUtils.isPotentialXSS(hostId);
+        validationUtils.checkForXSS(requestSearchAndFilterDTO);
+
         System.out.println(requestSearchAndFilterDTO);
         List<ReservationRequestForHostDTO> requests = reservationRequestService.searchRequestsForHost(hostId, requestSearchAndFilterDTO);
         return new ResponseEntity<>(requests, HttpStatus.OK);
@@ -119,7 +126,7 @@ public class ReservationRequestController {
     //@PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/createRequest")
     public ResponseEntity<MakeReservationRequestDTO> createReservationRequest(@Valid @RequestBody MakeReservationRequestDTO requestDTO) {
-
+        validationUtils.checkForXSS(requestDTO);
         System.out.println(requestDTO);
 
         Accommodation accommodation = accommodationService.findById(requestDTO.getAccommodationId());

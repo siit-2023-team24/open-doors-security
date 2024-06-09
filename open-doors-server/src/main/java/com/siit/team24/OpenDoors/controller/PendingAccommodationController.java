@@ -8,6 +8,7 @@ import com.siit.team24.OpenDoors.model.PendingAccommodation;
 import com.siit.team24.OpenDoors.service.ImageService;
 import com.siit.team24.OpenDoors.service.PendingAccommodationService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class PendingAccommodationController {
 
     @Autowired
     private PendingAccommodationService pendingService;
+
+    @Autowired
+    private ValidationUtils validationUtils;
 
 
     //@PreAuthorize("hasRole('HOST') or hasRole('ADMIN')")
@@ -52,6 +56,8 @@ public class PendingAccommodationController {
 //    @PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
     public ResponseEntity<Collection<PendingAccommodationHostDTO>> getPendingForHost(@PathVariable String hostId) {
+        validationUtils.isPotentialXSS(hostId);
+
         Collection<PendingAccommodationHostDTO> accommodations = pendingService.getForHost(hostId);
         return new ResponseEntity<>(accommodations, HttpStatus.OK);
     }
@@ -75,6 +81,8 @@ public class PendingAccommodationController {
 //    @PreAuthorize("hasRole('HOST')")
     @PostMapping("/save")
     public ResponseEntity<PendingAccommodationWholeDTO> save(@Valid @RequestBody PendingAccommodationWholeEditedDTO dto) {
+        validationUtils.checkForXSS(dto);
+
         System.out.println("Received: " + dto);
         try {
             PendingAccommodation pendingAccommodation = pendingService.save(dto);
@@ -110,6 +118,8 @@ public class PendingAccommodationController {
 //    @PreAuthorize("hasRole('ADMIN') or hasRole('HOST')")
     @PutMapping(consumes = "application/json")
     public ResponseEntity<Void> approve(@RequestBody PendingAccommodationHostDTO dto) throws IOException {
+        validationUtils.checkForXSS(dto);
+
         pendingService.approve(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

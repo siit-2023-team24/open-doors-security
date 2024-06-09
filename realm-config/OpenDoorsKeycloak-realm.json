@@ -731,6 +731,17 @@
         } ],
         "icon_uri" : ""
       }, {
+        "name" : "reservations-host-search-hostId",
+        "ownerManagedAccess" : false,
+        "displayName" : "",
+        "attributes" : { },
+        "_id" : "62d3ed60-a8ba-44b2-a49a-91aea7b42155",
+        "uris" : [ "/open-doors/reservations/host-search/{hostId}" ],
+        "scopes" : [ {
+          "name" : "POST"
+        } ],
+        "icon_uri" : ""
+      }, {
         "name" : "Default Resource",
         "type" : "urn:OpenDoorsBackend:resources:default",
         "ownerManagedAccess" : false,
@@ -1737,6 +1748,18 @@
         "config" : {
           "resources" : "[\"pending-accommodations-id\"]",
           "scopes" : "[\"DELETE\"]",
+          "applyPolicies" : "[\"host\"]"
+        }
+      }, {
+        "id" : "86a9b442-34da-4a43-a32f-bb1f7060c66a",
+        "name" : "searchReservationRequestsForHost",
+        "description" : "",
+        "type" : "scope",
+        "logic" : "POSITIVE",
+        "decisionStrategy" : "UNANIMOUS",
+        "config" : {
+          "resources" : "[\"reservations-host-search-hostId\"]",
+          "scopes" : "[\"POST\"]",
           "applyPolicies" : "[\"host\"]"
         }
       }, {
