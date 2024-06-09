@@ -1,0 +1,58 @@
+{
+  "realm": "OpenDoorsKeycloak",
+  "auth-server-url": "http://127.0.0.1:8080",
+  "resource": "OpenDoorsBackend",
+  "credentials":
+  {
+    "secret": "3U6WSMUJLo5TBIFvxSYSdgtomtRsAxSh"
+  },
+  "http-method-as-scope": true,
+  "paths": [
+    {
+      "path" : "/open-doors/accommodations/all",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/accommodations/{id}",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/accommodation-reviews/{id}",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/host-reviews/{id}",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/socket*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/image*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/accommodations/amenities",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/accommodations/accommodationTypes",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/open-doors/reservations/requestStatuses",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path" : "/open-doors/accommodations/search",
+      "enforcement-mode": "DISABLED",
+      "methods": [
+        {
+          "method": "POST",
+          "scopes": ["POST"]
+        }
+      ]
+    }
+  ]
+}

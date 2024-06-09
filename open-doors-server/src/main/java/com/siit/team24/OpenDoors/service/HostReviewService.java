@@ -22,7 +22,7 @@ public class HostReviewService {
     @Autowired
     private ReservationRequestService reservationRequestService;
 
-    public List<ReviewDetailsDTO> findAllForHost(Long hostId) {
+    public List<ReviewDetailsDTO> findAllForHost(String hostId) {
         List<HostReview> reviews = hostReviewRepository.findAllByHostId(hostId);
         List<ReviewDetailsDTO> dtos = new ArrayList<>();
         for (HostReview hr : reviews) {
@@ -38,7 +38,7 @@ public class HostReviewService {
         return hostReviewRepository.findAllReported();
     }
 
-    public boolean isReviewable(Long hostId, Long guestId) {
+    public boolean isReviewable(String hostId, String guestId) {
         boolean hasNotYetReviewed = hostReviewRepository.findByHostAndAuthor(hostId, guestId).isEmpty();
         boolean wasHosted = reservationRequestService.wasHosted(guestId, hostId);
         return (hasNotYetReviewed && wasHosted);
@@ -50,7 +50,7 @@ public class HostReviewService {
 
     public void delete(Long id) { this.hostReviewRepository.deleteById(id); }
 
-    public void deleteAllForHost(Long hostId) {
+    public void deleteAllForHost(String hostId) {
         List<HostReview> reviews = hostReviewRepository.findAllByHostId(hostId);
         hostReviewRepository.deleteAll(reviews);
     }

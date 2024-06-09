@@ -26,6 +26,6 @@ export interface AccommodationWithTotalPriceDTO {
     street: string;
     number: number;
     isFavoriteForGuest: boolean;
-    hostId: number;
+    hostId: string;
     blocked: boolean;
   }

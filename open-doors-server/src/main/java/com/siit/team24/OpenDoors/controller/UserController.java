@@ -8,6 +8,7 @@ import com.siit.team24.OpenDoors.service.NotificationService;
 import com.siit.team24.OpenDoors.service.PendingAccommodationService;
 import com.siit.team24.OpenDoors.service.user.UserReportService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,14 @@ public class UserController {
     @Autowired
     private NotificationService notificationService;
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+    @Autowired
+    private ValidationUtils validationUtils;
+
+    //@PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(consumes = "multipart/form-data")
     public ResponseEntity<Void> updateUser(@Valid UserFormDataDTO data) {
+        validationUtils.checkForXSS(data);
+
         UserEditedDTO dto = null;
         UserEditedDTO userDTO = data.toEditedDTO();
 
@@ -54,23 +60,27 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(consumes = "application/json", value = "/new-password")
     public ResponseEntity<Void> updateAccount(@RequestBody NewPasswordDTO newPasswordDTO){
+        validationUtils.checkForXSS(newPasswordDTO);
+
         this.service.changePassword(newPasswordDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
+        validationUtils.isPotentialXSS(id);
+
         service.delete(id);
         pendingAccommodationService.deleteAllForHost(id);
         userReportService.deleteAllFor(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/blocked")
     public ResponseEntity<List<UserSummaryDTO>> getBlockedUsers() {
         List<UserSummaryDTO> users = service.getBlockedDTOs();
@@ -78,10 +88,10 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserAccountViewDTO> getUser(
-            @PathVariable Long id) {
+    public ResponseEntity<UserAccountViewDTO> getUser(@PathVariable String id) {
+        validationUtils.isPotentialXSS(id);
         try {
             User user = service.findById(id);
             return new ResponseEntity<>(user.toAccountViewDTO(), HttpStatus.OK);
@@ -93,33 +103,44 @@ public class UserController {
 
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{userId}/notifications")
-    public ResponseEntity<List<NotificationShowDTO>> getNotificationsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<NotificationShowDTO>> getNotificationsByUserId(@PathVariable String userId) {
+        validationUtils.isPotentialXSS(userId);
         List<NotificationShowDTO> notifications = notificationService.findAllByUserId(userId);
         return new ResponseEntity<>(notifications, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/unblock/{id}")
-    public ResponseEntity<Void> unblock(@PathVariable Long id){
+    public ResponseEntity<Void> unblock(@PathVariable String id){
+        validationUtils.isPotentialXSS(id);
         service.unblock(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @GetMapping(value = "/{id}/disabled-notifications")
-    public ResponseEntity<List<NotificationType>> getDisabledNotificationTypes(@PathVariable Long id) {
+    public ResponseEntity<List<NotificationType>> getDisabledNotificationTypes(@PathVariable String id) {
+        validationUtils.isPotentialXSS(id);
         List<NotificationType> types = service.getDisabledNotificationTypesFor(id);
         return new ResponseEntity<>(types, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
+//    @PreAuthorize("hasRole('HOST') or hasRole('ADMIN') or hasRole('GUEST')")
     @PutMapping(value = "/{id}/disabled-notifications")
-    public ResponseEntity<Void> setDisabledNotificationTypes(@PathVariable Long id,
+    public ResponseEntity<Void> setDisabledNotificationTypes(@PathVariable String id,
                                                              @RequestBody List<NotificationType> types) {
+        validationUtils.isPotentialXSS(id);
         service.setDisabledNotificationTypesFor(id, types);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/id/{username}")
+    public ResponseEntity<String> getIdForUsername(@PathVariable String username) {
+        validationUtils.isPotentialXSS(username);
+        String id = service.getIdForUsername(username);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
 }

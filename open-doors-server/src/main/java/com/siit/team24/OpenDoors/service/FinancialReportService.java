@@ -28,7 +28,7 @@ public class FinancialReportService {
     @Autowired
     ReservationRequestService reservationRequestService;
 
-    public List<DateRangeReportDTO> getDateRangeReports(Long hostId, Timestamp startDate, Timestamp endDate) {
+    public List<DateRangeReportDTO> getDateRangeReports(String hostId, Timestamp startDate, Timestamp endDate) {
         List<DateRangeReportDTO> reports = new ArrayList<>();
         List<Accommodation> accommodations = accommodationService.findAllByHostId(hostId);
         for(Accommodation accommodation :  accommodations) {
@@ -90,7 +90,7 @@ public class FinancialReportService {
         return report;
     }
 
-    public void exportDateRangeReport(Long hostId, Timestamp startDate, Timestamp endDate) {
+    public void exportDateRangeReport(String hostId, Timestamp startDate, Timestamp endDate) {
         List<DateRangeReportDTO> report = getDateRangeReports(hostId, startDate, endDate);
         File file;
         try {

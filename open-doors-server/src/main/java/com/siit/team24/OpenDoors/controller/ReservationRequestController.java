@@ -10,11 +10,11 @@ import com.siit.team24.OpenDoors.model.enums.ReservationRequestStatus;
 import com.siit.team24.OpenDoors.service.AccommodationService;
 import com.siit.team24.OpenDoors.service.ReservationRequestService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -36,37 +36,49 @@ public class ReservationRequestController {
     @Autowired
     private AccommodationService accommodationService;
 
+    @Autowired
+    private ValidationUtils validationUtils;
 
-    @PreAuthorize("hasRole('GUEST')")
+
+//    @PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "/all/guest/{guestId}")
-    public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable Long guestId) {
+    public ResponseEntity<List<ReservationRequestForGuestDTO>> getAllForGuest(@PathVariable String guestId) {
+        validationUtils.isPotentialXSS(guestId);
+
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.findByGuestId(guestId);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+    //@PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "/host/{hostId}")
-    public ResponseEntity<List<ReservationRequestForHostDTO>> getAllForHost(@PathVariable Long hostId) {
+    public ResponseEntity<List<ReservationRequestForHostDTO>> getAllForHost(@PathVariable String hostId) {
+        validationUtils.isPotentialXSS(hostId);
+
         List<ReservationRequestForHostDTO> requests = reservationRequestService.getAllForHost(hostId);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+    //@PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/search/{guestId}")
     public ResponseEntity<List<ReservationRequestForGuestDTO>> searchReservationRequests(
-            @PathVariable Long guestId,
+            @PathVariable String guestId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
+        validationUtils.isPotentialXSS(guestId);
+        validationUtils.checkForXSS(requestSearchAndFilterDTO);
 
         System.out.println(requestSearchAndFilterDTO);
         List<ReservationRequestForGuestDTO> requests = reservationRequestService.searchRequests(guestId, requestSearchAndFilterDTO);
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+    //@PreAuthorize("hasRole('HOST')")
     @PostMapping(consumes = "application/json", value = "/host-search/{hostId}")
     public ResponseEntity<List<ReservationRequestForHostDTO>> searchReservationRequestsForHost(
-            @PathVariable Long hostId,
+            @PathVariable String hostId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
+
+        validationUtils.isPotentialXSS(hostId);
+        validationUtils.checkForXSS(requestSearchAndFilterDTO);
 
         System.out.println(requestSearchAndFilterDTO);
         List<ReservationRequestForHostDTO> requests = reservationRequestService.searchRequestsForHost(hostId, requestSearchAndFilterDTO);
@@ -82,28 +94,28 @@ public class ReservationRequestController {
         return ResponseEntity.ok(statuses);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+    //@PreAuthorize("hasRole('GUEST')")
     @GetMapping(value = "cancel/{id}")
     public ResponseEntity<Void> cancelRequest(@PathVariable Long id) {
         reservationRequestService.cancel(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('GUEST')")
+    //@PreAuthorize("hasRole('GUEST')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         reservationRequestService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+    //@PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "confirm/{id}")
     public ResponseEntity<Void> confirm(@PathVariable Long id) {
         reservationRequestService.confirm(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST')")
+    //@PreAuthorize("hasRole('HOST')")
     @GetMapping(value = "deny/{id}")
     public ResponseEntity<Void> deny(@PathVariable Long id) {
         reservationRequestService.deny(id);
@@ -111,10 +123,10 @@ public class ReservationRequestController {
     }
 
 
-    @PreAuthorize("hasRole('GUEST')")
+    //@PreAuthorize("hasRole('GUEST')")
     @PostMapping(consumes = "application/json", value = "/createRequest")
     public ResponseEntity<MakeReservationRequestDTO> createReservationRequest(@Valid @RequestBody MakeReservationRequestDTO requestDTO) {
-
+        validationUtils.checkForXSS(requestDTO);
         System.out.println(requestDTO);
 
         Accommodation accommodation = accommodationService.findById(requestDTO.getAccommodationId());

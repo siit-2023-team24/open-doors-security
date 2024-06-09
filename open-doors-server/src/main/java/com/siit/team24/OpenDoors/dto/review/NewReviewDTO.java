@@ -9,14 +9,14 @@ public class NewReviewDTO {
     private int rating;
     private String comment;
     @Min(1)
-    private Long authorId;
+    private String authorId;
     @Min(1)
-    private Long recipientId;
+    private String recipientId;
 
     public NewReviewDTO() {
     }
 
-    public NewReviewDTO(int rating, String comment, Long authorId, Long recipientId) {
+    public NewReviewDTO(int rating, String comment, String authorId, String recipientId) {
         this.rating = rating;
         this.comment = comment;
         this.authorId = authorId;
@@ -39,17 +39,17 @@ public class NewReviewDTO {
         this.comment = comment;
     }
 
-    public Long getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long authorId) { this.authorId = authorId; }
+    public void setAuthorId(String authorId) { this.authorId = authorId; }
 
-    public Long getRecipientId() {
+    public String getRecipientId() {
         return recipientId;
     }
 
-    public void setRecipientId(Long recipientId) {
+    public void setRecipientId(String recipientId) {
         this.recipientId = recipientId;
     }
 }

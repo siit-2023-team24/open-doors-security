@@ -1,0 +1,24 @@
+<div class="review">
+    <div class="review-details">
+        <div class="user-info">
+            <div class="user-text">
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Alias: {{ certificate.alias }}</div>
+                    <div style="font-size: 16px;">Issuer alias: {{ certificate.issuerAlias }}</div>
+                </div>
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Valid from: {{ certificate.startDate | date:'dd/MM/yyyy' }}</div>
+                    <div style="font-size: 16px;">Valid until: {{ certificate.expirationDate | date:'dd/MM/yyyy' }}</div>
+                </div>
+                <div class="txt-col">
+                    <div style="font-size: 16px;">Serial nubmer: {{ certificate.serialNumber }}</div>
+                    <div style="font-size: 16px;">Valid: {{ certificate.valid }}, revoked: {{ certificate.revoked }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="delete-container">
+        <button *ngIf="!certificate.revoked" mat-raised-button class="button delete-btn" (click)="openDeleteDialog()">Revoke</button>
+        <button *ngIf="certificate.extensions.ca" mat-raised-button class="button delete-btn" (click)="clickPlus()">+</button>
+    </div>
+</div>

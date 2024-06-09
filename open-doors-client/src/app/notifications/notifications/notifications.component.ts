@@ -30,7 +30,7 @@ export class NotificationsComponent {
               private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    const id: number = this.authService.getId();
+    const id: string = this.authService.getId();
     this.role = this.authService.getRole();
     this.service.getAllFor(id).subscribe({
       next: (data: Notification[]) => {

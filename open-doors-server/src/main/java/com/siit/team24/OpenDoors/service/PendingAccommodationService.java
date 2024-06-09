@@ -78,7 +78,7 @@ public class PendingAccommodationService {
                     }
                 }
                 if (deleted) continue;
-                images.add(imageService.saveBytes(imageService.getImageBytesDTO(imageId, false, pendingAccommodation.getId())));
+                images.add(imageService.saveBytes(imageService.getImageBytesDTO(imageId, false, pendingAccommodation.getId().toString())));
             }
         } else if (dto.getId() != null) {   //editing existing pending
             for (Long imageId: dto.getImages()) {
@@ -99,7 +99,7 @@ public class PendingAccommodationService {
         Set<Image> images = pendingAccommodation.getImages();
 
         for (MultipartFile file: newImages) {  //new images to be saved
-            images.add(imageService.save(new ImageFileDTO(null, file, ImageType.PENDING_ACCOMMODATION, pendingAccommodationId)));
+            images.add(imageService.save(new ImageFileDTO(null, file, ImageType.PENDING_ACCOMMODATION, pendingAccommodationId.toString())));
         }
         pendingAccommodation.setImages(images);
         return repo.save(pendingAccommodation);
@@ -115,7 +115,7 @@ public class PendingAccommodationService {
         repo.deleteById(id);
     }
 
-    public void deleteAllForHost(Long hostId) {
+    public void deleteAllForHost(String hostId) {
         List<PendingAccommodation> accommodations = repo.findAllByHostId(hostId);
         if (accommodations==null) return;
         repo.deleteAll(accommodations);
@@ -125,7 +125,7 @@ public class PendingAccommodationService {
         return repo.findAllDtos();
     }
 
-    public Collection<PendingAccommodationHostDTO> getForHost(Long hostId) {
+    public Collection<PendingAccommodationHostDTO> getForHost(String hostId) {
         return repo.findByHost(hostId);
     }
 
@@ -152,7 +152,7 @@ public class PendingAccommodationService {
         //save images from pending
         Set<Image> images = new HashSet<>();
         for (Image image: pendingAccommodation.getImages()) {
-            images.add(imageService.saveBytes(imageService.getImageBytesDTO(image.getId(), false, accommodation.getId())));
+            images.add(imageService.saveBytes(imageService.getImageBytesDTO(image.getId(), false, accommodation.getId().toString())));
         }
         withoutImages.setImages(images);
         Accommodation saved = accommodationService.save(withoutImages);

@@ -25,14 +25,14 @@ export class AccommodationService {
   add(dto: AccommodationWholeEdited): Observable<AccommodationWholeEdited>{
     console.log("in service:");
     console.log(dto);
-    return this.http.post<AccommodationWholeEdited>(environment.apiHost + '/pending-accommodations', dto);
+    return this.http.post<AccommodationWholeEdited>(environment.apiHost + '/pending-accommodations/save', dto);
   }
 
   getAll() : Observable<AccommodationSearchDTO[]> {
     return this.http.get<AccommodationSearchDTO[]>(environment.apiHost + "/accommodations/all");
   }
 
-  getAllWhenGuest(guestId: number) : Observable<AccommodationSearchDTO[]> {
+  getAllWhenGuest(guestId: string) : Observable<AccommodationSearchDTO[]> {
     return this.http.get<AccommodationSearchDTO[]>(environment.apiHost + "/accommodations/all/" + guestId);
   }
 
@@ -47,7 +47,7 @@ export class AccommodationService {
     }
   }
 
-  getAccommodationWhenGuest(accommodationId: number | null, guestId: number) : Observable<AccommodationWithTotalPriceDTO> {
+  getAccommodationWhenGuest(accommodationId: number | null, guestId: string) : Observable<AccommodationWithTotalPriceDTO> {
     return this.http.get<AccommodationWithTotalPriceDTO>(environment.apiHost + "/accommodations/" + accommodationId + "/" + guestId);
   }
 
@@ -56,7 +56,7 @@ export class AccommodationService {
     return this.http.post<AccommodationSearchDTO[]>(searchEndpoint, filterParams);
   }
 
-  searchAndFilterAccommodationWhenGuest(guestId: number, filterParams: SearchAndFilterDTO): Observable<AccommodationSearchDTO[]> {
+  searchAndFilterAccommodationWhenGuest(guestId: string, filterParams: SearchAndFilterDTO): Observable<AccommodationSearchDTO[]> {
     const searchEndpoint = environment.apiHost + "/accommodations/search/" + guestId;
     return this.http.post<AccommodationSearchDTO[]>(searchEndpoint, filterParams);
   }
@@ -79,11 +79,11 @@ export class AccommodationService {
     return this.http.get<HostListAccommodation[]>(environment.apiHost + '/pending-accommodations')
   }
 
-  getForHost(hostId: number): Observable<HostListAccommodation[]> {
+  getForHost(hostId: string): Observable<HostListAccommodation[]> {
     return this.http.get<HostListAccommodation[]>(environment.apiHost + '/accommodations/host/' + hostId)
   }
 
-  getPendingForHost(hostId: number): Observable<HostListAccommodation[]> {
+  getPendingForHost(hostId: string): Observable<HostListAccommodation[]> {
     return this.http.get<HostListAccommodation[]>(environment.apiHost + '/pending-accommodations/host/' + hostId)
   }
 
@@ -123,11 +123,11 @@ export class AccommodationService {
     return this.http.post(environment.apiHost + '/accommodations/removeFromFavorites', dto);
   }
 
-  getFavoriteAccommodations(guestId: number) : Observable<AccommodationSearchDTO[]> {
+  getFavoriteAccommodations(guestId: string) : Observable<AccommodationSearchDTO[]> {
     return this.http.get<AccommodationSearchDTO[]>(environment.apiHost + "/accommodations/favorites/" + guestId);
   }
 
-  getHostAccommodationNames(hostId: number): Observable<AccommodationNameDTO[]> {
+  getHostAccommodationNames(hostId: string): Observable<AccommodationNameDTO[]> {
 	  return this.http.get<AccommodationNameDTO[]>(environment.apiHost + "/accommodations/names/" + hostId);
   }
 

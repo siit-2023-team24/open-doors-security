@@ -1,1 +1,28 @@
-<p>certificates works!</p>
+<div class="container">
+    <div class="list-item">
+        <div class="horiz">
+            <h1 class="create-cert-text">Create certificate from root</h1>
+            <button mat-icon-button color="primary" class="btn-plus" (click)="createFromRoot()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <h2>Certificates:</h2>
+        <mat-grid-list cols="1" rowHeight="250px" class="review-list">
+            <mat-grid-tile class="tile" *ngFor="let certificate of certificates">
+                <app-certificate-card [certificate]="certificate" (reload)="reloadParent($event)" (onPlusClicked)="openCreateForm($event)"></app-certificate-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+    
+
+    <app-create-certificate-dialog (reload)="reloadParent($event)" (onCreateTemplate)="createTemplate($event)"></app-create-certificate-dialog>
+    <div class="list-item-end">
+        <h2 class="end">Templates</h2>
+        <button mat-raised-button color="primary"  class="button sign-up-btn" (click)="applyNone()">None</button>
+        <mat-grid-list cols="1" rowHeight="250px" class="review-list">
+            <mat-grid-tile class="tile" *ngFor="let template of templates">
+                <app-certificate-template [template]="template" (reload)="reloadParent($event)" (onApplyClicked)="apply($event)"></app-certificate-template>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

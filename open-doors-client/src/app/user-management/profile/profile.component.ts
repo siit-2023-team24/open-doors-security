@@ -9,6 +9,10 @@ import { EditUser } from '../model/edit-user.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SocketService } from 'src/app/shared/socket.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CertificateRequestService } from 'src/app/security/certificate-request.service';
+import { CertificateRequestNew } from 'src/app/security/model/certificate-request-new';
+import { UserDataDTO } from 'src/app/shared/model/user-data-cert';
+import { saveAs } from 'file-saver';
 
 
 @Component({
@@ -18,30 +22,67 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfileComponent implements OnInit {
   
-  user: EditUser = {firstName: "", lastName: "", id: 0, country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
+  user: EditUser = {firstName: "", lastName: "", id: "", country: Country.VATICAN_CITY, city: "", street: "", number: 0, phone: ""}
 
   username: string = this.authService.getUsername();
   
   imgPath: string= "";
 
+  certificateText: string = "";
+  certificateBtnEnabled = false;
+  status = 8;
+
+  role: string = "";
+
   constructor(private userService: UserService, private imageService: ImageService,
     private dialog: MatDialog, private router: Router, private authService: AuthService,
-    private socketService: SocketService, private snackBar: MatSnackBar) {
+    private socketService: SocketService, private snackBar: MatSnackBar,
+    private certificateRequestService: CertificateRequestService) {
   }
 
 
   ngOnInit(): void {
     
+    this.role = this.authService.getRole();
+
     const id = this.authService.getId();
     this.userService.getUser(id).subscribe({
       
       next: (data: EditUser) => {
         this.user = data;
         this.imgPath = this.imageService.getPath(data.imageId, true);
+        this.setCertificateBtn();
       },
 
       error: (_) => { console.log('Error in getUser'); }
     });
+
+    
+
+  }
+
+  private setCertificateBtn() {
+    this.certificateRequestService.getFor(this.user.id).subscribe({
+      next: (status: number) => {
+        this.status = status;
+
+        if (this.status == 0) {
+          this.certificateText = "Awaiting response";
+          this.certificateBtnEnabled = false;
+        }
+        else if (this.status == 1) {
+          this.certificateText = "Generate certificate";
+          this.certificateBtnEnabled = true;
+        }
+        else {
+          this.status = -1;
+          this.certificateText = "Request certificate";
+          this.certificateBtnEnabled = true;
+        } 
+      },
+      error: () => console.log("error getting certificate request status")
+    })
+
   }
 
   openDialog(): void {
@@ -82,6 +123,32 @@ export class ProfileComponent implements OnInit {
     this.snackBar.open(message, 'Close', {
       duration: 3000,
     });
+  }
+
+  onCertificateBtnClicked(): void {
+    if (this.status == 1) {
+      let dto: UserDataDTO = {id: this.user.id, username: this.username,
+                              firstName: this.user.firstName, lastName: this.user.lastName,
+                              city: this.user.city, country: this.user.country};
+
+      this.certificateRequestService.generate(dto).subscribe((data: Blob) => {
+        const blob = new Blob([data], { type: 'application/x-x509-ca-cert' });
+        saveAs(blob, 'certificate.crt');
+        this.showSnackBar("Certificate generated");
+        this.setCertificateBtn();
+      }, error => {console.log("error generating certificate")
+      });
+    }
+    else if (this.status == -1) {
+      let dto: CertificateRequestNew = {userId: this.user.id, timestamp: new Date()};
+      this.certificateRequestService.create(dto).subscribe({
+        next: () => {
+          this.showSnackBar("Request created");
+          this.setCertificateBtn();
+        },
+        error: ()=> {console.log("error creating request")}
+      })
+    }
   }
 
 }

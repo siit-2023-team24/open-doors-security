@@ -12,13 +12,13 @@ export class UserReportService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getReportableUsersForUser(userId: number, isGuestComplainant: boolean) : Observable<string[]> {
+  getReportableUsersForUser(userId: string, isGuestComplainant: boolean) : Observable<string[]> {
     let params = new HttpParams().set('isGuestComplainant', isGuestComplainant.toString());
     return this.httpClient.get<string[]>(environment.apiHost + '/user-reports/' + userId, { params });
   }
 
   createUserReview(dto: NewUserReportDTO) : Observable<UserReportDTO> {
-    return this.httpClient.post<UserReportDTO>(environment.apiHost + '/user-reports', dto);
+    return this.httpClient.post<UserReportDTO>(environment.apiHost + '/user-reports/create', dto);
   }
 
   getAll(): Observable<UserReportDTO[]> {

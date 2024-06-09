@@ -7,6 +7,9 @@
         <div class="dark-blue-button-wrapper">
             <button [routerLink]="['/edit-profile']" [queryParams]="{title: 'Edit profile'}" class="blueBtn" mat-raised-button>Edit</button>
         </div>
+        <div *ngIf="role=='ROLE_HOST'" class="grey-button-wrapper">
+            <button class="greyBtn" mat-raised-button [disabled]="!certificateBtnEnabled" (click)="onCertificateBtnClicked()">{{certificateText}}</button>
+        </div>
     </div>
 
     <div id="profileDetails">

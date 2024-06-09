@@ -17,7 +17,7 @@ public class HostReviewWholeDTO extends NewReviewDTO {
         this(review.getRating(), review.getComment(), review.getAuthor().getId(), review.getHost().getId(), review.getId(), review.getTimestamp(), review.isReported());
     }
 
-    public HostReviewWholeDTO(int rating, String comment, Long authorId, Long recipientId, Long id, Timestamp timestamp, boolean reported) {
+    public HostReviewWholeDTO(int rating, String comment, String authorId, String recipientId, Long id, Timestamp timestamp, boolean reported) {
         super(rating, comment, authorId, recipientId);
         this.id = id;
         this.timestamp = timestamp;

@@ -23,7 +23,7 @@ public class NotificationService {
     private UserService userService;
 
 
-    public List<NotificationShowDTO> findAllByUserId(Long userId) {
+    public List<NotificationShowDTO> findAllByUserId(String userId) {
         List<NotificationShowDTO> notifications = repo.findAllByUserId(userId);
         notifications.sort(Comparator.comparing(NotificationShowDTO::getTimestamp).reversed());
         return notifications;

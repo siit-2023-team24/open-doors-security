@@ -27,8 +27,8 @@ public class Guest extends User {
         this.favorites = favorites;
     }
 
-    public Guest(Long id, String email, String password, Timestamp lastPasswordResetDate, UserRole role, String firstName, String lastName, String phone, Image image, Address address, boolean enabled, Set<Accommodation> favorites, List<NotificationType> disabledTypes) {
-        super(id, email, password, lastPasswordResetDate, role, firstName, lastName, phone, image, address, enabled, disabledTypes);
+    public Guest(String id, String email, UserRole role, String firstName, String lastName, String phone, Image image, Address address, boolean enabled, Set<Accommodation> favorites, List<NotificationType> disabledTypes) {
+        super(id, email, role, firstName, lastName, phone, image, address, enabled, disabledTypes);
         this.favorites = favorites;
     }
 

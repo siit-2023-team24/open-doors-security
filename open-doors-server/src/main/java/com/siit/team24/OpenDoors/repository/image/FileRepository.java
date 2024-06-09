@@ -45,7 +45,7 @@ public class FileRepository {
         }
     }
 
-    private String getFilepath(ImageType type, Long entityId) {
+    private String getFilepath(ImageType type, String entityId) {
         String folder;
         if (type == ImageType.PROFILE)
             folder = "\\profile\\";

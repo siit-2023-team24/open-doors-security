@@ -6,6 +6,7 @@ import com.siit.team24.OpenDoors.model.User;
 import com.siit.team24.OpenDoors.model.UserReport;
 import com.siit.team24.OpenDoors.service.user.UserReportService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,38 +25,43 @@ public class UserReportController {
     @Autowired
     private UserReportService userReportService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @Autowired
+    private ValidationUtils validationUtils;
+
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserReportDTO>> getAllUserReports() {
         List<UserReportDTO> reports = userReportService.findAllDTOs();
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
+    //@PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
     @GetMapping(value="/{id}")
-    public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable Long id,
+    public ResponseEntity<List<String>> getReportableUsersForUser(@PathVariable String id,
                         @RequestParam boolean isGuestComplainant) {
+        validationUtils.isPotentialXSS(id);
         List<String> reportableUserIds = userReportService.getReportableUsers(id, isGuestComplainant);
         return new ResponseEntity<>(reportableUserIds, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
-    @PostMapping(consumes = "application/json")
+    //@PreAuthorize("hasRole('HOST') or hasRole('GUEST')")
+    @PostMapping(value="/create" ,consumes = "application/json")
     public ResponseEntity<UserReportDTO> createUserReport(@Valid @RequestBody NewUserReportDTO dto) {
+        validationUtils.checkForXSS(dto);
         UserReport report = userReportService.createReport(dto);
         UserReportDTO returnDto = new UserReportDTO(report);
         System.out.println(returnDto);
         return new ResponseEntity<>(returnDto, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/dismiss/{id}")
     public ResponseEntity<UserReportDTO> dismiss(@PathVariable Long id) {
         UserReportDTO dto = userReportService.dismiss(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/resolve/{id}")
     public ResponseEntity<Void> resolve(@PathVariable Long id) {
         userReportService.resolve(id);

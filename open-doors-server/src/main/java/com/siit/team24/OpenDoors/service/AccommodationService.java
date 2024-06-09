@@ -87,17 +87,17 @@ public class AccommodationService {
         accommodationRepository.revive(id);
     }
 
-    public void reviveByHostId(Long hostId) {
+    public void reviveByHostId(String hostId) {
         List<Accommodation> accommodations = accommodationRepository.findDeletedForHost(hostId);
         for (Accommodation accommodation: accommodations)
             revive(accommodation.getId());
     }
 
-    public Collection<AccommodationHostDTO> getDTOsForHost(Long hostId) {
+    public Collection<AccommodationHostDTO> getDTOsForHost(String hostId) {
         return accommodationRepository.findAllDtoByHostId(hostId);
     }
 
-    public List<Accommodation> findAllByHostId(Long hostId) {
+    public List<Accommodation> findAllByHostId(String hostId) {
         return accommodationRepository.findAllByHostId(hostId);
     }
 
@@ -298,7 +298,7 @@ public class AccommodationService {
         return dtos;
     }
 
-    public Collection<AccommodationNameDTO> getHostAccommodations(Long hostId) {
+    public Collection<AccommodationNameDTO> getHostAccommodations(String hostId) {
         List<Accommodation> accommodations = findAll();
         List<AccommodationNameDTO> hostAccommodations = new ArrayList<>();
         for(Accommodation a: accommodations) {

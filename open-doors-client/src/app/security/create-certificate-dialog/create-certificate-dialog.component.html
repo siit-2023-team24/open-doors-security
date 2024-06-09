@@ -1,0 +1,163 @@
+<div *ngIf="visible" class="container">
+  <h1>Create Certificate</h1>
+  <form [formGroup]="extensionForm">
+  
+      <div fxLayout="row" fxLayoutGap="20px" class="section">
+          <mat-slide-toggle formControlName="ca" color="#0C4A60">
+            CA
+          </mat-slide-toggle>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+          <section class="checkbox-column">
+              <mat-label>Choose extended key usages:</mat-label>
+              <br>
+              <section class="checkbox-grid">
+                  <section class="checkbox-column" *ngFor="let use of extendedUsageText; let i = index">
+                  <mat-checkbox [checked]="extendedUsages.includes(i)" (change)="onExtendedUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  </section>
+              </section>
+          </section>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+          <section class="checkbox-column">
+              <mat-label>Choose key usages:</mat-label>
+              <br>
+              <section class="checkbox-grid">
+                  <section class="checkbox-column" *ngFor="let use of usageText; let i = index">
+                  <mat-checkbox [checked]="usage.includes(i)" (change)="onUsageCheckboxChange(i, $event.checked)" color="primary">{{ use }}</mat-checkbox>
+                  </section>
+              </section>
+          </section>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="amenities">
+        <mat-form-field>
+          <mat-label>Template name</mat-label>
+          <input matInput type="text" formControlName="templateName">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onCreateTemplateClick()" class="button sign-up-btn" id="register-btn">
+          Create template
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px" class="section">
+        <p class="error">{{ templateMessage }}</p>
+      </div>
+    
+  </form>
+
+  <form [formGroup]="certificateForm">
+      <div fxLayout="column" fxLayoutGap="20px"  class="form register-form">
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+              <mat-form-field disabled="true">
+                  <mat-label>Issuer alias</mat-label>
+                  <input matInput type="text" formControlName="issuerAlias">
+              </mat-form-field>
+  
+              <mat-form-field>
+                <mat-label>Alias</mat-label>
+                <input matInput type="text" formControlName="alias">
+                <mat-error *ngIf="certificateForm.get('alias')?.hasError('required')">
+                  Alias is required.
+              </mat-error>
+              </mat-form-field>
+          </div>
+  
+          
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+            <mat-form-field>
+              <input matInput [matDatepicker]="startDatePicker" placeholder="Start date" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #startDatePicker></mat-datepicker>
+              <mat-error *ngIf="certificateForm.get('startDate')?.hasError('required')">Start date is required</mat-error>
+            </mat-form-field>
+          
+            <mat-form-field>
+              <input matInput [matDatepicker]="endDatePicker" placeholder="End date" formControlName="expirationDate">
+              <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #endDatePicker></mat-datepicker>
+              <mat-error *ngIf="certificateForm.get('expirationDate')?.hasError('required')">Expiration date is required</mat-error>
+            </mat-form-field>
+          </div>
+          
+          <div style="height:20px">
+            <mat-error *ngIf="certificateForm.hasError('dateInvalid') && certificateForm.get('expirationDate')?.touched">Expiration date cannot be before start date</mat-error>
+          </div>
+          
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+            <mat-form-field>
+              <mat-label>Common name</mat-label>
+              <input matInput type="text" formControlName="commonName">
+              <mat-error *ngIf="certificateForm.get('commonName')?.hasError('required')">
+                Common name is required.
+            </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email">
+              <mat-error *ngIf="certificateForm.get('email')?.hasError('required')">
+                Email is required.
+            </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+            <mat-form-field>
+              <mat-label>Organization</mat-label>
+              <input matInput type="text" formControlName="organization">
+              <mat-error *ngIf="certificateForm.get('organization')?.hasError('required')">
+                Organization is required.
+            </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Organization unit</mat-label>
+              <input matInput type="text" formControlName="organizationalUnit">
+              <mat-error *ngIf="certificateForm.get('organizationalUnit')?.hasError('required')">
+                Organization unit is required.
+            </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+            <mat-form-field>
+              <mat-label>Locality</mat-label>
+              <input matInput type="text" formControlName="locality">
+              <mat-error *ngIf="certificateForm.get('locality')?.hasError('required')">
+                Locality is required.
+            </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>State</mat-label>
+              <input matInput type="text" formControlName="state">
+              <mat-error *ngIf="certificateForm.get('state')?.hasError('required')">
+                State is required.
+            </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+            <mat-form-field>
+              <mat-label>Country</mat-label>
+              <input matInput type="text" formControlName="country">
+              <mat-error *ngIf="certificateForm.get('country')?.hasError('required')">
+                Country is required.
+              </mat-error>
+            </mat-form-field>
+  
+            <button mat-raised-button color="primary" (click)="onCreateClick()" class="button sign-up-btn" id="register-btn">
+              Create certificate
+            </button>
+          </div>
+  
+          <div fxLayout="row" fxLayoutGap="20px" class="section">
+              <p class="error">{{ errorMessage }}</p>
+          </div>
+      </div>
+  </form>
+</div>

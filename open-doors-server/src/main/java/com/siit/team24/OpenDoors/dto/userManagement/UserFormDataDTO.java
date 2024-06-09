@@ -148,7 +148,7 @@ public class UserFormDataDTO {
             imageId = imageId.replaceAll("\"", "");
             imgId = Long.parseLong(imageId);
         }
-        return new UserEditedDTO(Long.parseLong(id), firstName, lastName, phone, street, Integer.parseInt(number),
+        return new UserEditedDTO(id, firstName, lastName, phone, street, Integer.parseInt(number),
                 city, country, imgId, file);
     }
 }

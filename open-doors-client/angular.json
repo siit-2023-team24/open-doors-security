@@ -68,7 +68,10 @@
               "browserTarget": "OpenDoors:build:production"
             },
             "development": {
-              "browserTarget": "OpenDoors:build:development"
+              "browserTarget": "OpenDoors:build:development",
+              "ssl": true,
+              "sslKey": "ang-cert/private.key",
+              "sslCert": "ang-cert/certificate.crt"
             }
           },
           "defaultConfiguration": "development"

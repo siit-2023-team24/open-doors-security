@@ -18,12 +18,12 @@ export class ReviewService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getReviewsForAccommodation(accommodationId: number, guestId: number) : Observable<AccommodationReviewsDTO> {
+  getReviewsForAccommodation(accommodationId: number, guestId: string) : Observable<AccommodationReviewsDTO> {
     let params = new HttpParams().set('guestId', guestId.toString());
     return this.httpClient.get<AccommodationReviewsDTO>(environment.apiHost + '/accommodation-reviews/' + accommodationId, { params });
   }
 
-  getReviewsForHost(hostId: number, guestId: number) : Observable<HostPublicDataDTO> {
+  getReviewsForHost(hostId: string, guestId: string) : Observable<HostPublicDataDTO> {
     let params = new HttpParams().set('guestId', guestId.toString());
     return this.httpClient.get<HostPublicDataDTO>(environment.apiHost + '/host-reviews/' + hostId, { params })
   }

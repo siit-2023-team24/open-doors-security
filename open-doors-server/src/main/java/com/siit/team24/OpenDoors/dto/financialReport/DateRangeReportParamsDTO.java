@@ -5,24 +5,24 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.sql.Timestamp;
 
 public class DateRangeReportParamsDTO {
-    private Long hostId;
+    private String hostId;
 
     @PastOrPresent
     private Timestamp startDate;
     @PastOrPresent
     private Timestamp endDate;
 
-    public DateRangeReportParamsDTO(Long hostId, Timestamp startDate, Timestamp endDate) {
+    public DateRangeReportParamsDTO(String hostId, Timestamp startDate, Timestamp endDate) {
         this.hostId = hostId;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Long getHostId() {
+    public String getHostId() {
         return hostId;
     }
 
-    public void setHostId(Long hostId) {
+    public void setHostId(String hostId) {
         this.hostId = hostId;
     }
 
