@@ -10,6 +10,7 @@ import com.siit.team24.OpenDoors.model.enums.ReservationRequestStatus;
 import com.siit.team24.OpenDoors.service.AccommodationService;
 import com.siit.team24.OpenDoors.service.ReservationRequestService;
 import com.siit.team24.OpenDoors.service.user.UserService;
+import com.siit.team24.OpenDoors.util.ValidationUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class ReservationRequestController {
 
     @Autowired
     private AccommodationService accommodationService;
+
+    @Autowired
+    private ValidationUtils validationUtils;
 
 
 //    @PreAuthorize("hasRole('GUEST')")
@@ -68,6 +72,7 @@ public class ReservationRequestController {
             @PathVariable String hostId,
             @RequestBody ReservationRequestSearchAndFilterDTO requestSearchAndFilterDTO) {
 
+        validationUtils.printFields(requestSearchAndFilterDTO);
         System.out.println(requestSearchAndFilterDTO);
         List<ReservationRequestForHostDTO> requests = reservationRequestService.searchRequestsForHost(hostId, requestSearchAndFilterDTO);
         return new ResponseEntity<>(requests, HttpStatus.OK);

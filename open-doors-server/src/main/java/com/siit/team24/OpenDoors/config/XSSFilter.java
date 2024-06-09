@@ -10,17 +10,9 @@ import java.io.IOException;
 public class XSSFilter implements Filter{
 
     @Override
-    public void init(jakarta.servlet.FilterConfig filterConfig) throws jakarta.servlet.ServletException {
-        jakarta.servlet.Filter.super.init(filterConfig);
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         filterChain.doFilter(new XSSRequestWrapper((HttpServletRequest) request), response);
     }
 
-    @Override
-    public void destroy() {
 
-    }
 }
