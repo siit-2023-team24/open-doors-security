@@ -16,7 +16,7 @@ import com.siit.team24.OpenDoors.service.ReservationRequestService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,8 +46,6 @@ public class UserService {
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
 
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
@@ -62,8 +60,7 @@ public class UserService {
         return user.get();
     }
 
-    public UserService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+    public UserService() {
     }
 
     public User findByUsername(String username) {
